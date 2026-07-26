@@ -5,6 +5,11 @@ import SpaceBackground from "./components/SpaceBackground";
 import Reveal from "./components/Reveal";
 import CursorFX from "./components/CursorFX";
 import HeroVideo from "./components/HeroVideo";
+import RotatingWords from "./components/RotatingWords";
+import CountUp from "./components/CountUp";
+import PixelCard from "./components/PixelCard";
+import ShinyText from "./components/ShinyText";
+import StarBorder from "./components/StarBorder";
 
 /* ---------------------------------------------------------------------------
    Content
@@ -63,9 +68,9 @@ const SERVICES = [
 ];
 
 const STATS = [
-  { value: "100+", label: "Projects delivered" },
-  { value: "8+", label: "Industries served" },
-  { value: "5+", label: "Years of experience" },
+  { to: 100, suffix: "+", label: "Projects delivered" },
+  { to: 8, suffix: "+", label: "Industries served" },
+  { to: 5, suffix: "+", label: "Years of experience" },
 ];
 
 const PROCESS = [
@@ -162,17 +167,28 @@ function Hero() {
         {/* Copy */}
         <div>
           <Reveal>
-            <span className="glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium text-ink">
+            <span className="glass inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium">
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_2px_rgba(34,211,238,0.8)]" />
-              Software studio for the next frontier
+              <ShinyText
+                text="Software studio for the next frontier"
+                speed={4}
+                color="#8b8fb8"
+                shineColor="#ffffff"
+              />
             </span>
           </Reveal>
 
           <Reveal delay={80}>
             <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-6xl">
-              We build software that
-              <br className="hidden sm:block" />{" "}
-              <span className="text-gradient">launches brands</span> into orbit
+              <span className="block">We build software that</span>
+              <span className="mt-1 flex flex-wrap items-center gap-x-3">
+                <RotatingWords
+                  words={["launches brands", "scales startups", "ships products", "elevates teams"]}
+                  interval={2800}
+                  className="text-gradient"
+                />
+                <span>into orbit</span>
+              </span>
             </h1>
           </Reveal>
 
@@ -195,12 +211,15 @@ function Hero() {
                   <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </Link>
-              <Link
+              <StarBorder
+                as={Link}
                 href="#services"
-                className="glass inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+                color="#a78bfa"
+                speed="5s"
+                className="text-sm font-semibold"
               >
                 View our Work
-              </Link>
+              </StarBorder>
             </div>
           </Reveal>
 
@@ -247,7 +266,10 @@ function Services() {
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {SERVICES.map((s, i) => (
           <Reveal as="div" key={s.title} delay={i * 70}>
-            <article className="card-glow glass group h-full rounded-2xl p-6">
+            <PixelCard
+              variant="cosmic"
+              className="card-glow glass group h-full rounded-2xl p-6"
+            >
               <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-violet-500/20 to-cyan-400/20 text-violet-200 ring-1 ring-white/10">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
                   {s.icon}
@@ -261,7 +283,7 @@ function Services() {
                   <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </span>
-            </article>
+            </PixelCard>
           </Reveal>
         ))}
 
@@ -298,8 +320,11 @@ function Stats() {
         <div className="glass grid grid-cols-1 gap-8 rounded-3xl px-8 py-12 sm:grid-cols-3">
           {STATS.map((s) => (
             <div key={s.label} className="text-center">
-              <div className="font-display text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white to-violet-300 sm:text-6xl">
-                {s.value}
+              <div className="font-display text-5xl font-bold tracking-tight sm:text-6xl">
+                <span className="bg-gradient-to-b from-white to-violet-300 bg-clip-text text-transparent">
+                  <CountUp to={s.to} duration={2.2} />
+                  {s.suffix}
+                </span>
               </div>
               <p className="mt-2 text-sm text-ink-muted">{s.label}</p>
             </div>
@@ -497,11 +522,11 @@ function Footer() {
 }
 
 /* ------------------------------- Helpers -------------------------------- */
-function SectionKicker({ children }: { children: React.ReactNode }) {
+function SectionKicker({ children }: { children: string }) {
   return (
-    <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-violet-300">
+    <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em]">
       <span className="h-px w-6 bg-gradient-to-r from-transparent to-violet-400" />
-      {children}
+      <ShinyText text={children} speed={4} color="#c4b5fd" shineColor="#ffffff" />
       <span className="h-px w-6 bg-gradient-to-l from-transparent to-violet-400" />
     </span>
   );
