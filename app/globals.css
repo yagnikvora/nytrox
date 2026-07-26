@@ -32,10 +32,42 @@
   --animate-float-slow: float 11s ease-in-out infinite;
   --animate-spin-slow: spin 24s linear infinite;
   --animate-spin-slower: spin 40s linear infinite;
+  --animate-spin-slowest: spin 60s linear infinite;
+  --animate-halo: halo 6s ease-in-out infinite;
+  --animate-surface: surface 16s linear infinite;
+  --animate-drift: drift 10s ease-in-out infinite;
+  --animate-twinkle: twinkle 3.6s ease-in-out infinite;
+  --animate-planet-spin: planet-spin 16s linear infinite;
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-14px); }
+  }
+  /* pulsing planet halo */
+  @keyframes halo {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.78; transform: scale(1.12); }
+  }
+  /* atmospheric sheen sweeping across the planet (reads as rotation) */
+  @keyframes surface {
+    from { background-position: 0% 50%; }
+    to { background-position: 220% 50%; }
+  }
+  /* slow drift of the specular highlight */
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(7%, 6%); }
+  }
+  /* twinkling background stars */
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.25); }
+  }
+  /* planet rotation: two identical tiles scroll one full tile-width, so the
+     surface loops seamlessly and reads as the planet spinning */
+  @keyframes planet-spin {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
 }
 
@@ -208,7 +240,13 @@ body {
   .animate-float,
   .animate-float-slow,
   .animate-spin-slow,
-  .animate-spin-slower { animation: none !important; }
+  .animate-spin-slower,
+  .animate-spin-slowest,
+  .animate-halo,
+  .animate-surface,
+  .animate-drift,
+  .animate-twinkle,
+  .animate-planet-spin { animation: none !important; }
 }
 
 /* Coarse pointers (touch): never hide the native cursor */
