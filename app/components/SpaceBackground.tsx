@@ -14,10 +14,9 @@ type Meteor = {
 };
 
 /**
- * Live space scene rendered on a single canvas:
- *  - drifting, breathing nebula clouds (additive glow)
+ * Live space scene rendered on a single canvas over a pure-black page:
  *  - a parallax starfield that gently reacts to the mouse + twinkles + drifts
- *  - meteors that spawn on their own and streak across
+ *  - meteors ("falling stars") that spawn on their own and streak across
  * Pauses when the tab is hidden. Renders a calm static frame for
  * prefers-reduced-motion.
  */
@@ -42,13 +41,6 @@ export default function SpaceBackground() {
     let raf = 0;
 
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
-
-    const orbs = [
-      { hue: [139, 92, 246], fx: 0.22, fy: 0.26, rf: 0.44, phase: 0.0, sp: 0.06 },
-      { hue: [34, 211, 238], fx: 0.82, fy: 0.3, rf: 0.36, phase: 2.1, sp: 0.05 },
-      { hue: [236, 72, 153], fx: 0.6, fy: 0.86, rf: 0.34, phase: 4.0, sp: 0.045 },
-      { hue: [99, 102, 241], fx: 0.35, fy: 0.68, rf: 0.42, phase: 1.2, sp: 0.052 },
-    ];
 
     const resize = () => {
       W = canvas.width = Math.floor(window.innerWidth * dpr);
@@ -103,23 +95,6 @@ export default function SpaceBackground() {
       }
       const ox = mouse.x - W / 2;
       const oy = mouse.y - H / 2;
-
-      // --- nebula clouds (additive) ---
-      ctx!.globalCompositeOperation = "lighter";
-      for (const o of orbs) {
-        const dx = Math.sin(t * o.sp + o.phase) * 0.06;
-        const dy = Math.cos(t * o.sp * 0.9 + o.phase) * 0.06;
-        const cx = (o.fx + dx) * W - ox * 0.02;
-        const cy = (o.fy + dy) * H - oy * 0.02;
-        const R = o.rf * Math.min(W, H) * (1 + 0.08 * Math.sin(t * 0.2 + o.phase));
-        const [r, g, b] = o.hue;
-        const grad = ctx!.createRadialGradient(cx, cy, 0, cx, cy, R);
-        grad.addColorStop(0, `rgba(${r},${g},${b},0.16)`);
-        grad.addColorStop(0.5, `rgba(${r},${g},${b},0.05)`);
-        grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
-        ctx!.fillStyle = grad;
-        ctx!.fillRect(cx - R, cy - R, R * 2, R * 2);
-      }
 
       // --- stars ---
       ctx!.globalCompositeOperation = "source-over";

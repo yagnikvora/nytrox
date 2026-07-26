@@ -4,7 +4,7 @@
    Nytrox — cosmic design tokens
 --------------------------------------------------------------------------- */
 :root {
-  --bg: #050510;
+  --bg: #000000;
   --bg-soft: #0a0a1a;
   --ink: #d7d9f2;
   --ink-muted: #8b8fb8;
@@ -71,19 +71,6 @@
   }
 }
 
-/* Deep-space base tint behind the live canvas (the moving nebula clouds,
-   stars, and meteors are drawn on <SpaceBackground /> above this). */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -20;
-  background:
-    radial-gradient(1100px 780px at 12% -12%, rgba(139, 92, 246, 0.18), transparent 60%),
-    radial-gradient(1000px 720px at 92% 4%, rgba(34, 211, 238, 0.10), transparent 55%),
-    radial-gradient(1200px 1000px at 50% 118%, rgba(99, 102, 241, 0.16), transparent 62%);
-}
-
 html {
   scroll-behavior: smooth;
 }
@@ -93,6 +80,20 @@ body {
   color: var(--ink);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+}
+
+/* Hide the page scrollbar everywhere (scrolling still works via wheel/touch/
+   keys). The scroll-deck already hides its panel scrollbars; this covers the
+   plain-document fallback + the initial pre-hydration render. */
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge/IE */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none; /* Chrome/Safari */
 }
 
 /* ---------------------------------------------------------------------------
@@ -177,8 +178,7 @@ body {
 }
 
 .cursor-dot,
-.cursor-ring,
-.cursor-glow {
+.cursor-ring {
   position: fixed;
   top: 0;
   left: 0;
@@ -218,22 +218,6 @@ body {
   border-color: rgba(236, 72, 153, 0.9);
 }
 
-.cursor-glow {
-  z-index: -15;
-  height: 560px;
-  width: 560px;
-  border-radius: 9999px;
-  background: radial-gradient(
-    circle,
-    rgba(139, 92, 246, 0.24),
-    rgba(34, 211, 238, 0.1) 40%,
-    transparent 68%
-  );
-  filter: blur(4px);
-  mix-blend-mode: screen;
-  transition: opacity 0.6s ease;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .deck-mouse-wheel,
@@ -252,8 +236,7 @@ body {
 /* Coarse pointers (touch): never hide the native cursor */
 @media (pointer: coarse) {
   .cursor-dot,
-  .cursor-ring,
-  .cursor-glow { display: none !important; }
+  .cursor-ring { display: none !important; }
 }
 
 ::selection {

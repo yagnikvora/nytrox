@@ -3,14 +3,12 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Custom cosmic cursor (precise dot + trailing ring) plus a soft
- * mouse-following background glow. Disabled on touch/coarse pointers,
- * and de-animated for reduced-motion users.
+ * Custom cosmic cursor: a precise dot with a trailing ring.
+ * Disabled on touch/coarse pointers, and de-animated for reduced-motion users.
  */
 export default function CursorFX() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const finePointer = window.matchMedia("(pointer: fine)").matches;
@@ -19,8 +17,7 @@ export default function CursorFX() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const dot = dotRef.current;
     const ring = ringRef.current;
-    const glow = glowRef.current;
-    if (!dot || !ring || !glow) return;
+    if (!dot || !ring) return;
 
     document.documentElement.classList.add("cursor-none");
 
@@ -28,8 +25,6 @@ export default function CursorFX() {
     let my = window.innerHeight / 2;
     let rx = mx;
     let ry = my;
-    let gx = mx;
-    let gy = my;
     let raf = 0;
     let shown = false;
 
@@ -38,7 +33,6 @@ export default function CursorFX() {
       shown = true;
       dot.style.opacity = "1";
       ring.style.opacity = "1";
-      glow.style.opacity = "1";
     };
 
     const onMove = (e: MouseEvent) => {
@@ -62,18 +56,13 @@ export default function CursorFX() {
       shown = false;
       dot.style.opacity = "0";
       ring.style.opacity = "0";
-      glow.style.opacity = "0";
     };
 
     const tick = () => {
       const ringEase = reduce ? 1 : 0.2;
-      const glowEase = reduce ? 1 : 0.08;
       rx += (mx - rx) * ringEase;
       ry += (my - ry) * ringEase;
-      gx += (mx - gx) * glowEase;
-      gy += (my - gy) * glowEase;
       ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
-      glow.style.transform = `translate3d(${gx}px, ${gy}px, 0) translate(-50%, -50%)`;
       raf = requestAnimationFrame(tick);
     };
 
@@ -97,7 +86,6 @@ export default function CursorFX() {
 
   return (
     <>
-      <div ref={glowRef} className="cursor-glow" aria-hidden />
       <div ref={ringRef} className="cursor-ring" aria-hidden />
       <div ref={dotRef} className="cursor-dot" aria-hidden />
     </>

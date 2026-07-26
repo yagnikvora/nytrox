@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import LogoMark from "./Logo";
+import GooeyNav from "./GooeyNav";
 
 const NAV = [
   { label: "Home", href: "#home" },
@@ -26,11 +27,15 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        {/* overflow-hidden clips the gooey effect's black backdrop to the bar
+            so it can't spill onto the page content below; the solid-ish dark
+            fill gives the metaballs a surface and masks content scrolling
+            underneath. */}
         <nav
-          className={`mt-3 flex items-center justify-between rounded-2xl px-4 py-2.5 transition-all duration-300 ${
+          className={`mt-3 flex items-center justify-between overflow-hidden rounded-2xl border border-white/10 backdrop-blur-xl transition-all duration-300 px-4 py-2.5 ${
             scrolled
-              ? "glass shadow-[0_10px_40px_-20px_rgba(0,0,0,0.9)]"
-              : "border border-transparent"
+              ? "bg-[#05050f]/90 shadow-[0_10px_40px_-20px_rgba(0,0,0,0.9)]"
+              : "bg-[#05050f]/70"
           }`}
         >
           {/* Logo */}
@@ -41,19 +46,10 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop menu */}
-          <ul className="hidden items-center gap-1 md:flex">
-            {NAV.map((item) => (
-              <li key={item.label}>
-                <Link
-                  href={item.href}
-                  className="rounded-lg px-3.5 py-2 text-sm font-medium text-ink-muted transition-colors hover:text-white"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {/* Desktop menu — gooey nav */}
+          <div className="hidden text-sm font-medium md:block">
+            <GooeyNav items={NAV} particleCount={12} particleDistances={[55, 8]} />
+          </div>
 
           {/* Right actions */}
           <div className="flex items-center gap-1.5">
