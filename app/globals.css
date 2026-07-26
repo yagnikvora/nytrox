@@ -1,26 +1,224 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   Nytrox — cosmic design tokens
+--------------------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #050510;
+  --bg-soft: #0a0a1a;
+  --ink: #d7d9f2;
+  --ink-muted: #8b8fb8;
+  --line: rgba(255, 255, 255, 0.08);
+
+  --violet: #8b5cf6;
+  --indigo: #6366f1;
+  --cyan: #22d3ee;
+  --pink: #ec4899;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-bg: var(--bg);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-violet: var(--violet);
+  --color-indigo: var(--indigo);
+  --color-cyan: var(--cyan);
+  --color-pink: var(--pink);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-space-grotesk);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 11s ease-in-out infinite;
+  --animate-spin-slow: spin 24s linear infinite;
+  --animate-spin-slower: spin 40s linear infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
   }
 }
 
+/* Deep-space base tint behind the live canvas (the moving nebula clouds,
+   stars, and meteors are drawn on <SpaceBackground /> above this). */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -20;
+  background:
+    radial-gradient(1100px 780px at 12% -12%, rgba(139, 92, 246, 0.18), transparent 60%),
+    radial-gradient(1000px 720px at 92% 4%, rgba(34, 211, 238, 0.10), transparent 55%),
+    radial-gradient(1200px 1000px at 50% 118%, rgba(99, 102, 241, 0.16), transparent 62%);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Helpers
+--------------------------------------------------------------------------- */
+.text-gradient {
+  background-image: linear-gradient(100deg, #c4b5fd 0%, #a78bfa 30%, #67e8f9 70%, #7dd3fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.card-glow {
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+}
+.card-glow:hover {
+  transform: translateY(-6px);
+  border-color: rgba(139, 92, 246, 0.5);
+  background: rgba(139, 92, 246, 0.06);
+  box-shadow: 0 24px 60px -30px rgba(139, 92, 246, 0.65);
+}
+
+/* Orbit rings in the hero */
+.orbit-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Custom scrollbar for the testimonial rail + deck panels */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Scroll-deck "mouse" hint */
+.deck-mouse {
+  display: block;
+  height: 30px;
+  width: 18px;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(215, 217, 242, 0.5);
+  position: relative;
+}
+.deck-mouse-wheel {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  height: 5px;
+  width: 3px;
+  margin-left: -1.5px;
+  border-radius: 9999px;
+  background: #d7d9f2;
+  animation: deck-wheel 1.6s ease-in-out infinite;
+}
+@keyframes deck-wheel {
+  0% { transform: translateY(0); opacity: 0; }
+  30% { opacity: 1; }
+  60% { transform: translateY(9px); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ---------------------------------------------------------------------------
+   Custom cosmic cursor
+--------------------------------------------------------------------------- */
+.cursor-none,
+.cursor-none * {
+  cursor: none !important;
+}
+
+.cursor-dot,
+.cursor-ring,
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.cursor-dot {
+  z-index: 9999;
+  height: 7px;
+  width: 7px;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow: 0 0 10px 2px rgba(167, 139, 250, 0.9);
+  transition: opacity 0.3s ease;
+}
+
+.cursor-ring {
+  z-index: 9998;
+  height: 34px;
+  width: 34px;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(167, 139, 250, 0.85);
+  transition: opacity 0.3s ease, width 0.22s ease, height 0.22s ease,
+    border-color 0.22s ease, background-color 0.22s ease;
+}
+.cursor-ring--hover {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(34, 211, 238, 0.9);
+  background-color: rgba(34, 211, 238, 0.08);
+}
+.cursor-ring--down {
+  width: 26px;
+  height: 26px;
+  border-color: rgba(236, 72, 153, 0.9);
+}
+
+.cursor-glow {
+  z-index: -15;
+  height: 560px;
+  width: 560px;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    rgba(139, 92, 246, 0.24),
+    rgba(34, 211, 238, 0.1) 40%,
+    transparent 68%
+  );
+  filter: blur(4px);
+  mix-blend-mode: screen;
+  transition: opacity 0.6s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .deck-mouse-wheel,
+  .animate-float,
+  .animate-float-slow,
+  .animate-spin-slow,
+  .animate-spin-slower { animation: none !important; }
+}
+
+/* Coarse pointers (touch): never hide the native cursor */
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring,
+  .cursor-glow { display: none !important; }
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+  color: #fff;
 }
