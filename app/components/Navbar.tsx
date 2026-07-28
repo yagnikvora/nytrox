@@ -1,21 +1,30 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import LogoMark from "./Logo";
 import GooeyNav from "./GooeyNav";
 
+/* Root-relative hrefs so the same bar works from any route, not just "/". */
 const NAV = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Products", href: "#products" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/#home" },
+  { label: "Services", href: "/services" },
+  { label: "Products", href: "/#products" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  /* Highlight the entry matching the current route (home otherwise). */
+  const activeIndex = Math.max(
+    NAV.findIndex((item) => item.href === pathname),
+    0
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -39,7 +48,7 @@ export default function Navbar() {
           }`}
         >
           {/* Logo */}
-          <Link href="#home" className="flex items-center gap-2.5">
+          <Link href="/#home" className="flex items-center gap-2.5">
             <LogoMark />
             <span className="font-display text-lg font-bold tracking-tight text-white">
               Nytrox
@@ -48,13 +57,19 @@ export default function Navbar() {
 
           {/* Desktop menu — gooey nav */}
           <div className="hidden text-sm font-medium md:block">
-            <GooeyNav items={NAV} particleCount={12} particleDistances={[55, 8]} />
+            <GooeyNav
+              key={pathname}
+              items={NAV}
+              particleCount={12}
+              particleDistances={[55, 8]}
+              initialActiveIndex={activeIndex}
+            />
           </div>
 
           {/* Right actions */}
           <div className="flex items-center gap-1.5">
             <Link
-              href="#contact"
+              href="/contact"
               className="hidden rounded-lg bg-gradient-to-r from-violet-500 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_0_30px_-8px_rgba(139,92,246,0.9)] transition-transform hover:scale-[1.03] sm:block"
             >
               Book a Demo
@@ -95,7 +110,7 @@ export default function Navbar() {
               ))}
             </ul>
             <Link
-              href="#contact"
+              href="/contact"
               onClick={() => setOpen(false)}
               className="mt-2 block rounded-lg bg-gradient-to-r from-violet-500 to-indigo-500 px-4 py-2.5 text-center text-sm font-semibold text-white"
             >

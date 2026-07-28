@@ -41,6 +41,8 @@
   /* StarBorder (React Bits) — duration is supplied inline via animationDuration */
   --animate-star-movement-bottom: star-movement-bottom linear infinite alternate;
   --animate-star-movement-top: star-movement-top linear infinite alternate;
+  /* LogoLoop (React Bits) — two identical tracks scroll one full track width */
+  --animate-marquee: marquee 38s linear infinite;
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
@@ -80,6 +82,12 @@
   @keyframes star-movement-top {
     0% { transform: translate(0%, 0%); opacity: 1; }
     100% { transform: translate(100%, 0%); opacity: 0; }
+  }
+  /* LogoLoop: the track holds two identical copies, so scrolling exactly half
+     its width lands on the duplicate and loops seamlessly */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
 }
 
@@ -244,7 +252,8 @@ body::-webkit-scrollbar {
   .animate-twinkle,
   .animate-planet-spin,
   .animate-star-movement-bottom,
-  .animate-star-movement-top { animation: none !important; }
+  .animate-star-movement-top,
+  .animate-marquee { animation: none !important; }
 }
 
 /* Coarse pointers (touch): never hide the native cursor */
