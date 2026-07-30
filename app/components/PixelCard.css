@@ -19,6 +19,49 @@
   display: block;
   pointer-events: none;
   z-index: 0;
+  opacity: 0.85;
+  /* The grid reads best as ambience at the edges. Fade it down through the
+     middle of the card — that's where the title/description sit — so the
+     pixels never compete with the copy for contrast. */
+  -webkit-mask-image: radial-gradient(
+    115% 85% at 50% 50%,
+    rgba(0, 0, 0, 0.28) 0%,
+    rgba(0, 0, 0, 0.4) 38%,
+    rgba(0, 0, 0, 0.85) 72%,
+    #000 100%
+  );
+  mask-image: radial-gradient(
+    115% 85% at 50% 50%,
+    rgba(0, 0, 0, 0.28) 0%,
+    rgba(0, 0, 0, 0.4) 38%,
+    rgba(0, 0, 0, 0.85) 72%,
+    #000 100%
+  );
+}
+
+/* Scrim between the canvas and the content: sits above the pixels (same
+   stacking level, painted later) but below `.pixel-content` (z-index 1).
+   Only fades in on hover, when there are actually pixels to damp down. */
+.pixel-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 320ms cubic-bezier(0.5, 1, 0.89, 1);
+  background: linear-gradient(
+    180deg,
+    rgba(3, 3, 12, 0) 0%,
+    rgba(3, 3, 12, 0.35) 28%,
+    rgba(3, 3, 12, 0.62) 60%,
+    rgba(3, 3, 12, 0.72) 100%
+  );
+}
+
+.pixel-card:hover::after,
+.pixel-card:focus-within::after {
+  opacity: 1;
 }
 
 /* content flows normally, always painted above the pixel canvas */
@@ -26,4 +69,16 @@
   position: relative;
   z-index: 1;
   height: 100%;
+}
+
+/* Lift the copy off the animated grid so it stays crisp while pixels shimmer */
+.pixel-card:hover .pixel-content,
+.pixel-card:focus-within .pixel-content {
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.85), 0 0 2px rgba(0, 0, 0, 0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-card::after {
+    transition: none;
+  }
 }

@@ -254,6 +254,11 @@ body::-webkit-scrollbar {
   .animate-star-movement-bottom,
   .animate-star-movement-top,
   .animate-marquee { animation: none !important; }
+  /* A stopped marquee would clip everything past the first screenful, so let
+     the rail be scrolled through by hand instead. */
+  .marquee-viewport { overflow-x: auto; }
+  /* ...and a pause control has nothing left to pause. */
+  .marquee-control { display: none; }
 }
 
 /* Coarse pointers (touch): never hide the native cursor */

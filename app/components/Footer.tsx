@@ -1,6 +1,7 @@
 import Link from "next/link";
 import LogoMark from "./Logo";
 import { SERVICES } from "../data/services";
+import { PROJECTS } from "../data/projects";
 
 const SOCIAL_PATHS = [
   "M22 12a10 10 0 10-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6v1.9h2.7l-.4 2.9h-2.3v7A10 10 0 0022 12z",
@@ -15,7 +16,7 @@ export default function Footer() {
       title: "Company",
       links: [
         { label: "About Us", href: "/about" },
-        { label: "Portfolio", href: "/#products" },
+        { label: "Projects", href: "/projects" },
         { label: "Careers", href: "/contact" },
         { label: "Contact", href: "/contact" },
       ],
@@ -28,13 +29,11 @@ export default function Footer() {
       })),
     },
     {
-      title: "Products",
-      links: [
-        { label: "Mousepads", href: "/#products" },
-        { label: "Store", href: "/#products" },
-        { label: "Cart", href: "/#products" },
-        { label: "Shipping", href: "/#products" },
-      ],
+      title: "Projects",
+      links: PROJECTS.slice(0, 4).map((p) => ({
+        label: p.title,
+        href: `/projects#${p.slug}`,
+      })),
     },
   ];
 

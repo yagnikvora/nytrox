@@ -10,7 +10,7 @@ import GooeyNav from "./GooeyNav";
 const NAV = [
   { label: "Home", href: "/#home" },
   { label: "Services", href: "/services" },
-  { label: "Products", href: "/#products" },
+  { label: "Projects", href: "/projects" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];

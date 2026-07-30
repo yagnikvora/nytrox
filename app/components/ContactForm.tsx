@@ -80,7 +80,7 @@ export default function ContactForm() {
 
   if (sent) {
     return (
-      <div className="glass rounded-3xl p-8 text-center sm:p-12">
+      <div className="glass flex h-full flex-col justify-center rounded-3xl p-8 text-center sm:p-12">
         <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-violet-500/30 to-cyan-400/25 ring-1 ring-white/15">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path
@@ -119,7 +119,14 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="glass rounded-3xl p-6 sm:p-8">
+    // h-full so the card matches the height of the channel column beside it;
+    // the footer row takes the slack via mt-auto rather than leaving a gap
+    // below the card.
+    <form
+      onSubmit={handleSubmit}
+      noValidate
+      className="glass flex h-full flex-col rounded-3xl p-6 sm:p-8"
+    >
       <h2 className="font-display text-xl font-semibold text-white">
         Tell us about your project
       </h2>
@@ -206,7 +213,7 @@ export default function ContactForm() {
         </div>
       </div>
 
-      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-auto flex flex-col gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs leading-5 text-ink-muted">
           We&apos;ll only use these details to reply to your enquiry.
         </p>

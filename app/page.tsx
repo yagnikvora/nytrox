@@ -5,6 +5,7 @@ import Reveal from "./components/Reveal";
 import CursorFX from "./components/CursorFX";
 import HeroVideo from "./components/HeroVideo";
 import RotatingWords from "./components/RotatingWords";
+import AvatarStack from "./components/AvatarStack";
 import PixelCard from "./components/PixelCard";
 import ShinyText from "./components/ShinyText";
 import StarBorder from "./components/StarBorder";
@@ -80,16 +81,19 @@ function Hero() {
           </Reveal>
 
           <Reveal delay={80}>
-            <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-6xl">
+            {/* Three lines by construction. The lg size is fluid because the copy
+                column is only ~400–511px wide — a fixed size that fits line one at
+                1440 wraps it into two lines at the lg breakpoint. */}
+            <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[clamp(2.25rem,3.35vw,2.9rem)]">
               <SplitText text="We build software that" className="block" delay={22} />
-              <span className="mt-1 flex flex-wrap items-center gap-x-3">
+              <span className="mt-1 block">
                 <RotatingWords
                   words={["launches brands", "scales startups", "ships products", "elevates teams"]}
                   interval={2800}
                   className="text-gradient"
                 />
-                <span>into orbit</span>
               </span>
+              <span className="block">into orbit</span>
             </h1>
           </Reveal>
 
@@ -129,15 +133,10 @@ function Hero() {
           </Reveal>
 
           <Reveal delay={320}>
-            <div className="mt-10 flex items-center gap-6 text-sm text-ink-muted">
-              <div className="flex -space-x-2.5">
-                {["from-violet-500 to-indigo-500", "from-cyan-400 to-blue-500", "from-pink-500 to-violet-500", "from-indigo-500 to-cyan-400"].map(
-                  (g, i) => (
-                    <span key={i} className={`h-9 w-9 rounded-full bg-gradient-to-br ${g} ring-2 ring-[#050510]`} />
-                  )
-                )}
-              </div>
-              <p>
+            <div className="mt-10 flex items-center gap-3.5">
+              {/* The +46 chip closes out the "50+" in the line beside it */}
+              <AvatarStack overflow="+46" />
+              <p className="text-sm text-ink-muted">
                 Trusted by <span className="font-semibold text-white">50+ teams</span> across the galaxy
               </p>
             </div>
@@ -176,13 +175,24 @@ function Services() {
                 variant="cosmic"
                 className="card-glow glass group h-full rounded-2xl p-6"
               >
-                <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-violet-500/20 to-cyan-400/20 text-violet-200 ring-1 ring-white/10">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
+                {/* Icon tile picks up the card's hover: lifts with it, warms from
+                    a faint wash to a lit violet/cyan, and throws a soft glow. */}
+                <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-violet-500/20 to-cyan-400/20 text-violet-200 shadow-[0_0_0_0_rgba(139,92,246,0)] ring-1 ring-white/10 transition-[translate,scale,box-shadow,color,--tw-gradient-from,--tw-gradient-to] duration-[350ms] ease-out group-hover:-translate-y-0.5 group-hover:scale-[1.08] group-hover:from-violet-500/45 group-hover:to-cyan-400/45 group-hover:text-white group-hover:shadow-[0_10px_28px_-10px_rgba(139,92,246,0.9)] group-hover:ring-violet-400/45">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    className="transition-transform duration-[350ms] ease-out group-hover:scale-110"
+                    aria-hidden
+                  >
                     {s.icon}
                   </svg>
                 </div>
                 <h3 className="mt-5 font-display text-lg font-semibold text-white">{s.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-ink-muted">{s.desc}</p>
+                <p className="mt-2 text-sm leading-6 text-ink-muted transition-colors duration-300 group-hover:text-ink">
+                  {s.desc}
+                </p>
                 <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-violet-300 opacity-0 transition-opacity group-hover:opacity-100">
                   Learn more
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -277,7 +287,7 @@ function Process() {
 /* ----------------------------- Testimonials ----------------------------- */
 function Testimonials() {
   return (
-    <section id="products" className="scroll-mt-24 py-16">
+    <section id="testimonials" className="scroll-mt-24 py-16">
       <div className="mx-auto max-w-7xl px-6">
         <Reveal className="mx-auto max-w-2xl text-center">
           <SectionKicker>Signals from clients</SectionKicker>

@@ -31,6 +31,8 @@ export default function CountUp({
   onEnd,
 }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
+  /** Last string written to the DOM, so identical values are not rewritten. */
+  const lastText = useRef("");
   const motionValue = useMotionValue(direction === "down" ? to : from);
 
   const damping = 20 + 40 * (1 / duration);
@@ -39,6 +41,11 @@ export default function CountUp({
   const springValue = useSpring(motionValue, {
     damping,
     stiffness,
+    // Without an explicit rest threshold this spring never comes to rest and
+    // its rAF loop runs for the lifetime of the page. framer-motion snaps to
+    // the exact target once at rest, so this only decides how long the number
+    // spends crawling the last fraction of a unit.
+    restDelta: 0.01,
   });
 
   const isInView = useInView(ref, { once: true, margin: "0px" });
@@ -75,7 +82,8 @@ export default function CountUp({
 
   useEffect(() => {
     if (ref.current) {
-      ref.current.textContent = formatValue(direction === "down" ? to : from);
+      lastText.current = formatValue(direction === "down" ? to : from);
+      ref.current.textContent = lastText.current;
     }
   }, [from, to, direction, formatValue]);
 
@@ -107,9 +115,18 @@ export default function CountUp({
 
   useEffect(() => {
     const unsubscribe = springValue.on("change", (latest: number) => {
-      if (ref.current) {
-        ref.current.textContent = formatValue(latest);
-      }
+      const el = ref.current;
+      if (!el) return;
+
+      const next = formatValue(latest);
+      // The spring goes on emitting changes far below display precision long
+      // after the number has visibly stopped, and each one used to rewrite the
+      // text node. On a page with a dozen counters that is a few hundred DOM
+      // mutations a second, forever, for no visible change — so only write when
+      // the formatted string actually differs.
+      if (next === lastText.current) return;
+      lastText.current = next;
+      el.textContent = next;
     });
 
     return () => unsubscribe();
