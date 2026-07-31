@@ -1,4 +1,5 @@
 import Link from "next/link";
+import GradientText from "./GradientText";
 import Reveal from "./Reveal";
 
 /** Closing call-to-action band, shared by every page. */
@@ -10,7 +11,8 @@ export default function CtaBand() {
           <div className="pointer-events-none absolute -left-20 -top-24 h-64 w-64 rounded-full bg-violet-600/30 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-cyan-500/25 blur-3xl" />
           <h2 className="relative font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Ready to launch your next product?
+            Ready to launch your{" "}
+            <GradientText inline>next product</GradientText>?
           </h2>
           <p className="relative mx-auto mt-4 max-w-xl text-ink-muted">
             Book a free consultation and let&apos;s map the journey from idea to
@@ -19,7 +21,7 @@ export default function CtaBand() {
           <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-500 via-indigo-500 to-cyan-400 px-7 py-3.5 text-sm font-semibold text-white shadow-[0_0_44px_-10px_rgba(139,92,246,0.95)] transition-transform hover:scale-[1.03]"
+              className="btn-gradient inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold shadow-[0_0_44px_-10px_rgba(178,86,255,0.95)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_54px_-8px_rgba(255,159,252,0.9)]"
             >
               Book a Consultation
             </Link>
@@ -27,7 +29,7 @@ export default function CtaBand() {
               href="mailto:hello@nytrox.com"
               className="glass inline-flex items-center justify-center rounded-xl px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
             >
-              hello@nytrox.com
+              <GradientText inline>hello@nytrox.com</GradientText>
             </Link>
           </div>
         </div>

@@ -9,6 +9,8 @@ import SpotlightCard from "../components/SpotlightCard";
 import GlareHover from "../components/GlareHover";
 import CtaBand from "../components/CtaBand";
 import Footer from "../components/Footer";
+import MaskedHeading from "../components/MaskedHeading";
+import ScrollReveal from "../components/ScrollReveal";
 import { SERVICES } from "../data/services";
 
 export const metadata: Metadata = {
@@ -30,14 +32,18 @@ export default function ServicesPage() {
         <section className="mx-auto max-w-7xl px-6 py-16">
           <Reveal className="mx-auto max-w-3xl text-center">
             <SectionKicker>What we do</SectionKicker>
-            <h1 className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-6xl">
-              Every stage of the <span className="text-gradient">product journey</span>
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
+            <MaskedHeading
+              as="h1"
+              text="Every stage of the product journey"
+              accent="product journey"
+              stagger={60}
+              className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-6xl"
+            />
+            <ScrollReveal className="mx-auto mt-6 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
               One studio for strategy, design, engineering, and the long tail of
               support that comes after launch — so you brief a single team instead
               of stitching five together.
-            </p>
+            </ScrollReveal>
           </Reveal>
         </section>
 
@@ -45,7 +51,14 @@ export default function ServicesPage() {
         <section className="mx-auto max-w-7xl px-6 pb-8">
           <div className="grid gap-5 lg:grid-cols-2">
             {SERVICES.map((s, i) => (
-              <Reveal as="div" key={s.slug} delay={(i % 2) * 80} className="h-full">
+              <Reveal
+                as="div"
+                key={s.slug}
+                delay={(i % 2) * 80}
+                // the two columns slide in toward each other
+                variant={i % 2 === 0 ? "left" : "right"}
+                className="h-full"
+              >
                 {/* wrapper carries the anchor target for /services#slug links */}
                 <div id={s.slug} className="h-full scroll-mt-28">
                   <SpotlightCard className="card-glow glass h-full">

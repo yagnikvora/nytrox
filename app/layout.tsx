@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Space_Grotesk } from "next/font/google";
 import ClickSpark from "./components/ClickSpark";
+import RouteFade from "./components/RouteFade";
+import ScrollProgress from "./components/ScrollProgress";
+import ScrollToTop from "./components/ScrollToTop";
+import SmoothScroll from "./components/SmoothScroll";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,9 +38,13 @@ export default function RootLayout({
       className={`${geistSans.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="min-h-full">
-        {/* one instance for the whole site — sparks every click */}
+        {/* one instance each for the whole site */}
         <ClickSpark />
-        {children}
+        {/* eases the wheel; no-ops on touch and under reduced motion */}
+        <SmoothScroll />
+        <ScrollProgress />
+        <ScrollToTop />
+        <RouteFade>{children}</RouteFade>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import GradientText from "./GradientText";
 import LogoMark from "./Logo";
 import { SERVICES } from "../data/services";
 import { PROJECTS } from "../data/projects";
@@ -44,7 +45,9 @@ export default function Footer() {
           <div>
             <Link href="/" className="flex items-center gap-2.5">
               <LogoMark />
-              <span className="font-display text-lg font-bold text-white">Nytrox</span>
+              <GradientText inline className="font-display text-lg font-bold">
+                Nytrox
+              </GradientText>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-6 text-ink-muted">
               A software studio building mobile apps, web platforms, and digital

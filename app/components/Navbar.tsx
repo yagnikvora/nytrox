@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import LogoMark from "./Logo";
 import GooeyNav from "./GooeyNav";
+import GradientText from "./GradientText";
 
 /* Root-relative hrefs so the same bar works from any route, not just "/". */
 const NAV = [
@@ -50,9 +51,12 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/#home" className="flex items-center gap-2.5">
             <LogoMark />
-            <span className="font-display text-lg font-bold tracking-tight text-white">
+            <GradientText
+              inline
+              className="font-display text-lg font-bold tracking-tight"
+            >
               Nytrox
-            </span>
+            </GradientText>
           </Link>
 
           {/* Desktop menu — gooey nav */}
@@ -70,7 +74,7 @@ export default function Navbar() {
           <div className="flex items-center gap-1.5">
             <Link
               href="/contact"
-              className="hidden rounded-lg bg-gradient-to-r from-violet-500 to-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_0_30px_-8px_rgba(139,92,246,0.9)] transition-transform hover:scale-[1.03] sm:block"
+              className="btn-gradient hidden rounded-lg px-4 py-2 text-sm font-semibold shadow-[0_0_30px_-8px_rgba(178,86,255,0.9)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_38px_-6px_rgba(255,159,252,0.9)] sm:block"
             >
               Book a Demo
             </Link>
@@ -112,7 +116,7 @@ export default function Navbar() {
             <Link
               href="/contact"
               onClick={() => setOpen(false)}
-              className="mt-2 block rounded-lg bg-gradient-to-r from-violet-500 to-indigo-500 px-4 py-2.5 text-center text-sm font-semibold text-white"
+              className="btn-gradient mt-2 block rounded-lg px-4 py-2.5 text-center text-sm font-semibold"
             >
               Book a Demo
             </Link>

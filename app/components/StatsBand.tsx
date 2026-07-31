@@ -1,4 +1,5 @@
 import CountUp from "./CountUp";
+import GradientText from "./GradientText";
 import Reveal from "./Reveal";
 import { STATS } from "../data/stats";
 
@@ -10,10 +11,12 @@ export default function StatsBand() {
         {STATS.map((s) => (
           <div key={s.label} className="text-center">
             <div className="font-display text-5xl font-bold tracking-tight sm:text-6xl">
-              <span className="bg-gradient-to-b from-white to-violet-300 bg-clip-text text-transparent">
+              {/* the figure counts up, and the gradient keeps travelling after
+                  it lands so the band never reads as static */}
+              <GradientText animationSpeed={7}>
                 <CountUp to={s.to} duration={2.2} />
                 {s.suffix}
-              </span>
+              </GradientText>
             </div>
             <p className="mt-2 text-sm text-ink-muted">{s.label}</p>
           </div>

@@ -9,6 +9,8 @@ import SpotlightCard from "../components/SpotlightCard";
 import GlareHover from "../components/GlareHover";
 import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
+import MaskedHeading from "../components/MaskedHeading";
+import ScrollReveal from "../components/ScrollReveal";
 import { CHANNELS, CONTACT_EMAIL, FAQS, NEXT_STEPS } from "../data/contact";
 
 export const metadata: Metadata = {
@@ -45,14 +47,18 @@ export default function ContactPage() {
         <section className="mx-auto max-w-7xl px-6 py-16">
           <Reveal className="mx-auto max-w-3xl text-center">
             <SectionKicker>Get in touch</SectionKicker>
-            <h1 className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-6xl">
-              Let&apos;s chart your <span className="text-gradient">flight path</span>
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
+            <MaskedHeading
+              as="h1"
+              text="Let’s chart your flight path"
+              accent="flight path"
+              stagger={60}
+              className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-6xl"
+            />
+            <ScrollReveal className="mx-auto mt-6 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
               Whether you have a fully-specced brief or a rough idea scribbled on
               a napkin, tell us where you want to go. Every enquiry gets a human
               reply within one business day.
-            </p>
+            </ScrollReveal>
           </Reveal>
         </section>
 
@@ -63,7 +69,7 @@ export default function ContactPage() {
                 so the primary action isn't buried under five cards. */}
             <div className="order-2 flex flex-col gap-5 lg:order-1">
               {CHANNELS.map((c, i) => (
-                <Reveal as="div" key={c.label} delay={i * 70}>
+                <Reveal as="div" key={c.label} delay={i * 70} variant="left">
                   <SpotlightCard className="card-glow glass h-full">
                     {/* padding lives on the glare layer so the sweep spans the whole card */}
                     <GlareHover className="h-full rounded-2xl p-6">
@@ -128,7 +134,7 @@ export default function ContactPage() {
             </div>
 
             {/* Right: enquiry form */}
-            <Reveal as="div" delay={120} className="order-1 lg:order-2">
+            <Reveal as="div" delay={120} variant="right" className="order-1 lg:order-2">
               <ContactForm />
             </Reveal>
           </div>
@@ -138,14 +144,16 @@ export default function ContactPage() {
         <section className="mx-auto max-w-7xl px-6 py-16">
           <Reveal className="mx-auto max-w-2xl text-center">
             <SectionKicker>What happens next</SectionKicker>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              No black holes, no silence
-            </h2>
+            <MaskedHeading
+              text="No black holes, no silence"
+              accent="no silence"
+              className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            />
           </Reveal>
 
           <ol className="mt-14 grid gap-6 md:grid-cols-3">
             {NEXT_STEPS.map((s, i) => (
-              <Reveal as="li" key={s.step} delay={i * 80}>
+              <Reveal as="li" key={s.step} delay={i * 80} variant="blur">
                 <div className="glass h-full rounded-2xl p-7">
                   <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-violet-500/25 to-cyan-400/20 font-display text-sm font-bold text-white ring-1 ring-white/15">
                     {s.step}
@@ -162,9 +170,11 @@ export default function ContactPage() {
         <section className="mx-auto max-w-3xl px-6 py-16">
           <Reveal className="text-center">
             <SectionKicker>Before you write</SectionKicker>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Questions we get a lot
-            </h2>
+            <MaskedHeading
+              text="Questions we get a lot"
+              accent="a lot"
+              className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            />
           </Reveal>
 
           <div className="mt-12 flex flex-col gap-3">

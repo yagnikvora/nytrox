@@ -13,12 +13,18 @@ import SectionKicker from "./components/SectionKicker";
 import StatsBand from "./components/StatsBand";
 import TestimonialRail from "./components/TestimonialRail";
 import SplitText from "./components/SplitText";
-import Magnet from "./components/Magnet";
 import LogoLoop from "./components/LogoLoop";
 import CtaBand from "./components/CtaBand";
 import Footer from "./components/Footer";
+import GradientText from "./components/GradientText";
+import HorizontalShowcase from "./components/HorizontalShowcase";
+import MaskedHeading from "./components/MaskedHeading";
+import Parallax from "./components/Parallax";
+import ProcessTimeline from "./components/ProcessTimeline";
+import ScrollReveal from "./components/ScrollReveal";
 import { SERVICES, HOME_SERVICE_COUNT } from "./data/services";
 import { STACK } from "./data/stack";
+import { PROJECTS } from "./data/projects";
 
 /* ---------------------------------------------------------------------------
    Content
@@ -43,10 +49,12 @@ export default function Home() {
 
       <Navbar />
 
-      {/* Normal, native document scroll. pt clears the fixed navbar. */}
+      {/* Normal, native document scroll (eased by SmoothScroll on desktop).
+          pt clears the fixed navbar. */}
       <main className="pt-20">
         <Hero />
         <Services />
+        <HorizontalShowcase projects={PROJECTS} />
         <Stats />
         <Stack />
         <Process />
@@ -109,17 +117,18 @@ function Hero() {
           {/* CTAs */}
           <Reveal delay={240}>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Magnet className="w-full sm:w-auto">
-                <Link
-                  href="/contact"
-                  className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-500 via-indigo-500 to-cyan-400 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_0_44px_-10px_rgba(139,92,246,0.95)] transition-transform hover:scale-[1.03] sm:w-auto"
-                >
-                  Book a Consultation
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover:translate-x-0.5" aria-hidden>
-                    <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </Link>
-              </Magnet>
+              {/* Plain hover: a small lift and a warmer glow. No cursor-follow
+                  — that pulled the button out of the row while you were still
+                  reading the copy beside it. */}
+              <Link
+                href="/contact"
+                className="btn-gradient group inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold shadow-[0_0_44px_-10px_rgba(178,86,255,0.95)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_54px_-8px_rgba(255,159,252,0.9)] sm:w-auto"
+              >
+                Book a Consultation
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover:translate-x-0.5" aria-hidden>
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
               <StarBorder
                 as={Link}
                 href="/services"
@@ -127,7 +136,7 @@ function Hero() {
                 speed="5s"
                 className="text-sm font-semibold"
               >
-                Explore our Services
+                <GradientText inline>Explore our Services</GradientText>
               </StarBorder>
             </div>
           </Reveal>
@@ -143,9 +152,13 @@ function Hero() {
           </Reveal>
         </div>
 
-        {/* Hero video — sits below the copy on small screens, beside it on large */}
-        <Reveal delay={200} className="relative">
-          <HeroVideo />
+        {/* Hero video — sits below the copy on small screens, beside it on
+            large. The parallax lets it drift a little slower than the page, so
+            the hero peels apart as you scroll out of it. */}
+        <Reveal delay={200} variant="scale" duration={900} className="relative">
+          <Parallax speed={38} zoom={1.03}>
+            <HeroVideo />
+          </Parallax>
         </Reveal>
       </div>
     </section>
@@ -158,18 +171,20 @@ function Services() {
     <section id="services" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
       <Reveal className="mx-auto max-w-2xl text-center">
         <SectionKicker>What we do</SectionKicker>
-        <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-          Services that go the distance
-        </h2>
-        <p className="mt-4 text-ink-muted">
+        <MaskedHeading
+          text="Services that go the distance"
+          accent="the distance"
+          className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+        />
+        <ScrollReveal className="mt-4 text-ink-muted">
           A full-stack studio covering every stage of your product journey — so you
           launch with one team, not five.
-        </p>
+        </ScrollReveal>
       </Reveal>
 
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {SERVICES.slice(0, HOME_SERVICE_COUNT).map((s, i) => (
-          <Reveal as="div" key={s.slug} delay={i * 70}>
+          <Reveal as="div" key={s.slug} delay={i * 70} variant="blur">
             <Link href={`/services#${s.slug}`} className="block h-full">
               <PixelCard
                 variant="cosmic"
@@ -211,7 +226,7 @@ function Services() {
           href="/services"
           className="glass group inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
         >
-          View more services
+          <GradientText inline>View more services</GradientText>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover:translate-x-0.5" aria-hidden>
             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -225,7 +240,9 @@ function Services() {
 function Stats() {
   return (
     <section id="stats" className="mx-auto max-w-7xl px-6 py-10">
-      <StatsBand />
+      <Parallax speed={26}>
+        <StatsBand />
+      </Parallax>
     </section>
   );
 }
@@ -240,7 +257,10 @@ function Stack() {
         </p>
       </Reveal>
       <Reveal className="mt-7">
-        <LogoLoop items={STACK} speed={46} />
+        {/* the rail slides against the page as well as running on its own */}
+        <Parallax speed={-18}>
+          <LogoLoop items={STACK} speed={46} />
+        </Parallax>
       </Reveal>
     </section>
   );
@@ -252,34 +272,20 @@ function Process() {
     <section id="process" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
       <Reveal className="mx-auto max-w-2xl text-center">
         <SectionKicker>Inside our process</SectionKicker>
-        <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-          From idea to orbit
-        </h2>
-        <p className="mt-4 text-ink-muted">
+        <MaskedHeading
+          text="From idea to orbit"
+          accent="to orbit"
+          className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+        />
+        <ScrollReveal className="mt-4 text-ink-muted">
           Every product follows a proven lifecycle — transparent at each stage, so
           you always know exactly where your mission stands.
-        </p>
+        </ScrollReveal>
       </Reveal>
 
-      <div className="relative mt-16">
-        {/* connecting line */}
-        <div className="absolute left-0 right-0 top-7 hidden h-px bg-gradient-to-r from-transparent via-white/15 to-transparent lg:block" />
-        <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-6 lg:gap-3">
-          {PROCESS.map((p, i) => (
-            <Reveal as="li" key={p.step} delay={i * 70} className="relative">
-              <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-violet-500/25 to-cyan-400/20 font-display text-sm font-bold text-white ring-1 ring-white/15 lg:mx-0">
-                {p.step}
-              </div>
-              <h3 className="mt-4 text-center font-display text-base font-semibold text-white lg:text-left">
-                {p.title}
-              </h3>
-              <p className="mt-1.5 text-center text-sm leading-6 text-ink-muted lg:text-left">
-                {p.desc}
-              </p>
-            </Reveal>
-          ))}
-        </ol>
-      </div>
+      {/* The rail draws itself as the section scrolls; each stage lights up as
+          the line reaches it. */}
+      <ProcessTimeline steps={PROCESS} />
     </section>
   );
 }
@@ -291,9 +297,11 @@ function Testimonials() {
       <div className="mx-auto max-w-7xl px-6">
         <Reveal className="mx-auto max-w-2xl text-center">
           <SectionKicker>Signals from clients</SectionKicker>
-          <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Loved across the system
-          </h2>
+          <MaskedHeading
+            text="Loved across the system"
+            accent="across the system"
+            className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+          />
         </Reveal>
       </div>
 

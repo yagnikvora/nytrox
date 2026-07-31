@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import Magnet from "./Magnet";
+import GradientText from "./GradientText";
 import { SERVICES } from "../data/services";
 import { BUDGETS, CONTACT_EMAIL } from "../data/contact";
 
@@ -112,7 +112,7 @@ export default function ContactForm() {
           onClick={() => setSent(false)}
           className="glass mt-8 inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
         >
-          Write another message
+          <GradientText inline>Write another message</GradientText>
         </button>
       </div>
     );
@@ -217,30 +217,29 @@ export default function ContactForm() {
         <p className="text-xs leading-5 text-ink-muted">
           We&apos;ll only use these details to reply to your enquiry.
         </p>
-        <Magnet>
-          <button
-            type="submit"
-            className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-500 via-indigo-500 to-cyan-400 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_0_44px_-10px_rgba(139,92,246,0.95)] transition-transform hover:scale-[1.03]"
+        {/* same plain hover as the other primary buttons — lift + glow */}
+        <button
+          type="submit"
+          className="btn-gradient group inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold shadow-[0_0_44px_-10px_rgba(178,86,255,0.95)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_54px_-8px_rgba(255,159,252,0.9)]"
+        >
+          Send enquiry
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            className="transition-transform group-hover:translate-x-0.5"
+            aria-hidden
           >
-            Send enquiry
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="transition-transform group-hover:translate-x-0.5"
-              aria-hidden
-            >
-              <path
-                d="M5 12h14M13 6l6 6-6 6"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-        </Magnet>
+            <path
+              d="M5 12h14M13 6l6 6-6 6"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
       </div>
     </form>
   );

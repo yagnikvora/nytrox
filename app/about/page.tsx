@@ -12,6 +12,9 @@ import OrbitVisual from "../components/OrbitVisual";
 import StatsBand from "../components/StatsBand";
 import CtaBand from "../components/CtaBand";
 import Footer from "../components/Footer";
+import MaskedHeading from "../components/MaskedHeading";
+import MilestoneTimeline from "../components/MilestoneTimeline";
+import Parallax from "../components/Parallax";
 import { DISCIPLINES, MILESTONES, STORY, STORY_FACTS, VALUES } from "../data/about";
 
 export const metadata: Metadata = {
@@ -33,10 +36,13 @@ export default function AboutPage() {
         <section className="mx-auto max-w-7xl px-6 py-16">
           <Reveal className="mx-auto max-w-3xl text-center">
             <SectionKicker>Who we are</SectionKicker>
-            <h1 className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-6xl">
-              A small crew with a{" "}
-              <span className="text-gradient whitespace-nowrap">wide orbit</span>
-            </h1>
+            <MaskedHeading
+              as="h1"
+              text="A small crew with a wide orbit"
+              accent="wide orbit"
+              stagger={60}
+              className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-6xl"
+            />
             <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
               We&apos;re the software studio behind products you&apos;ve probably
               used without knowing our name — and we like it that way. The work
@@ -49,11 +55,11 @@ export default function AboutPage() {
         <section className="mx-auto max-w-7xl px-6 pb-8">
           <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
             <div>
-              <Reveal>
-                <h2 className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Why the studio exists
-                </h2>
-              </Reveal>
+              <MaskedHeading
+                text="Why the studio exists"
+                accent="exists"
+                className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+              />
 
               {/* words sharpen into focus as the paragraph rises up the viewport */}
               {STORY.map((para, i) => (
@@ -78,33 +84,40 @@ export default function AboutPage() {
               </Reveal>
             </div>
 
-            <Reveal delay={160}>
-              <OrbitVisual chips={["🚀 100+ launches", "🛰 5+ years in orbit"]} />
+            <Reveal delay={160} variant="scale" duration={900}>
+              {/* drifts against the story column as the section scrolls */}
+              <Parallax speed={44}>
+                <OrbitVisual chips={["🚀 100+ launches", "🛰 5+ years in orbit"]} />
+              </Parallax>
             </Reveal>
           </div>
         </section>
 
         {/* Stats */}
         <section className="mx-auto max-w-7xl px-6 py-12">
-          <StatsBand />
+          <Parallax speed={26}>
+            <StatsBand />
+          </Parallax>
         </section>
 
         {/* Values */}
         <section className="mx-auto max-w-7xl px-6 py-16">
           <Reveal className="mx-auto max-w-2xl text-center">
             <SectionKicker>What we stand for</SectionKicker>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Six rules we don&apos;t bend
-            </h2>
-            <p className="mt-4 text-ink-muted">
+            <MaskedHeading
+              text="Six rules we don’t bend"
+              accent="don’t bend"
+              className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            />
+            <ScrollReveal className="mt-4 text-ink-muted">
               Every studio says it cares about quality. These are the specific
               habits that make ours hold up when a deadline gets tight.
-            </p>
+            </ScrollReveal>
           </Reveal>
 
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {VALUES.map((v, i) => (
-              <Reveal as="div" key={v.title} delay={i * 70} className="h-full">
+              <Reveal as="div" key={v.title} delay={i * 70} variant="blur" className="h-full">
                 <SpotlightCard className="card-glow glass h-full">
                   {/* padding lives on the glare layer so the sweep spans the whole card */}
                   <GlareHover className="h-full rounded-2xl p-6">
@@ -132,18 +145,27 @@ export default function AboutPage() {
         <section className="mx-auto max-w-7xl px-6 py-16">
           <Reveal className="mx-auto max-w-2xl text-center">
             <SectionKicker>The crew</SectionKicker>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Four disciplines, one mission
-            </h2>
-            <p className="mt-4 text-ink-muted">
+            <MaskedHeading
+              text="Four disciplines, one mission"
+              accent="one mission"
+              className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            />
+            <ScrollReveal className="mt-4 text-ink-muted">
               You get the whole crew on a project — not a salesperson up front and
               a stranger doing the work.
-            </p>
+            </ScrollReveal>
           </Reveal>
 
           <div className="mt-14 grid gap-5 md:grid-cols-2">
             {DISCIPLINES.map((d, i) => (
-              <Reveal as="div" key={d.name} delay={(i % 2) * 80} className="h-full">
+              <Reveal
+                as="div"
+                key={d.name}
+                delay={(i % 2) * 80}
+                // cards meet in the middle: odd column slides in from the right
+                variant={i % 2 === 0 ? "left" : "right"}
+                className="h-full"
+              >
                 <div className="card-glow glass h-full rounded-2xl p-7">
                   <div className="flex items-baseline gap-3">
                     <span className="font-display text-sm font-bold text-violet-300">
@@ -185,42 +207,15 @@ export default function AboutPage() {
         <section className="mx-auto max-w-4xl px-6 py-16">
           <Reveal className="text-center">
             <SectionKicker>The flight log</SectionKicker>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              How we got here
-            </h2>
+            <MaskedHeading
+              text="How we got here"
+              accent="got here"
+              className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            />
           </Reveal>
 
-          <ol className="relative mt-14">
-            {/* spine */}
-            <div
-              className="absolute left-[7px] top-2 bottom-2 w-px bg-gradient-to-b from-violet-400/60 via-white/15 to-transparent sm:left-[calc(6rem+7px)]"
-              aria-hidden
-            />
-            {MILESTONES.map((m, i) => (
-              <Reveal as="li" key={m.year} delay={i * 70} className="relative pb-10 last:pb-0">
-                <div className="flex gap-6 sm:gap-8">
-                  {/* year rail (desktop) */}
-                  <span className="hidden w-24 shrink-0 pt-px text-right font-display text-sm font-bold text-white sm:block">
-                    {m.year}
-                  </span>
-                  {/* node */}
-                  <span
-                    className="relative mt-1.5 h-[15px] w-[15px] shrink-0 rounded-full bg-gradient-to-br from-violet-400 to-cyan-300 shadow-[0_0_16px_3px_rgba(139,92,246,0.65)] ring-4 ring-[#05050f]"
-                    aria-hidden
-                  />
-                  <div className="min-w-0 pb-1">
-                    <span className="font-display text-sm font-bold text-violet-300 sm:hidden">
-                      {m.year}
-                    </span>
-                    <h3 className="mt-1 font-display text-lg font-semibold text-white sm:mt-0">
-                      {m.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-7 text-ink-muted">{m.desc}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </ol>
+          {/* the spine draws itself downward; each node lights as it's reached */}
+          <MilestoneTimeline items={MILESTONES} />
         </section>
 
         {/* Back to home */}

@@ -95,11 +95,21 @@ html {
   scroll-behavior: smooth;
 }
 
+/* SmoothScroll drives window.scrollTo frame by frame; native smoothing on top
+   of that would fight the lerp, so it turns itself off while mounted. */
+html[data-smooth-scroll="on"] {
+  scroll-behavior: auto;
+}
+
 body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
-  overflow-x: hidden;
+  /* `clip`, not `hidden`: `overflow-x: hidden` makes the body a scroll
+     container, which stops `position: sticky` working anywhere inside it — and
+     the pinned work rail depends on it. `clip` contains the same overflow
+     without creating a scrollport. */
+  overflow-x: clip;
 }
 
 /* Hide the page scrollbar everywhere (scrolling still works via wheel/touch/
@@ -119,11 +129,69 @@ body::-webkit-scrollbar {
 /* ---------------------------------------------------------------------------
    Helpers
 --------------------------------------------------------------------------- */
+/* Inline gradient text — the same three stops and cadence as the GradientText
+   component (see GRADIENT_STOPS there), driven by CSS instead of a per-word
+   React component so it can be dropped on a run of text inside a heading:
+   MaskedHeading's accent words already sit in transformed mask sleeves, and
+   nesting an animated element in each one buys nothing.
+
+   The gradient is three times the width of the text and the position sweeps
+   across it and back (`alternate`), which is what makes the colours travel. */
 .text-gradient {
-  background-image: linear-gradient(100deg, #c4b5fd 0%, #a78bfa 30%, #67e8f9 70%, #7dd3fc 100%);
+  background-image: linear-gradient(
+    to right,
+    #5227ff,
+    #ff9ffc,
+    #b497cf,
+    #5227ff
+  );
+  background-size: 300% 100%;
+  background-position: 0% 50%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  animation: gradient-sweep 8s ease-in-out infinite alternate;
+}
+
+/* Shared by the text and the button fills, so every gradient on the page
+   travels on the same 8s beat. */
+@keyframes gradient-sweep {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+/* Filled buttons — the same three stops as .text-gradient and the GradientText
+   component, sweeping on the same 8s beat, so every button on the site is the
+   same live gradient.
+
+   The stop order is what makes an animated fill readable. A plain
+   violet → pink → lilac ramp slides the pale pink under the label, where dark
+   ink reads at 12:1 but the deep violet only manages 2.6:1. So the ramp is laid
+   out symmetrically — pale at both ends, the deep violet as a narrow crest in
+   the middle — and the window (background-size) is wide enough that the crest
+   crosses quickly, at the fastest part of the ease. The white halo on the ink
+   carries legibility through that moment.
+
+   The label is near-black rather than white for the same reason: two of the
+   three stops are light, and white over them reads at ~1.7:1. */
+.btn-gradient {
+  background-image: linear-gradient(
+    100deg,
+    #ff9ffc 0%,
+    #b497cf 24%,
+    #5227ff 50%,
+    #b497cf 76%,
+    #ff9ffc 100%
+  );
+  background-size: 260% 100%;
+  background-position: 0% 50%;
+  color: #150a2e;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+  animation: gradient-sweep 8s ease-in-out infinite alternate;
 }
 
 .glass {
@@ -141,6 +209,21 @@ body::-webkit-scrollbar {
   border-color: rgba(139, 92, 246, 0.5);
   background: rgba(139, 92, 246, 0.06);
   box-shadow: 0 24px 60px -30px rgba(139, 92, 246, 0.65);
+}
+
+/* Route change: the incoming page eases up out of black. Opacity only — a
+   transform here would break every `position: fixed` child (navbar, cursor,
+   star canvas). */
+.route-fade {
+  animation: route-fade 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes route-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Orbit rings in the hero */
@@ -240,6 +323,7 @@ body::-webkit-scrollbar {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .route-fade { animation: none !important; }
   .deck-mouse-wheel,
   .animate-float,
   .animate-float-slow,
@@ -254,6 +338,9 @@ body::-webkit-scrollbar {
   .animate-star-movement-bottom,
   .animate-star-movement-top,
   .animate-marquee { animation: none !important; }
+  /* the gradients stay, they just stop travelling */
+  .text-gradient,
+  .btn-gradient { animation: none !important; }
   /* A stopped marquee would clip everything past the first screenful, so let
      the rail be scrolled through by hand instead. */
   .marquee-viewport { overflow-x: auto; }

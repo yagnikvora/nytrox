@@ -11,6 +11,8 @@ import ShinyText from "../components/ShinyText";
 import CountUp from "../components/CountUp";
 import CtaBand from "../components/CtaBand";
 import Footer from "../components/Footer";
+import MaskedHeading from "../components/MaskedHeading";
+import ScrollReveal from "../components/ScrollReveal";
 import { PROJECTS } from "../data/projects";
 
 export const metadata: Metadata = {
@@ -32,14 +34,18 @@ export default function ProjectsPage() {
         <section className="mx-auto max-w-7xl px-6 py-16">
           <Reveal className="mx-auto max-w-3xl text-center">
             <SectionKicker>Selected work</SectionKicker>
-            <h1 className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-6xl">
-              Products we put <span className="text-gradient">into orbit</span>
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
+            <MaskedHeading
+              as="h1"
+              text="Products we put into orbit"
+              accent="into orbit"
+              stagger={60}
+              className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-6xl"
+            />
+            <ScrollReveal className="mx-auto mt-6 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
               A cross-section of what we build — native apps, server-rendered
               platforms, and the design systems that hold them together. Each one
               shipped, measured, and handed over.
-            </p>
+            </ScrollReveal>
             <span className="glass mt-8 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-medium">
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_2px_rgba(34,211,238,0.8)]" />
               <ShinyText
@@ -56,7 +62,14 @@ export default function ProjectsPage() {
         <section className="mx-auto max-w-7xl px-6 pb-8">
           <div className="grid gap-5 md:grid-cols-2">
             {PROJECTS.map((p, i) => (
-              <Reveal as="div" key={p.slug} delay={(i % 2) * 80} className="h-full">
+              <Reveal
+                as="div"
+                key={p.slug}
+                delay={(i % 2) * 80}
+                // the two columns slide in toward each other
+                variant={i % 2 === 0 ? "left" : "right"}
+                className="h-full"
+              >
                 {/* wrapper carries the anchor target for /projects#slug links */}
                 <div id={p.slug} className="h-full scroll-mt-28">
                   <SpotlightCard className="card-glow glass h-full">
