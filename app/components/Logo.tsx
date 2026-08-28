@@ -1,36 +1,70 @@
-type LogoMarkProps = {
-  /** Tailwind sizing utilities for the tile (default 36px square). */
+/* Nytrox identity — the mark and the NYTROX wordmark are the supplied artwork
+   (public/Only-Logo.svg, public/Only-Name.svg) painted through a CSS mask, so
+   the shapes come from the source files while the colour comes from the site
+   palette instead of the artwork's gold. See `.brand-art` in globals.css: it
+   carries the same stops and the same 8s beat as `.text-gradient`, so the logo
+   travels with every other gradient on the page.
+
+   Both pieces are height-driven — pass a `h-*` utility and the width follows
+   from the source viewBox. Shared by the navbar and the footer so the identity
+   stays consistent. */
+
+/** Aspect ratios lifted from the source files' viewBox. */
+const MARK_RATIO = "3167.88 / 2622.44";
+const NAME_RATIO = "5066.09 / 822.2";
+
+type BrandProps = {
+  /** Tailwind height utility; the width follows the artwork (default 36px tall). */
   className?: string;
 };
 
-/* Nytrox mark — an "N" monogram set in the brand's cosmic gradient, finished
-   with a glossy planet-like highlight and a small orbiting spark. Shared by
-   the navbar and footer so the identity stays consistent. */
-export default function LogoMark({ className = "h-9 w-9" }: LogoMarkProps) {
+export default function LogoMark({ className = "h-9" }: BrandProps) {
+  /* The glow lives on the wrapper, not on the shape: masking is applied after
+     filters, so a drop-shadow on the masked element itself gets masked away
+     with it. From out here the filter sees the finished glyph. */
   return (
     <span
-      className={`relative grid ${className} shrink-0 place-items-center overflow-hidden rounded-xl bg-gradient-to-br from-violet-500 via-indigo-500 to-cyan-400 shadow-[0_0_22px_-4px_rgba(139,92,246,0.9)]`}
+      className={`inline-block shrink-0 drop-shadow-[0_0_16px_rgba(139,92,246,0.55)] ${className}`}
+      aria-hidden
     >
-      {/* glossy highlight, like light catching a planet */}
-      <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_24%,rgba(255,255,255,0.5),transparent_58%)]" />
+      <span
+        className="brand-art brand-mark block h-full"
+        style={{ aspectRatio: MARK_RATIO }}
+      />
+    </span>
+  );
+}
 
-      <svg viewBox="0 0 24 24" fill="none" className="relative h-[58%] w-[58%]" aria-hidden>
-        {/* N monogram */}
-        <path
-          d="M6.5 17.5V6.5L17.5 17.5V6.5"
-          stroke="white"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        {/* orbiting spark */}
-        <g transform="translate(19.6 4.3) scale(0.2)">
-          <path
-            d="M0 -10C0.6 -3 3 -0.6 10 0C3 0.6 0.6 3 0 10C-0.6 3 -3 0.6 -10 0C-3 -0.6 -0.6 -3 0 -10Z"
-            fill="white"
-          />
-        </g>
-      </svg>
+export function LogoWordmark({ className = "h-[17px]" }: BrandProps) {
+  return (
+    <span
+      className={`brand-art brand-name inline-block ${className}`}
+      style={{ aspectRatio: NAME_RATIO }}
+      aria-hidden
+    />
+  );
+}
+
+type LockupProps = {
+  className?: string;
+  markClassName?: string;
+  nameClassName?: string;
+};
+
+/** Mark + wordmark, sized to sit together on one line. */
+export function LogoLockup({
+  className = "",
+  markClassName,
+  nameClassName,
+}: LockupProps) {
+  return (
+    <span
+      role="img"
+      aria-label="Nytrox"
+      className={`inline-flex items-center gap-2.5 ${className}`}
+    >
+      <LogoMark className={markClassName} />
+      <LogoWordmark className={nameClassName} />
     </span>
   );
 }

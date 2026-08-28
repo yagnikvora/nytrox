@@ -194,6 +194,70 @@ body::-webkit-scrollbar {
   animation: gradient-sweep 8s ease-in-out infinite alternate;
 }
 
+/* Brand lockup — the mark and the wordmark are the supplied artwork used as a
+   mask, so the shapes come from the SVGs and the colour comes from here. Same
+   three stops and the same 8s beat as .text-gradient (and GRADIENT_STOPS in
+   GradientText.tsx), so the logo reads as part of the same system as the accent
+   words next to it. */
+.brand-art {
+  background-image: linear-gradient(
+    to right,
+    #5227ff,
+    #ff9ffc,
+    #b497cf,
+    #5227ff
+  );
+  background-size: 300% 100%;
+  background-position: 0% 50%;
+  animation: gradient-sweep 8s ease-in-out infinite alternate;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+/* The mark is a compact silhouette rather than a run of text, so the third of
+   the ramp it shows can land wholly inside the deep violet and go dim against
+   the black. It takes the symmetric button ramp instead — pale at both ends,
+   the violet a narrow crest — so a bright stop is always inside the glyph. Same
+   stops as .btn-gradient and app/icon.svg, on the same 8s beat. */
+.brand-mark {
+  background-image: linear-gradient(
+    115deg,
+    #ff9ffc 0%,
+    #b497cf 24%,
+    #5227ff 50%,
+    #b497cf 76%,
+    #ff9ffc 100%
+  );
+  background-size: 260% 100%;
+  -webkit-mask-image: url("/Only-Logo.svg");
+  mask-image: url("/Only-Logo.svg");
+}
+.brand-name {
+  -webkit-mask-image: url("/Only-Name.svg");
+  mask-image: url("/Only-Name.svg");
+}
+
+/* Without masking the gradient would paint a bare rectangle, so fall back to
+   the artwork's own colours rather than a violet block. */
+@supports not ((-webkit-mask-image: url("/Only-Logo.svg")) or (mask-image: url("/Only-Logo.svg"))) {
+  .brand-art {
+    background-image: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: none;
+  }
+  .brand-mark {
+    background-image: url("/Only-Logo.svg");
+  }
+  .brand-name {
+    background-image: url("/Only-Name.svg");
+  }
+}
+
 .glass {
   background: rgba(255, 255, 255, 0.035);
   border: 1px solid var(--line);
@@ -340,7 +404,8 @@ body::-webkit-scrollbar {
   .animate-marquee { animation: none !important; }
   /* the gradients stay, they just stop travelling */
   .text-gradient,
-  .btn-gradient { animation: none !important; }
+  .btn-gradient,
+  .brand-art { animation: none !important; }
   /* A stopped marquee would clip everything past the first screenful, so let
      the rail be scrolled through by hand instead. */
   .marquee-viewport { overflow-x: auto; }

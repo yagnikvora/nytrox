@@ -1,6 +1,5 @@
 import Link from "next/link";
-import GradientText from "./GradientText";
-import LogoMark from "./Logo";
+import { LogoLockup } from "./Logo";
 import { SERVICES } from "../data/services";
 import { PROJECTS } from "../data/projects";
 
@@ -43,11 +42,8 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-14">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <Link href="/" className="flex items-center gap-2.5">
-              <LogoMark />
-              <GradientText inline className="font-display text-lg font-bold">
-                Nytrox
-              </GradientText>
+            <Link href="/" className="flex items-center">
+              <LogoLockup markClassName="h-9" nameClassName="h-[17px]" />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-6 text-ink-muted">
               A software studio building mobile apps, web platforms, and digital

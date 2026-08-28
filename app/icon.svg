@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Nytrox</title>
+  <defs>
+    <!-- Same symmetric ramp as .btn-gradient in globals.css: pale at both ends
+         with the deep violet as a narrow crest, so the mark stays legible at
+         16px against the dark tile. -->
+    <linearGradient id="nytrox-mark" gradientUnits="userSpaceOnUse"
+      x1="0" y1="0" x2="3167.88" y2="2622.44">
+      <stop offset="0" stop-color="#FF9FFC"/>
+      <stop offset="0.24" stop-color="#B497CF"/>
+      <stop offset="0.5" stop-color="#5227FF"/>
+      <stop offset="0.76" stop-color="#B497CF"/>
+      <stop offset="1" stop-color="#FF9FFC"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#05050f"/>
+  <g transform="translate(8 12.13) scale(0.0151521)" fill="url(#nytrox-mark)">
+    <path d="M105.4 11.43l2643.98 1489.72c394.46,222.25 535.36,726.84 313.1,1121.29l0 0 -2643.98 -1489.72c-394.46,-222.25 -535.36,-726.84 -313.1,-1121.29l0 0z"/>
+    <path d="M86.72 1439.12l458.98 258.61c324.52,182.84 440.42,597.96 257.58,922.47l0 0 -458.99 -258.61c-324.51,-182.84 -440.42,-597.95 -257.57,-922.47l0 0z"/>
+    <path d="M2364.59 0l458.98 258.61c324.51,182.85 440.42,597.96 257.57,922.47l0 0 -458.98 -258.61c-324.51,-182.85 -440.42,-597.95 -257.57,-922.47l0 0z"/>
+  </g>
+</svg>

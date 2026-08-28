@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import LogoMark from "./Logo";
+import { LogoLockup } from "./Logo";
 import GooeyNav from "./GooeyNav";
-import GradientText from "./GradientText";
 
 /* Root-relative hrefs so the same bar works from any route, not just "/". */
 const NAV = [
@@ -49,14 +48,8 @@ export default function Navbar() {
           }`}
         >
           {/* Logo */}
-          <Link href="/#home" className="flex items-center gap-2.5">
-            <LogoMark />
-            <GradientText
-              inline
-              className="font-display text-lg font-bold tracking-tight"
-            >
-              Nytrox
-            </GradientText>
+          <Link href="/#home" className="flex items-center">
+            <LogoLockup markClassName="h-8" nameClassName="h-[15px]" />
           </Link>
 
           {/* Desktop menu — gooey nav */}
