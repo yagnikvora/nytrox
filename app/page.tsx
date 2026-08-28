@@ -185,14 +185,19 @@ function Services() {
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {SERVICES.slice(0, HOME_SERVICE_COUNT).map((s, i) => (
           <Reveal as="div" key={s.slug} delay={i * 70} variant="blur">
-            <Link href={`/services#${s.slug}`} className="block h-full">
+            <Link
+              href={`/services#${s.slug}`}
+              data-accent={s.category}
+              className="svc block h-full"
+            >
               <PixelCard
                 variant="cosmic"
                 className="card-glow glass group h-full rounded-2xl p-6"
               >
                 {/* Icon tile picks up the card's hover: lifts with it, warms from
-                    a faint wash to a lit violet/cyan, and throws a soft glow. */}
-                <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-violet-500/20 to-cyan-400/20 text-violet-200 shadow-[0_0_0_0_rgba(139,92,246,0)] ring-1 ring-white/10 transition-[translate,scale,box-shadow,color,--tw-gradient-from,--tw-gradient-to] duration-[350ms] ease-out group-hover:-translate-y-0.5 group-hover:scale-[1.08] group-hover:from-violet-500/45 group-hover:to-cyan-400/45 group-hover:text-white group-hover:shadow-[0_10px_28px_-10px_rgba(139,92,246,0.9)] group-hover:ring-violet-400/45">
+                    a faint wash to its lit category accent, and throws a soft
+                    glow. See .svc-icon in globals.css. */}
+                <div className="svc-icon grid h-12 w-12 place-items-center rounded-xl">
                   <svg
                     width="24"
                     height="24"
@@ -208,7 +213,7 @@ function Services() {
                 <p className="mt-2 text-sm leading-6 text-ink-muted transition-colors duration-300 group-hover:text-ink">
                   {s.desc}
                 </p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-violet-300 opacity-0 transition-opacity group-hover:opacity-100">
+                <span className="svc-more mt-5 inline-flex items-center gap-1.5 text-sm font-medium opacity-0 transition-opacity group-hover:opacity-100">
                   Learn more
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
                     <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -226,7 +231,7 @@ function Services() {
           href="/services"
           className="glass group inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
         >
-          <GradientText inline>View more services</GradientText>
+          <GradientText inline>View all {SERVICES.length} services</GradientText>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover:translate-x-0.5" aria-hidden>
             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
           </svg>

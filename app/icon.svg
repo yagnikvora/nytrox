@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <title>Nytrox</title>
   <defs>
-    <!-- Same symmetric ramp as .btn-gradient in globals.css: pale at both ends
+    <!-- Same symmetric ramp as .brand-mark in globals.css: pale at both ends
          with the deep violet as a narrow crest, so the mark stays legible at
          16px against the dark tile. -->
     <linearGradient id="nytrox-mark" gradientUnits="userSpaceOnUse"

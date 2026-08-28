@@ -23,10 +23,14 @@ export default function Footer() {
     },
     {
       title: "Services",
-      links: SERVICES.slice(0, 4).map((s) => ({
-        label: s.title,
-        href: `/services#${s.slug}`,
-      })),
+      // a sample, then the door to the other eight
+      links: [
+        ...SERVICES.slice(0, 4).map((s) => ({
+          label: s.title,
+          href: `/services#${s.slug}`,
+        })),
+        { label: "All services", href: "/services" },
+      ],
     },
     {
       title: "Projects",

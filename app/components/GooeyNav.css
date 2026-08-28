@@ -89,8 +89,12 @@
   z-index: -1;
 }
 
+/* The active label sits on the white metaball, so it has to stay dark — but a
+   deep violet-black reads softer than pure #000 against the rest of the bar,
+   and still clears 17:1. Kept in step with .effect.text.active below, which is
+   the same label duplicated inside the goo filter. */
 .gooey-nav-container nav ul li.active {
-  color: black;
+  color: #150a2e;
   text-shadow: none;
 }
 
@@ -118,7 +122,7 @@
 }
 
 .gooey-nav-container .effect.text.active {
-  color: black;
+  color: #150a2e;
 }
 
 .gooey-nav-container .effect.filter {

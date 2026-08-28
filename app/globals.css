@@ -164,33 +164,34 @@ body::-webkit-scrollbar {
   }
 }
 
-/* Filled buttons — the same three stops as .text-gradient and the GradientText
-   component, sweeping on the same 8s beat, so every button on the site is the
-   same live gradient.
+/* Filled buttons — a deeper cut of the same violet → fuchsia family as
+   .text-gradient, sweeping on the same 8s beat, so every button on the site is
+   the same live gradient.
 
-   The stop order is what makes an animated fill readable. A plain
-   violet → pink → lilac ramp slides the pale pink under the label, where dark
-   ink reads at 12:1 but the deep violet only manages 2.6:1. So the ramp is laid
-   out symmetrically — pale at both ends, the deep violet as a narrow crest in
-   the middle — and the window (background-size) is wide enough that the crest
-   crosses quickly, at the fastest part of the ease. The white halo on the ink
-   carries legibility through that moment.
+   What makes an animated fill readable is that the label has to survive every
+   frame of the sweep, not just the flattering ones. So the ramp is laid out
+   symmetrically — the deep violet at both ends, a brighter fuchsia as a narrow
+   crest in the middle — and every stop is dark enough to carry white ink: the
+   crest is the lightest point the label ever sits on at 4.8:1, and the ends
+   reach 6.8:1. The label holds AA contrast through the whole cycle instead of
+   dipping under it halfway.
 
-   The label is near-black rather than white for the same reason: two of the
-   three stops are light, and white over them reads at ~1.7:1. */
+   Nothing here sets box-shadow: these rules are unlayered and would outrank the
+   per-button `shadow-[...]` utilities that give each button its glow. */
 .btn-gradient {
   background-image: linear-gradient(
     100deg,
-    #ff9ffc 0%,
-    #b497cf 24%,
-    #5227ff 50%,
-    #b497cf 76%,
-    #ff9ffc 100%
+    #5227ff 0%,
+    #7b2ff7 26%,
+    #ba2bd6 50%,
+    #7b2ff7 74%,
+    #5227ff 100%
   );
   background-size: 260% 100%;
   background-position: 0% 50%;
-  color: #150a2e;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  /* just enough weight to keep the white crisp as the crest passes under it */
+  text-shadow: 0 1px 2px rgba(17, 3, 40, 0.45);
   animation: gradient-sweep 8s ease-in-out infinite alternate;
 }
 
@@ -219,9 +220,9 @@ body::-webkit-scrollbar {
 }
 /* The mark is a compact silhouette rather than a run of text, so the third of
    the ramp it shows can land wholly inside the deep violet and go dim against
-   the black. It takes the symmetric button ramp instead — pale at both ends,
-   the violet a narrow crest — so a bright stop is always inside the glyph. Same
-   stops as .btn-gradient and app/icon.svg, on the same 8s beat. */
+   the black. It takes a symmetric ramp instead — pale at both ends, the violet
+   a narrow crest — so a bright stop is always inside the glyph. Same stops as
+   app/icon.svg, on the same 8s beat. */
 .brand-mark {
   background-image: linear-gradient(
     115deg,
@@ -273,6 +274,124 @@ body::-webkit-scrollbar {
   border-color: rgba(139, 92, 246, 0.5);
   background: rgba(139, 92, 246, 0.06);
   box-shadow: 0 24px 60px -30px rgba(139, 92, 246, 0.65);
+}
+
+/* ---------------------------------------------------------------------------
+   Service cards
+--------------------------------------------------------------------------- */
+/* Each service category carries its own accent, so twelve cards read as three
+   families rather than one long repetition. The hue is declared once on the
+   card's wrapper and inherits from there — hairline, icon tile, chips, and the
+   hover glow all draw from --accent, so nothing downstream has to know which
+   colour it is. Hover is keyed off the wrapper (.svc) rather than the card, so
+   the same rules drive both the home tiles and the /services detail cards. */
+.svc {
+  --accent: 139 92 246; /* design — violet, and the fallback */
+}
+.svc[data-accent="build"] {
+  --accent: 34 211 238; /* cyan */
+}
+.svc[data-accent="growth"] {
+  --accent: 236 72 153; /* pink */
+}
+
+/* card-glow's hover is hardcoded violet; inside an accented card it follows the
+   category instead. */
+.svc .card-glow:hover {
+  border-color: rgb(var(--accent) / 0.5);
+  background: rgb(var(--accent) / 0.06);
+  box-shadow: 0 24px 60px -30px rgb(var(--accent) / 0.65);
+}
+
+/* The /services detail card. ::before is the element's first child, so the
+   corner bloom paints behind the content; ::after is the last, so the hairline
+   sits on top of the card's own edge. The home tiles use PixelCard, whose
+   ::after is already spoken for by its scrim — they take the icon and hover
+   treatment only. */
+.svc-card::before {
+  content: "";
+  position: absolute;
+  top: -35%;
+  left: -12%;
+  width: 55%;
+  height: 75%;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgb(var(--accent) / 0.35), transparent 70%);
+  filter: blur(30px);
+  opacity: 0;
+  transition: opacity 450ms ease;
+  pointer-events: none;
+}
+.svc:hover .svc-card::before {
+  opacity: 1;
+}
+
+/* accent hairline along the top edge, brightest in the middle */
+.svc-card::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(var(--accent) / 0.8),
+    transparent
+  );
+  opacity: 0.4;
+  transition: opacity 350ms ease;
+  pointer-events: none;
+}
+.svc:hover .svc-card::after {
+  opacity: 1;
+}
+
+/* Icon tile — an accent wash that lifts and lights up with the card. */
+.svc-icon {
+  color: color-mix(in srgb, rgb(var(--accent)) 42%, white);
+  background: linear-gradient(
+    145deg,
+    rgb(var(--accent) / 0.3),
+    rgb(var(--accent) / 0.06)
+  );
+  box-shadow: inset 0 0 0 1px rgb(var(--accent) / 0.3);
+  transition:
+    transform 350ms ease,
+    color 350ms ease,
+    background 350ms ease,
+    box-shadow 350ms ease;
+}
+.svc:hover .svc-icon {
+  transform: translateY(-2px) scale(1.07);
+  color: #fff;
+  background: linear-gradient(
+    145deg,
+    rgb(var(--accent) / 0.6),
+    rgb(var(--accent) / 0.16)
+  );
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--accent) / 0.55),
+    0 12px 30px -12px rgb(var(--accent) / 0.9);
+}
+
+/* "Learn more" on the home tiles, so the affordance matches its card. */
+.svc-more {
+  color: color-mix(in srgb, rgb(var(--accent)) 35%, white);
+}
+
+/* Deliverable chips — tinted rather than plain hairline rings, so the list
+   reads as part of the card instead of a row of borders. */
+.svc-chip {
+  color: color-mix(in srgb, rgb(var(--accent)) 30%, white);
+  background: rgb(var(--accent) / 0.1);
+  box-shadow: inset 0 0 0 1px rgb(var(--accent) / 0.22);
+  transition:
+    background 300ms ease,
+    box-shadow 300ms ease;
+}
+.svc:hover .svc-chip {
+  background: rgb(var(--accent) / 0.18);
+  box-shadow: inset 0 0 0 1px rgb(var(--accent) / 0.4);
 }
 
 /* Route change: the incoming page eases up out of black. Opacity only — a
