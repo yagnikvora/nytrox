@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
-import type { Project } from "../data/projects";
+import { domainOf, type Project } from "../data/projects";
 import GradientText from "./GradientText";
 import MaskedHeading from "./MaskedHeading";
 import SectionKicker from "./SectionKicker";
@@ -89,7 +90,7 @@ export default function HorizontalShowcase({ projects }: { projects: Project[] }
         href="/projects"
         className="group inline-flex items-center gap-2 text-sm font-semibold text-violet-300 transition-colors hover:text-white"
       >
-        <GradientText inline>All {projects.length} case studies</GradientText>
+        <GradientText inline>All {projects.length} live sites</GradientText>
         <svg
           width="16"
           height="16"
@@ -117,9 +118,12 @@ export default function HorizontalShowcase({ projects }: { projects: Project[] }
       // warns if its target was never mounted.
       <section id="work" ref={sectionRef} className="scroll-mt-24 py-16">
         {header}
-        <div className="relative mt-10">
+        <div className="relative mt-7">
+          {/* Same headroom problem as the pinned rail: overflow-x-auto clips
+              the vertical axis too, so pt-3 keeps a hovered card's top edge in
+              view. mt-7 + pt-3 leaves the gap the mt-10 gave. */}
           <ul
-            className="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4"
+            className="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 pt-3"
             data-smooth-ignore
           >
             {projects.map((project) => (
@@ -150,9 +154,16 @@ export default function HorizontalShowcase({ projects }: { projects: Project[] }
         {header}
 
         <div
-          className="relative mt-8"
+          className="relative py-8"
           // cards fade out at both edges instead of clipping mid-card — same
-          // treatment as the logo and testimonial rails
+          // treatment as the logo and testimonial rails.
+          //
+          // The space above and below the cards is padding rather than a margin
+          // on purpose: mask-clip is border-box, so nothing outside this box
+          // gets painted — with the cards flush to the edge, a card's 6px hover
+          // lift sheared its own top border off. The padding puts that slack
+          // (and room for the hover glow) inside the masked box; the siblings
+          // drop their matching margins, so the layout is unchanged.
           style={{ maskImage: EDGE_FADE, WebkitMaskImage: EDGE_FADE }}
         >
           <motion.ul
@@ -169,7 +180,7 @@ export default function HorizontalShowcase({ projects }: { projects: Project[] }
         </div>
 
         {/* rail progress */}
-        <div className="mx-auto mt-8 w-full max-w-7xl px-6">
+        <div className="mx-auto w-full max-w-7xl px-6">
           <div className="h-px w-full bg-white/10">
             <motion.div
               className="h-full origin-left bg-gradient-to-r from-violet-400 to-cyan-300"
@@ -188,52 +199,48 @@ export default function HorizontalShowcase({ projects }: { projects: Project[] }
 /* ------------------------------- the card ------------------------------- */
 function RailCard({ project: p }: { project: Project }) {
   return (
-    <Link href={`/projects#${p.slug}`} className="block h-full">
+    <Link
+      href={`/projects#${p.slug}`}
+      className="accent block h-full"
+      style={{ "--accent": p.accent } as CSSProperties}
+    >
       <article className="card-glow glass group flex h-full flex-col overflow-hidden rounded-2xl p-5">
+        {/* Cover — the top of the live homepage. The rail is pinned inside one
+            viewport height, so this stays at h-36 and crops rather than growing
+            the card; the full capture is on the /projects page. */}
         <div
-          className={`relative grid h-36 shrink-0 place-items-center overflow-hidden rounded-xl bg-gradient-to-br ${p.cover}`}
-          aria-hidden
+          className={`relative h-36 shrink-0 overflow-hidden rounded-xl bg-gradient-to-br ${p.cover}`}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.28),transparent_55%)]" />
-          <span className="relative font-display text-4xl font-bold tracking-tight text-white/90 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)] transition-transform duration-500 group-hover:scale-110">
-            {p.monogram}
-          </span>
+          <Image
+            src={p.preview}
+            alt={`Homepage of ${p.title}`}
+            fill
+            sizes="360px"
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+          />
         </div>
 
-        <div className="mt-4 flex items-center gap-2 text-xs font-medium">
-          <span className="rounded-full bg-white/[0.06] px-2.5 py-1 text-violet-200 ring-1 ring-white/10">
-            {p.category}
-          </span>
-          <span className="text-ink-muted">{p.year}</span>
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-medium">
+          <span className="accent-chip rounded-full px-2.5 py-1">{p.category}</span>
+          <span className="text-ink-muted">{p.location}</span>
         </div>
 
         <h3 className="mt-3 font-display text-lg font-semibold text-white">
           {p.title}
         </h3>
-        <p className="text-sm font-medium text-violet-300">{p.client}</p>
+        <p className="accent-more text-sm font-medium">{domainOf(p.url)}</p>
         <p className="mt-2.5 line-clamp-3 text-sm leading-6 text-ink-muted">
           {p.summary}
         </p>
 
-        <dl className="mt-auto grid grid-cols-2 gap-2.5 pt-5">
-          {p.metrics.map((m) => (
-            <div
-              key={m.label}
-              className="rounded-xl bg-white/[0.03] p-3 ring-1 ring-white/10"
-            >
-              <dt className="sr-only">{m.label}</dt>
-              <dd>
-                <span className="font-display text-xl font-bold text-white">
-                  {m.value}
-                  {m.suffix}
-                </span>
-                <span className="mt-0.5 block text-[11px] leading-4 text-ink-muted">
-                  {m.label}
-                </span>
-              </dd>
-            </div>
+        {/* mt-auto keeps this on the bottom edge whatever the summary length */}
+        <ul className="mt-auto flex flex-wrap gap-2 pt-5">
+          {p.highlights.slice(0, 3).map((h) => (
+            <li key={h} className="accent-chip rounded-full px-2.5 py-1 text-[11px] font-medium">
+              {h}
+            </li>
           ))}
-        </dl>
+        </ul>
       </article>
     </Link>
   );

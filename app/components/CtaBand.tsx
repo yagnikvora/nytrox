@@ -21,7 +21,7 @@ export default function CtaBand() {
           <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/contact"
-              className="btn-gradient inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold shadow-[0_0_44px_-10px_rgba(178,86,255,0.95)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_54px_-8px_rgba(255,159,252,0.9)]"
+              className="btn-gradient inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold transition-transform duration-300 ease-out hover:-translate-y-0.5"
             >
               Book a Consultation
             </Link>

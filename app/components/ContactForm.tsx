@@ -220,7 +220,7 @@ export default function ContactForm() {
         {/* same plain hover as the other primary buttons — lift + glow */}
         <button
           type="submit"
-          className="btn-gradient group inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold shadow-[0_0_44px_-10px_rgba(178,86,255,0.95)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_54px_-8px_rgba(255,159,252,0.9)]"
+          className="btn-gradient group inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold transition-transform duration-300 ease-out hover:-translate-y-0.5"
         >
           Send enquiry
           <svg

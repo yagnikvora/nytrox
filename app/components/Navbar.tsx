@@ -67,7 +67,7 @@ export default function Navbar() {
           <div className="flex items-center gap-1.5">
             <Link
               href="/contact"
-              className="btn-gradient hidden rounded-lg px-4 py-2 text-sm font-semibold shadow-[0_0_30px_-8px_rgba(178,86,255,0.9)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_38px_-6px_rgba(255,159,252,0.9)] sm:block"
+              className="btn-gradient hidden rounded-lg px-4 py-2 text-sm font-semibold transition-transform duration-300 ease-out hover:-translate-y-0.5 sm:block"
             >
               Book a Demo
             </Link>

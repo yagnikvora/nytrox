@@ -40,7 +40,7 @@ export default function ScrollToTop() {
       }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       style={{ pointerEvents: shown ? "auto" : "none" }}
-      className="glass group fixed bottom-6 right-6 z-50 grid h-12 w-12 place-items-center rounded-full text-white/80 transition-colors hover:text-white hover:shadow-[0_0_28px_-6px_rgba(139,92,246,0.9)]"
+      className="glass group fixed bottom-6 right-6 z-50 grid h-12 w-12 place-items-center rounded-full text-white/80 transition-colors hover:text-white"
     >
       {/* progress dial */}
       <svg

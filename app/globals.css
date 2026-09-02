@@ -176,8 +176,9 @@ body::-webkit-scrollbar {
    reach 6.8:1. The label holds AA contrast through the whole cycle instead of
    dipping under it halfway.
 
-   Nothing here sets box-shadow: these rules are unlayered and would outrank the
-   per-button `shadow-[...]` utilities that give each button its glow. */
+   Nothing here sets box-shadow, and the buttons no longer carry one: the halo
+   they used to throw bloomed over whatever sat beside them. Hover is the lift
+   alone. */
 .btn-gradient {
   background-image: linear-gradient(
     100deg,
@@ -283,21 +284,31 @@ body::-webkit-scrollbar {
    families rather than one long repetition. The hue is declared once on the
    card's wrapper and inherits from there — hairline, icon tile, chips, and the
    hover glow all draw from --accent, so nothing downstream has to know which
-   colour it is. Hover is keyed off the wrapper (.svc) rather than the card, so
+   colour it is. Hover is keyed off the wrapper (.accent) rather than the card, so
    the same rules drive both the home tiles and the /services detail cards. */
-.svc {
+.accent {
   --accent: 139 92 246; /* design — violet, and the fallback */
 }
-.svc[data-accent="build"] {
+.accent[data-accent="build"] {
   --accent: 34 211 238; /* cyan */
 }
-.svc[data-accent="growth"] {
+.accent[data-accent="growth"] {
   --accent: 236 72 153; /* pink */
+}
+
+/* The home grid ignores the category mapping and alternates these two instead,
+   so the six tiles there read as one set rather than three families. See
+   HOME_ACCENTS in app/page.tsx. */
+.accent[data-accent="violet"] {
+  --accent: 139 92 246;
+}
+.accent[data-accent="green"] {
+  --accent: 52 211 153; /* emerald */
 }
 
 /* card-glow's hover is hardcoded violet; inside an accented card it follows the
    category instead. */
-.svc .card-glow:hover {
+.accent .card-glow:hover {
   border-color: rgb(var(--accent) / 0.5);
   background: rgb(var(--accent) / 0.06);
   box-shadow: 0 24px 60px -30px rgb(var(--accent) / 0.65);
@@ -308,7 +319,7 @@ body::-webkit-scrollbar {
    sits on top of the card's own edge. The home tiles use PixelCard, whose
    ::after is already spoken for by its scrim — they take the icon and hover
    treatment only. */
-.svc-card::before {
+.accent-panel::before {
   content: "";
   position: absolute;
   top: -35%;
@@ -322,12 +333,12 @@ body::-webkit-scrollbar {
   transition: opacity 450ms ease;
   pointer-events: none;
 }
-.svc:hover .svc-card::before {
+.accent:hover .accent-panel::before {
   opacity: 1;
 }
 
 /* accent hairline along the top edge, brightest in the middle */
-.svc-card::after {
+.accent-panel::after {
   content: "";
   position: absolute;
   inset: 0 0 auto 0;
@@ -342,12 +353,12 @@ body::-webkit-scrollbar {
   transition: opacity 350ms ease;
   pointer-events: none;
 }
-.svc:hover .svc-card::after {
+.accent:hover .accent-panel::after {
   opacity: 1;
 }
 
 /* Icon tile — an accent wash that lifts and lights up with the card. */
-.svc-icon {
+.accent-icon {
   color: color-mix(in srgb, rgb(var(--accent)) 42%, white);
   background: linear-gradient(
     145deg,
@@ -361,7 +372,7 @@ body::-webkit-scrollbar {
     background 350ms ease,
     box-shadow 350ms ease;
 }
-.svc:hover .svc-icon {
+.accent:hover .accent-icon {
   transform: translateY(-2px) scale(1.07);
   color: #fff;
   background: linear-gradient(
@@ -374,14 +385,15 @@ body::-webkit-scrollbar {
     0 12px 30px -12px rgb(var(--accent) / 0.9);
 }
 
-/* "Learn more" on the home tiles, so the affordance matches its card. */
-.svc-more {
+/* Links and affordances inside an accented card — "Learn more" on the home
+   tiles, the domain and "Visit live site" on the project cards. */
+.accent-more {
   color: color-mix(in srgb, rgb(var(--accent)) 35%, white);
 }
 
 /* Deliverable chips — tinted rather than plain hairline rings, so the list
    reads as part of the card instead of a row of borders. */
-.svc-chip {
+.accent-chip {
   color: color-mix(in srgb, rgb(var(--accent)) 30%, white);
   background: rgb(var(--accent) / 0.1);
   box-shadow: inset 0 0 0 1px rgb(var(--accent) / 0.22);
@@ -389,7 +401,7 @@ body::-webkit-scrollbar {
     background 300ms ease,
     box-shadow 300ms ease;
 }
-.svc:hover .svc-chip {
+.accent:hover .accent-chip {
   background: rgb(var(--accent) / 0.18);
   box-shadow: inset 0 0 0 1px rgb(var(--accent) / 0.4);
 }

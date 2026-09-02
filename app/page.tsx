@@ -117,12 +117,13 @@ function Hero() {
           {/* CTAs */}
           <Reveal delay={240}>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-              {/* Plain hover: a small lift and a warmer glow. No cursor-follow
-                  — that pulled the button out of the row while you were still
-                  reading the copy beside it. */}
+              {/* Plain hover: a small lift, nothing else. No halo behind the
+                  button and no cursor-follow — the glow smeared into the copy
+                  beside it, and the follow pulled the button out of the row
+                  while you were still reading. */}
               <Link
                 href="/contact"
-                className="btn-gradient group inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold shadow-[0_0_44px_-10px_rgba(178,86,255,0.95)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_54px_-8px_rgba(255,159,252,0.9)] sm:w-auto"
+                className="btn-gradient group inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold transition-transform duration-300 ease-out hover:-translate-y-0.5 sm:w-auto"
               >
                 Book a Consultation
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover:translate-x-0.5" aria-hidden>
@@ -166,6 +167,20 @@ function Hero() {
 }
 
 /* ------------------------------ Services -------------------------------- */
+/**
+ * The home tiles alternate two hues card by card — violet, green, violet — so
+ * the grid reads as one set. (The /services page keeps the per-category
+ * accents, where three families across twelve cards earn their keep.)
+ *
+ * `name` selects the wrapper accent in globals.css; `pixels` is the matching
+ * PixelCard dissolve palette, overriding the cosmic variant's violet→cyan so
+ * no third colour creeps into the section.
+ */
+const HOME_ACCENTS = [
+  { name: "violet", pixels: "#c4b5fd,#a78bfa,#8b5cf6" },
+  { name: "green", pixels: "#6ee7b7,#34d399,#10b981" },
+] as const;
+
 function Services() {
   return (
     <section id="services" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
@@ -183,46 +198,50 @@ function Services() {
       </Reveal>
 
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {SERVICES.slice(0, HOME_SERVICE_COUNT).map((s, i) => (
-          <Reveal as="div" key={s.slug} delay={i * 70} variant="blur">
-            <Link
-              href={`/services#${s.slug}`}
-              data-accent={s.category}
-              className="svc block h-full"
-            >
-              <PixelCard
-                variant="cosmic"
-                className="card-glow glass group h-full rounded-2xl p-6"
+        {SERVICES.slice(0, HOME_SERVICE_COUNT).map((s, i) => {
+          const accent = HOME_ACCENTS[i % HOME_ACCENTS.length];
+          return (
+            <Reveal as="div" key={s.slug} delay={i * 70} variant="blur">
+              <Link
+                href={`/services#${s.slug}`}
+                data-accent={accent.name}
+                className="accent block h-full"
               >
-                {/* Icon tile picks up the card's hover: lifts with it, warms from
-                    a faint wash to its lit category accent, and throws a soft
-                    glow. See .svc-icon in globals.css. */}
-                <div className="svc-icon grid h-12 w-12 place-items-center rounded-xl">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    className="transition-transform duration-[350ms] ease-out group-hover:scale-110"
-                    aria-hidden
-                  >
-                    {s.icon}
-                  </svg>
-                </div>
-                <h3 className="mt-5 font-display text-lg font-semibold text-white">{s.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-ink-muted transition-colors duration-300 group-hover:text-ink">
-                  {s.desc}
-                </p>
-                <span className="svc-more mt-5 inline-flex items-center gap-1.5 text-sm font-medium opacity-0 transition-opacity group-hover:opacity-100">
-                  Learn more
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </span>
-              </PixelCard>
-            </Link>
-          </Reveal>
-        ))}
+                <PixelCard
+                  variant="cosmic"
+                  colors={accent.pixels}
+                  className="card-glow glass group h-full rounded-2xl p-6"
+                >
+                  {/* Icon tile picks up the card's hover: lifts with it, warms
+                      from a faint wash to its lit accent, and throws a soft
+                      glow. See .accent-icon in globals.css. */}
+                  <div className="accent-icon grid h-12 w-12 place-items-center rounded-xl">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      className="transition-transform duration-[350ms] ease-out group-hover:scale-110"
+                      aria-hidden
+                    >
+                      {s.icon}
+                    </svg>
+                  </div>
+                  <h3 className="mt-5 font-display text-lg font-semibold text-white">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-ink-muted transition-colors duration-300 group-hover:text-ink">
+                    {s.desc}
+                  </p>
+                  <span className="accent-more mt-5 inline-flex items-center gap-1.5 text-sm font-medium opacity-0 transition-opacity group-hover:opacity-100">
+                    Learn more
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+                      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </PixelCard>
+              </Link>
+            </Reveal>
+          );
+        })}
       </div>
 
       {/* View more → Services page */}

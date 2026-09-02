@@ -108,16 +108,16 @@ export default function ServicesPage() {
                   <div
                     id={s.slug}
                     data-accent={s.category}
-                    className="svc h-full scroll-mt-28"
+                    className="accent h-full scroll-mt-28"
                   >
                     <SpotlightCard
-                      className="svc-card card-glow glass h-full"
+                      className="accent-panel card-glow glass h-full"
                       spotlightColor={SPOTLIGHT[s.category]}
                     >
                       {/* padding lives on the glare layer so the sweep spans the whole card */}
                       <GlareHover className="h-full rounded-2xl p-7 sm:p-8">
                         <div className="flex items-center gap-4">
-                          <div className="svc-icon grid h-12 w-12 shrink-0 place-items-center rounded-xl">
+                          <div className="accent-icon grid h-12 w-12 shrink-0 place-items-center rounded-xl">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
                               {s.icon}
                             </svg>
@@ -131,7 +131,7 @@ export default function ServicesPage() {
                           {s.deliverables.map((d) => (
                             <li
                               key={d}
-                              className="svc-chip rounded-full px-3 py-1.5 text-xs font-medium"
+                              className="accent-chip rounded-full px-3 py-1.5 text-xs font-medium"
                             >
                               {d}
                             </li>
