@@ -199,8 +199,13 @@ export default function HorizontalShowcase({ projects }: { projects: Project[] }
 /* ------------------------------- the card ------------------------------- */
 function RailCard({ project: p }: { project: Project }) {
   return (
-    <Link
-      href={`/projects#${p.slug}`}
+    // Straight out to the client's live site, same as the cards on /projects —
+    // the point of the rail is the work itself, not our write-up of it. The
+    // anchor targets on /projects are still reachable from the footer.
+    <a
+      href={p.url}
+      target="_blank"
+      rel="noopener noreferrer"
       className="accent block h-full"
       style={{ "--accent": p.accent } as CSSProperties}
     >
@@ -218,6 +223,23 @@ function RailCard({ project: p }: { project: Project }) {
             sizes="360px"
             className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
           />
+
+          {/* external-link glyph, lit on hover — tells you the card leaves the
+              site before you click it, matching the /projects cards */}
+          <span
+            className="absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-lg bg-black/50 text-white/80 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:text-white group-hover:opacity-100"
+            aria-hidden
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M8 16L16 8M9 8h7v7"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
         </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-medium">
@@ -242,6 +264,6 @@ function RailCard({ project: p }: { project: Project }) {
           ))}
         </ul>
       </article>
-    </Link>
+    </a>
   );
 }
