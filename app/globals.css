@@ -260,11 +260,32 @@ body::-webkit-scrollbar {
   }
 }
 
+/* NOTE ON DECLARATION ORDER: the standard `backdrop-filter` MUST come after
+   `-webkit-backdrop-filter`. Lightning CSS (Tailwind v4s minifier) collapses a
+   prefixed/unprefixed pair down to whichever is declared last — with the
+   standard property first it was dropped from the build entirely, leaving only
+   `-webkit-backdrop-filter`, which Safari honours but Blink does not. That is
+   why every glass surface looked right on iPhone and flat on Android.
+   Keep the standard property last here and in any rule like it.
+
+   The fill is also no longer a 3.5% white wash: where the blur cannot run (an
+   older Android, a low-power mode, a browser that drops backdrop-filter under
+   memory pressure) that alone left body copy legible straight through the
+   panel. The tinted dark base carries text on its own, and the blur is now an
+   enhancement on top rather than the thing holding the panel together. */
 .glass {
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(12, 12, 28, 0.55);
   border: 1px solid var(--line);
-  backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+/* Where the blur genuinely runs, the fill steps back and lets it do the work —
+   this is the look the design was after, now applied only when it is safe. */
+@supports (backdrop-filter: blur(14px)) {
+  .glass {
+    background: rgba(255, 255, 255, 0.035);
+  }
 }
 
 .card-glow {

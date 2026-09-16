@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useEffect, useState } from "react";
 import "./GooeyNav.css";
 
@@ -159,17 +160,24 @@ export default function GooeyNav({
     }
   };
 
+  /**
+   * Run the same bubble/particle effect for a keyboard activation.
+   *
+   * This used to call e.preventDefault(), which played the animation and then
+   * cancelled the navigation — Enter on a nav link went nowhere for anyone not
+   * using a mouse. The default is now left alone: the effect fires and the link
+   * follows, exactly as a click does.
+   *
+   * Only Enter is handled. Space does not activate a link natively, so there is
+   * no default to ride along with and nothing to animate towards.
+   */
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLAnchorElement>,
     index: number
   ) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      const liEl = e.currentTarget.parentElement;
-      if (liEl) {
-        handleClick({ currentTarget: liEl }, index);
-      }
-    }
+    if (e.key !== "Enter") return;
+    const liEl = e.currentTarget.parentElement;
+    if (liEl) handleClick({ currentTarget: liEl }, index);
   };
 
   useEffect(() => {
@@ -198,13 +206,18 @@ export default function GooeyNav({
         <ul ref={navRef}>
           {items.map((item, index) => (
             <li key={index} className={activeIndex === index ? "active" : ""}>
-              <a
+              {/* next/link, not a bare <a>: every desktop nav click used to be a
+                  full document navigation — the whole bundle re-downloaded and
+                  re-executed, the route fade never played, and the starfield
+                  restarted from scratch. Link keeps it a client-side
+                  transition. */}
+              <Link
                 href={item.href}
                 onClick={(e) => handleClick(e, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
               >
                 {item.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

@@ -83,12 +83,19 @@ export default function ScrollReveal({
         // each word owns a slice of the scroll range, so they light up in order
         const slice = 1 / words.length;
         const lit = Math.min(1, Math.max(0, (progress - i * slice * 0.75) / slice));
+        // A fully-lit word drops its filter rather than settling on a
+        // zero-radius blur. `blur(0px)` still puts the span on its own
+        // compositor layer, and a paragraph of thirty words leaves thirty of
+        // them pinned there permanently — across the page that was dozens of
+        // layers doing nothing but costing memory, which is felt on mid-range
+        // Android far more than on an iPhone.
+        const blurred = blurStrength > 0 && lit < 1;
         return (
           <span
             key={i}
             style={{
               opacity: baseOpacity + (1 - baseOpacity) * lit,
-              filter: blurStrength ? `blur(${(1 - lit) * blurStrength}px)` : undefined,
+              filter: blurred ? `blur(${(1 - lit) * blurStrength}px)` : undefined,
               transition: "opacity 120ms linear, filter 120ms linear",
             }}
           >

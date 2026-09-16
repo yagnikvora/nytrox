@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Hero visual: a seamlessly-looping clip (`blue2_looped.mp4`), muted + inline
  * so browsers allow autoplay.
@@ -9,7 +11,18 @@
  *   - feather the frame edges with a radial mask and sit it on a black backdrop
  *     that fades into the space background → the video's black blends into the
  *     page instead of reading as a hard box.
+ *
+ * Why this is a client component: `autoPlay` alone is a request, not a promise.
+ * Chrome on Android refuses it outright when Data Saver is on, and refuses it
+ * again on a "low media engagement" first visit — in both cases the hero fell
+ * back to an empty black rectangle, while iOS Safari (which has no equivalent
+ * policy for muted inline video) played it every time. That is the single
+ * biggest reason the hero looked different on the two phones. So the play
+ * attempt is made explicitly, the rejection is caught, and a real control is
+ * offered instead of silently showing nothing.
  */
+
+import { useEffect, useRef, useState } from "react";
 
 // Radial mask: opaque center, softly feathered outer edge so the frame has no
 // hard rectangular border. The subject stays well inside the opaque core.
@@ -27,6 +40,52 @@ const WATERMARK_PATCH =
 const FRAMING = "translate(-8%, -6%) scale(1.18)";
 
 export default function HeroVideo() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  /** Set only when the browser has actually refused to play. */
+  const [blocked, setBlocked] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Belt and braces for the autoplay policy: some builds only honour these
+    // when they are set as properties rather than attributes.
+    video.muted = true;
+
+    let cancelled = false;
+    const attempt = () => {
+      const started = video.play();
+      // Older browsers return undefined rather than a promise.
+      if (!started) return;
+      started
+        .then(() => !cancelled && setBlocked(false))
+        .catch(() => !cancelled && setBlocked(true));
+    };
+
+    attempt();
+
+    // A tab restored from the background can suspend the clip; pick it back up
+    // rather than leaving a frozen frame in the hero.
+    const onVisible = () => {
+      if (!document.hidden && video.paused && !cancelled) attempt();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      cancelled = true;
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, []);
+
+  const play = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    // Inside a real user gesture, so this is allowed even under Data Saver.
+    video.play().then(
+      () => setBlocked(false),
+      () => setBlocked(true)
+    );
+  };
+
   return (
     <div className="relative mx-auto w-full max-w-[880px]">
       {/* black backdrop → solid black that fully covers behind the video and
@@ -44,6 +103,7 @@ export default function HeroVideo() {
         style={{ WebkitMaskImage: EDGE_MASK, maskImage: EDGE_MASK }}
       >
         <video
+          ref={videoRef}
           className="absolute inset-0 h-full w-full object-cover"
           style={{ transform: FRAMING }}
           src="/videos/blue2_looped.mp4"
@@ -51,7 +111,15 @@ export default function HeroVideo() {
           muted
           playsInline
           loop
-          preload="auto"
+          // "metadata", not "auto": the clip is 3.6 MB and this is the first
+          // thing on the page. Where autoplay is allowed the browser fetches
+          // what it needs anyway; where it is blocked — exactly the Android
+          // case above — a phone on mobile data no longer spends 3.6 MB on a
+          // video it was never going to play.
+          preload="metadata"
+          disablePictureInPicture
+          aria-hidden={!blocked}
+          tabIndex={-1}
         />
 
         {/* hides the "Veo" watermark in the bottom-right corner */}
@@ -59,6 +127,24 @@ export default function HeroVideo() {
           className="pointer-events-none absolute bottom-0 right-0 h-[30%] w-[30%]"
           style={{ background: WATERMARK_PATCH }}
         />
+
+        {/* Shown only when the browser refused to autoplay. A quiet control
+            rather than a loud one — it sits on the clip's own black, so where
+            autoplay works nobody ever sees it. */}
+        {blocked && (
+          <button
+            type="button"
+            onClick={play}
+            className="absolute inset-0 grid place-items-center bg-black/40 text-white transition-colors hover:bg-black/25"
+          >
+            <span className="grid h-16 w-16 place-items-center rounded-full border border-white/25 bg-white/10 backdrop-blur-sm">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <path d="M8 5.5v13l11-6.5-11-6.5z" />
+              </svg>
+            </span>
+            <span className="sr-only">Play the showreel</span>
+          </button>
+        )}
       </div>
     </div>
   );

@@ -43,6 +43,13 @@ export default function SplitText({
       setShown(true);
       return;
     }
+    // Reveal and MaskedHeading both honour this; SplitText was the one
+    // holdout, so the hero headline still animated for visitors who had
+    // asked the whole site not to.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const frame = requestAnimationFrame(() => setShown(true));
+      return () => cancelAnimationFrame(frame);
+    }
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -55,6 +62,19 @@ export default function SplitText({
     io.observe(el);
     return () => io.disconnect();
   }, []);
+
+  // will-change promotes every single character to its own compositor layer.
+  // That is worth it while the stagger is running and pure overhead forever
+  // after — a headline of 30 characters left 30 layers pinned in GPU memory
+  // for the life of the page, which mid-range Android hardware feels. Release
+  // them once the last character has landed.
+  const [settled, setSettled] = useState(false);
+  useEffect(() => {
+    if (!shown || settled) return;
+    const total = startDelay + text.length * delay + duration + 60;
+    const timer = setTimeout(() => setSettled(true), total);
+    return () => clearTimeout(timer);
+  }, [shown, settled, startDelay, delay, duration, text.length]);
 
   // Split into words first so a word never breaks across lines mid-animation.
   const words = text.split(" ");
@@ -69,9 +89,9 @@ export default function SplitText({
       {words.map((word, w) => (
         <span key={w} className="inline-block whitespace-nowrap" aria-hidden>
           {splitBy === "words"
-            ? renderUnit(word, unitIndex++, shown, delay, startDelay, duration)
+            ? renderUnit(word, unitIndex++, shown, delay, startDelay, duration, settled)
             : [...word].map((char) =>
-                renderUnit(char, unitIndex++, shown, delay, startDelay, duration)
+                renderUnit(char, unitIndex++, shown, delay, startDelay, duration, settled)
               )}
           {w < words.length - 1 && (
             <span className="inline-block">&nbsp;</span>
@@ -88,12 +108,13 @@ function renderUnit(
   shown: boolean,
   delay: number,
   startDelay: number,
-  duration: number
+  duration: number,
+  settled: boolean
 ) {
   return (
     <span
       key={index}
-      className="inline-block will-change-transform"
+      className={`inline-block${settled ? "" : " will-change-transform"}`}
       style={{
         transitionProperty: "opacity, transform, filter",
         transitionDuration: `${duration}ms`,
@@ -101,7 +122,11 @@ function renderUnit(
         transitionDelay: `${startDelay + index * delay}ms`,
         opacity: shown ? 1 : 0,
         transform: shown ? "translateY(0)" : "translateY(0.45em)",
-        filter: shown ? "blur(0)" : "blur(6px)",
+        // Undefined once settled, not blur(0): a zero-radius blur still keeps
+        // the character on its own compositor layer. The headline has to land
+        // on a real zero first (a filter cannot transition to none), so this
+        // holds blur(0) until the stagger has finished and then drops out.
+        filter: settled ? undefined : shown ? "blur(0)" : "blur(6px)",
       }}
     >
       {content}

@@ -58,6 +58,16 @@ export default function MaskedHeading({
     return () => io.disconnect();
   }, []);
 
+  // Drop the per-word compositor layers once the headline has finished
+  // rising; see the same note in SplitText.
+  const [settled, setSettled] = useState(false);
+  useEffect(() => {
+    if (!shown || settled) return;
+    const total = delay + text.split(/s+/).length * stagger + 820 + 60;
+    const timer = setTimeout(() => setSettled(true), total);
+    return () => clearTimeout(timer);
+  }, [shown, settled, delay, stagger, text]);
+
   const accentWords = accent ? accent.trim().split(/\s+/) : [];
   const words = text.split(/\s+/);
   // Match the accent as a run of consecutive words, so a word that also appears
@@ -82,7 +92,7 @@ export default function MaskedHeading({
               className="inline-flex overflow-hidden pb-[0.14em] align-bottom -mb-[0.14em]"
             >
               <span
-                className={`inline-block will-change-transform ${isAccent ? "text-gradient" : ""}`}
+                className={`inline-block ${settled ? "" : "will-change-transform"} ${isAccent ? "text-gradient" : ""}`}
                 style={{
                   transitionProperty: "transform, opacity",
                   transitionDuration: "820ms",

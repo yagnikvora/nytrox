@@ -2,12 +2,7 @@ import Link from "next/link";
 import { LogoLockup } from "./Logo";
 import { SERVICES } from "../data/services";
 import { PROJECTS } from "../data/projects";
-
-const SOCIAL_PATHS = [
-  "M22 12a10 10 0 10-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6v1.9h2.7l-.4 2.9h-2.3v7A10 10 0 0022 12z",
-  "M18.9 5H21l-6.6 7.5L22 21h-6l-4.7-5.7L5.8 21H3.7l7-8L2 5h6.2l4.2 5.2L18.9 5z",
-  "M16 8a6 6 0 016 6v6h-4v-6a2 2 0 00-4 0v6H10v-9h4v1.5A4 4 0 0116 8zM6 9H2v11h4V9zM4 2a2.5 2.5 0 100 5 2.5 2.5 0 000-5z",
-];
+import { CONTACT_EMAIL, SOCIALS } from "../data/contact";
 
 /** Site footer, shared by every page. */
 export default function Footer() {
@@ -53,20 +48,27 @@ export default function Footer() {
               A software studio building mobile apps, web platforms, and digital
               products that launch brands into orbit.
             </p>
-            <div className="mt-5 flex gap-2.5">
-              {SOCIAL_PATHS.map((d, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  aria-label="Social link"
-                  className="grid h-9 w-9 place-items-center rounded-lg text-white/60 ring-1 ring-white/10 transition-colors hover:bg-white/10 hover:text-white"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                    <path d={d} />
-                  </svg>
-                </a>
-              ))}
-            </div>
+            {/* Only the accounts that actually have a URL. See SOCIALS in
+                data/contact.ts — these were all href="#" before, so every one
+                of them just jumped the visitor back to the top of the page. */}
+            {SOCIALS.some((social) => social.href) && (
+              <div className="mt-5 flex gap-2.5">
+                {SOCIALS.filter((social) => social.href).map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="grid h-11 w-11 place-items-center rounded-lg text-white/60 ring-1 ring-white/10 transition-colors hover:bg-white/10 hover:text-white"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                      <path d={social.d} />
+                    </svg>
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
           {cols.map((c) => (
@@ -90,10 +92,17 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-sm text-ink-muted sm:flex-row">
           <p>© {new Date().getFullYear()} Nytrox. All rights reserved.</p>
+          {/* Privacy and Terms used to sit here as href="#". Neither page
+              exists, and a policy is not something to stub out with filler —
+              add the routes, then link them here. The address is also no
+              longer duplicated as a literal; it comes from CONTACT_EMAIL. */}
           <div className="flex gap-6">
-            <a href="#" className="transition-colors hover:text-white">Privacy</a>
-            <a href="#" className="transition-colors hover:text-white">Terms</a>
-            <a href="mailto:hello@nytrox.com" className="transition-colors hover:text-white">hello@nytrox.com</a>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="transition-colors hover:text-white"
+            >
+              {CONTACT_EMAIL}
+            </a>
           </div>
         </div>
       </div>

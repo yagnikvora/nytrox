@@ -20,8 +20,13 @@ type Errors = Partial<Record<Field, string>>;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// text-base (16px) up to sm, text-sm above it. Safari on iOS zooms the whole
+// page in when a focused field has a font-size under 16px, and it does not
+// zoom back out afterwards — the visitor is left on a sideways-scrolling page
+// halfway through the form. 16px on phones is the only thing that suppresses
+// it; the 14px look is kept from sm upward, where no browser does this.
 const inputClass =
-  "w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white outline-none transition-colors placeholder:text-ink-muted/60 focus:border-violet-400/60 focus:bg-white/[0.06] focus:ring-2 focus:ring-violet-500/25";
+  "w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-base text-white outline-none transition-colors placeholder:text-ink-muted/60 focus:border-violet-400/60 focus:bg-white/[0.06] focus:ring-2 focus:ring-violet-500/25 sm:text-sm";
 
 export default function ContactForm() {
   const [errors, setErrors] = useState<Errors>({});

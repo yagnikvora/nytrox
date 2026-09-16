@@ -34,6 +34,14 @@ export default function SpaceBackground() {
 
     let W = 0;
     let H = 0;
+    /* Size the starfield was last built for. On Android, showing or hiding the
+       URL bar changes window.innerHeight and fires `resize`, and this whole
+       field used to be thrown away and re-randomised on every one of those —
+       so the stars visibly teleported each time you changed scroll direction.
+       iOS Safari keeps innerHeight stable through the same gesture, which is
+       why the effect only ever showed up on Android. */
+    let builtW = 0;
+    let builtH = 0;
     let stars: Star[] = [];
     let meteors: Meteor[] = [];
     let nextMeteor = 1;
@@ -42,15 +50,41 @@ export default function SpaceBackground() {
 
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
 
+    /** A height change no bigger than this is the browser toolbar, not a rotation. */
+    const TOOLBAR_SLACK = 140;
+
     const resize = () => {
-      W = canvas.width = Math.floor(window.innerWidth * dpr);
-      H = canvas.height = Math.floor(window.innerHeight * dpr);
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-      const count = Math.min(
-        340,
-        Math.floor((window.innerWidth * window.innerHeight) / 6500)
-      );
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const prevH = H;
+
+      // The canvas itself always follows the viewport, so the field never
+      // leaves a bare strip where the toolbar used to be.
+      W = canvas.width = Math.floor(vw * dpr);
+      H = canvas.height = Math.floor(vh * dpr);
+      canvas.style.width = `${vw}px`;
+      canvas.style.height = `${vh}px`;
+
+      // Whether the *contents* are rebuilt is a separate question. A pure
+      // height wobble with the width unchanged is the Android URL bar sliding
+      // in or out; rebuilding there re-randomised every star, so they visibly
+      // teleported each time you changed scroll direction. iOS Safari holds
+      // innerHeight steady through the same gesture, which is why this only
+      // ever showed on Android. Stretch the existing field instead.
+      const toolbarOnly =
+        builtW === vw && builtH !== 0 && Math.abs(builtH - vh) <= TOOLBAR_SLACK;
+
+      if (toolbarOnly && stars.length) {
+        const scale = prevH > 0 ? H / prevH : 1;
+        for (const star of stars) star.y *= scale;
+        builtH = vh;
+        if (reduce) draw();
+        return;
+      }
+
+      builtW = vw;
+      builtH = vh;
+      const count = Math.min(340, Math.floor((vw * vh) / 6500));
       stars = Array.from({ length: count }, () => {
         const z = Math.random();
         return {

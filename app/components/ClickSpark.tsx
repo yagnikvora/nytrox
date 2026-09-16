@@ -43,11 +43,19 @@ export default function ClickSpark({
     let sparks: Spark[] = [];
     let raf = 0;
 
+    let lastW = 0;
     const resize = () => {
-      canvas.width = Math.floor(window.innerWidth * dpr);
-      canvas.height = Math.floor(window.innerHeight * dpr);
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      // Resizing the backing store clears it. On Android the URL bar sliding
+      // away fires resize mid-scroll, which wiped a burst that was still
+      // playing; a width-only check skips that case.
+      if (lastW === vw && canvas.height >= Math.floor(vh * dpr)) return;
+      lastW = vw;
+      canvas.width = Math.floor(vw * dpr);
+      canvas.height = Math.floor(vh * dpr);
+      canvas.style.width = `${vw}px`;
+      canvas.style.height = `${vh}px`;
     };
 
     // easeOutCubic — quick flick outward, gentle settle
@@ -82,6 +90,11 @@ export default function ClickSpark({
     };
 
     const onClick = (e: MouseEvent) => {
+      // A click synthesised from the keyboard (Enter on a focused button)
+      // reports clientX/clientY as 0, so the burst fired in the top-left
+      // corner of the screen instead of at the control. detail is 0 for
+      // exactly those events and 1+ for real pointer clicks.
+      if (e.detail === 0) return;
       const now = performance.now();
       for (let i = 0; i < sparkCount; i++) {
         sparks.push({

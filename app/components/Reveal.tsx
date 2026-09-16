@@ -37,8 +37,24 @@ const SHOWN: Record<RevealVariant, CSSProperties> = {
   left: { opacity: 1, transform: "translateX(0)" },
   right: { opacity: 1, transform: "translateX(0)" },
   scale: { opacity: 1, transform: "scale(1)" },
-  blur: { opacity: 1, transform: "translateY(0)", filter: "blur(0)" },
+  // A zero-radius blur is NOT the same as no filter: it keeps the element on
+  // its own compositor layer for the life of the page. The home page alone
+  // finished with forty of those still live — memory and raster work that
+  // Android phones pay for and never get back. This settles to "none"
+  // instead; BLUR_LANDING below is how it gets there without killing the
+  // animation on the way.
+  blur: { opacity: 1, transform: "translateY(0)", filter: "none" },
   clip: { clipPath: "inset(0% 0 0 0)", transform: "translateY(0)" },
+};
+
+/**
+ * The blur variant mid-transition. A filter cannot animate to "none", so the
+ * reveal has to land on a real zero radius first and only then be dropped.
+ */
+const BLUR_LANDING: CSSProperties = {
+  opacity: 1,
+  transform: "translateY(0)",
+  filter: "blur(0px)",
 };
 
 /**
@@ -65,6 +81,8 @@ export default function Reveal({
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const [shown, setShown] = useState(false);
+  /** True once the reveal has played out and its filter layer can be released. */
+  const [settled, setSettled] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -90,6 +108,15 @@ export default function Reveal({
     return () => io.disconnect();
   }, []);
 
+  // Once the transition has finished, drop the compositor layer. A timer
+  // rather than transitionend: filter is only one of four animated properties
+  // here, and an element already in view can finish before a listener lands.
+  useEffect(() => {
+    if (!shown || settled) return;
+    const timer = setTimeout(() => setSettled(true), delay + duration + 60);
+    return () => clearTimeout(timer);
+  }, [shown, settled, delay, duration]);
+
   return createElement(
     as,
     {
@@ -99,7 +126,11 @@ export default function Reveal({
         transitionDuration: `${duration}ms`,
         transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
         transitionDelay: `${delay}ms`,
-        ...(shown ? SHOWN[variant] : HIDDEN[variant]),
+        ...(shown
+          ? variant === "blur" && !settled
+            ? BLUR_LANDING
+            : SHOWN[variant]
+          : HIDDEN[variant]),
       } satisfies CSSProperties,
       className,
     },

@@ -49,6 +49,46 @@ export const CHANNELS: Channel[] = [
   },
 ];
 
+export type Social = {
+  label: string;
+  /** SVG path for a 24x24 viewBox. */
+  d: string;
+  /**
+   * Profile URL. Leave it empty and the icon is not rendered at all — the
+   * footer and the contact page both skip it rather than shipping a link that
+   * goes nowhere. Fill these in and both places light up at once.
+   */
+  href: string;
+};
+
+/**
+ * Social accounts, shared by the footer and the contact page — they used to be
+ * two separate hardcoded lists, both pointing at href="#", which meant six
+ * links on every page that scrolled the visitor back to the top and did
+ * nothing else.
+ *
+ * TODO(nytrox): add the real profile URLs. Until then these render as nothing,
+ * which is the honest state — an icon that does nothing when tapped reads as a
+ * broken site, and on a phone there is no hover to hint otherwise.
+ */
+export const SOCIALS: Social[] = [
+  {
+    label: "Facebook",
+    href: "",
+    d: "M22 12a10 10 0 10-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6v1.9h2.7l-.4 2.9h-2.3v7A10 10 0 0022 12z",
+  },
+  {
+    label: "X",
+    href: "",
+    d: "M18.9 5H21l-6.6 7.5L22 21h-6l-4.7-5.7L5.8 21H3.7l7-8L2 5h6.2l4.2 5.2L18.9 5z",
+  },
+  {
+    label: "LinkedIn",
+    href: "",
+    d: "M16 8a6 6 0 016 6v6h-4v-6a2 2 0 00-4 0v6H10v-9h4v1.5A4 4 0 0116 8zM6 9H2v11h4V9zM4 2a2.5 2.5 0 100 5 2.5 2.5 0 000-5z",
+  },
+];
+
 /** Budget bands offered in the enquiry form. */
 export const BUDGETS = [
   "Under $10k",
