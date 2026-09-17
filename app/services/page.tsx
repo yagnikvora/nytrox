@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import SpaceBackground from "../components/SpaceBackground";
@@ -12,12 +11,14 @@ import Footer from "../components/Footer";
 import MaskedHeading from "../components/MaskedHeading";
 import ScrollReveal from "../components/ScrollReveal";
 import { CATEGORY_SPOTLIGHT, SERVICE_GROUPS, serviceHref } from "../data/services";
+import { pageMetadata } from "../data/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Services — Nytrox",
   description:
     "Twelve services across design, engineering, and growth — UI/UX, websites, custom development, mobile apps, AI automation, branding, packaging, video, and performance marketing.",
-};
+  path: "/services/",
+});
 
 export default function ServicesPage() {
   return (

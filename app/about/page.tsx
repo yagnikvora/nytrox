@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import SpaceBackground from "../components/SpaceBackground";
@@ -16,12 +15,14 @@ import MaskedHeading from "../components/MaskedHeading";
 import MilestoneTimeline from "../components/MilestoneTimeline";
 import Parallax from "../components/Parallax";
 import { DISCIPLINES, MILESTONES, STORY, STORY_FACTS, VALUES } from "../data/about";
+import { pageMetadata } from "../data/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "About — Nytrox",
   description:
     "Nytrox is a remote-first software studio that carries products from the first messy conversation through design, engineering, launch, and the years afterwards.",
-};
+  path: "/about/",
+});
 
 export default function AboutPage() {
   return (

@@ -25,6 +25,38 @@ import ScrollReveal from "./components/ScrollReveal";
 import { SERVICES, HOME_SERVICE_COUNT, serviceHref } from "./data/services";
 import { STACK } from "./data/stack";
 import { PROJECTS } from "./data/projects";
+import { HOME_DESCRIPTION, HOME_TITLE, SITE_NAME, SITE_URL, pageMetadata } from "./data/site";
+
+export const metadata = pageMetadata({
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
+  path: "/",
+});
+
+/**
+ * Structured data for the home page. The WebSite entry is what Google reads
+ * for the site name shown above a search result; the Organization entry ties
+ * the logo to that name.
+ */
+const STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: SITE_NAME,
+      url: `${SITE_URL}/`,
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+      url: `${SITE_URL}/`,
+      logo: `${SITE_URL}/apple-icon.png`,
+    },
+  ],
+};
 
 /* ---------------------------------------------------------------------------
    Content
@@ -44,6 +76,12 @@ const PROCESS = [
 export default function Home() {
   return (
     <div className="relative flex min-h-screen flex-col overflow-clip">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(STRUCTURED_DATA).replace(/</g, "\\u003c"),
+        }}
+      />
       <CursorFX />
       <SpaceBackground />
 

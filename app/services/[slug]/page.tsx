@@ -22,6 +22,7 @@ import {
   relatedServices,
   serviceHref,
 } from "../../data/services";
+import { pageMetadata } from "../../data/site";
 
 /*
  * One page per entry in SERVICES. The export has no server to render a slug on
@@ -40,10 +41,11 @@ export async function generateMetadata({
 }: PageProps<"/services/[slug]">): Promise<Metadata> {
   const service = findService((await params).slug);
   if (!service) return {};
-  return {
+  return pageMetadata({
     title: `${service.title} — Nytrox`,
     description: service.desc,
-  };
+    path: `${serviceHref(service.slug)}/`,
+  });
 }
 
 export default async function ServicePage({ params }: PageProps<"/services/[slug]">) {

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import SpaceBackground from "../components/SpaceBackground";
@@ -14,13 +13,15 @@ import MaskedHeading from "../components/MaskedHeading";
 import ScrollReveal from "../components/ScrollReveal";
 import Image from "next/image";
 import { PROJECTS, domainOf } from "../data/projects";
+import { pageMetadata } from "../data/site";
 import type { CSSProperties } from "react";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Projects — Nytrox",
   description:
     "Live client work from the Nytrox studio — hospital and rehab clinics, security services, precision manufacturing, export catalogues, and retail storefronts.",
-};
+  path: "/projects/",
+});
 
 export default function ProjectsPage() {
   return (

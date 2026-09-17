@@ -5,6 +5,7 @@ import RouteFade from "./components/RouteFade";
 import ScrollProgress from "./components/ScrollProgress";
 import ScrollToTop from "./components/ScrollToTop";
 import SmoothScroll from "./components/SmoothScroll";
+import { HOME_DESCRIPTION, HOME_TITLE, SITE_NAME, SITE_URL } from "./data/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,10 +18,16 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
 });
 
+/*
+ * Site-wide defaults. Each page sets its own title, description, and canonical
+ * through pageMetadata() in data/site.ts; these only show through on routes
+ * that don't, such as the 404 page.
+ */
 export const metadata: Metadata = {
-  title: "Nytrox — Software Built for the Next Frontier",
-  description:
-    "Nytrox is a software studio crafting mobile apps, web platforms, and UI/UX that launch brands into orbit. 100+ projects delivered across 8+ industries.",
+  metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
 };
 
 export default function RootLayout({

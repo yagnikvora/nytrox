@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import SpaceBackground from "../components/SpaceBackground";
@@ -12,12 +11,14 @@ import Footer from "../components/Footer";
 import MaskedHeading from "../components/MaskedHeading";
 import ScrollReveal from "../components/ScrollReveal";
 import { CHANNELS, CONTACT_EMAIL, FAQS, NEXT_STEPS, SOCIALS } from "../data/contact";
+import { pageMetadata } from "../data/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Contact — Nytrox",
   description:
     "Tell us about your product and we'll map the flight path. Every enquiry gets a human reply within one business day.",
-};
+  path: "/contact/",
+});
 
 export default function ContactPage() {
   return (

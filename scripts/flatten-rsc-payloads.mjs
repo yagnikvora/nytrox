@@ -19,6 +19,16 @@
  * existingResponse="Replace", so the router is handed a page of HTML where it
  * expected an RSC payload.
  *
+ * Dynamic routes nest a level deeper, and there the segment payload is split
+ * too — /services/[slug] is written as
+ *
+ *     out/services/website/__next.services/$d$slug.txt
+ *     out/services/website/__next.services/$d$slug/__PAGE__.txt
+ *
+ * and requested as `__next.services.$d$slug.txt` and
+ * `__next.services.$d$slug.__PAGE__.txt`. The rule is the same at any depth:
+ * every path component under a `__next.*` directory is joined with a dot.
+ *
  * This copies each nested payload to the flat name the client actually requests.
  * Both are left in place — the directory form is what Next wrote, and something
  * downstream may yet expect it.
@@ -26,7 +36,7 @@
  * Runs as npm's `postbuild`, so `npm run build` picks it up with no extra step.
  */
 
-import { readdir, copyFile, stat } from "node:fs/promises";
+import { readdir, copyFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 
@@ -39,32 +49,46 @@ if (!existsSync(OUT)) {
 
 let copied = 0;
 
-/** Walk out/, mirroring every `__next.<seg>/__PAGE__.txt` to `__next.<seg>.__PAGE__.txt`. */
+/**
+ * Mirror every file under a `__next.*` directory to a flat, dot-joined name
+ * beside that directory: `__next.a/b/c.txt` → `__next.a.b.c.txt`.
+ */
+async function flatten(parent, dirName, parts = []) {
+  const dir = join(parent, dirName, ...parts);
+  const entries = await readdir(dir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    if (entry.isDirectory()) {
+      await flatten(parent, dirName, [...parts, entry.name]);
+      continue;
+    }
+    if (!entry.isFile()) continue;
+
+    const flat = join(parent, [dirName, ...parts, entry.name].join("."));
+    if (!existsSync(flat)) {
+      await copyFile(join(dir, entry.name), flat);
+      copied++;
+    }
+  }
+}
+
+/** Walk out/ looking for `__next.*` payload directories. */
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
 
   for (const entry of entries) {
-    const path = join(dir, entry.name);
-
     if (!entry.isDirectory()) continue;
 
     // Next's own asset directory holds no route payloads.
     if (entry.name === "_next") continue;
 
     if (entry.name.startsWith("__next.")) {
-      const page = join(path, "__PAGE__.txt");
-      if (existsSync(page) && (await stat(page)).isFile()) {
-        const flat = join(dir, `${entry.name}.__PAGE__.txt`);
-        if (!existsSync(flat)) {
-          await copyFile(page, flat);
-          copied++;
-        }
-      }
-      // These directories hold only the payload; no need to descend.
+      // These directories hold only payloads; nothing below is a route.
+      await flatten(dir, entry.name);
       continue;
     }
 
-    await walk(path);
+    await walk(join(dir, entry.name));
   }
 }
 
