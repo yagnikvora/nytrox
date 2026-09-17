@@ -6,7 +6,7 @@ import {
   useScroll,
   useSpring,
 } from "motion/react";
-import { useRef, useState } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 
 export type ProcessStep = {
@@ -65,7 +65,12 @@ export default function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
         />
       </div>
 
-      <ol className="grid gap-8 lg:grid-cols-6 lg:gap-3">
+      {/* One column per step from lg up: six on the home page, four on a
+          service page. */}
+      <ol
+        className="grid gap-8 lg:grid-cols-[repeat(var(--steps),minmax(0,1fr))] lg:gap-3"
+        style={{ "--steps": steps.length } as CSSProperties}
+      >
         {steps.map((p, i) => (
           <li key={p.step} className="relative flex gap-5 lg:block">
             {/* Number tile. Sits on the rail, so it needs an opaque-ish

@@ -11,17 +11,7 @@ import CtaBand from "../components/CtaBand";
 import Footer from "../components/Footer";
 import MaskedHeading from "../components/MaskedHeading";
 import ScrollReveal from "../components/ScrollReveal";
-import { SERVICE_GROUPS, type ServiceCategory } from "../data/services";
-
-/** The cursor-follow spotlight, tuned to each category's accent. */
-const SPOTLIGHT: Record<
-  ServiceCategory,
-  `rgba(${number}, ${number}, ${number}, ${number})`
-> = {
-  design: "rgba(139, 92, 246, 0.22)",
-  build: "rgba(34, 211, 238, 0.2)",
-  growth: "rgba(236, 72, 153, 0.2)",
-};
+import { CATEGORY_SPOTLIGHT, SERVICE_GROUPS, serviceHref } from "../data/services";
 
 export const metadata: Metadata = {
   title: "Services — Nytrox",
@@ -103,19 +93,20 @@ export default function ServicesPage() {
                   variant={i % 2 === 0 ? "left" : "right"}
                   className="h-full"
                 >
-                  {/* wrapper carries the anchor target for /services#slug links,
-                      and the category accent every layer below inherits */}
-                  <div
+                  {/* the whole card opens the service's own page; the id keeps
+                      older /services#slug links landing on the card */}
+                  <Link
+                    href={serviceHref(s.slug)}
                     id={s.slug}
                     data-accent={s.category}
-                    className="accent h-full scroll-mt-28"
+                    className="accent block h-full scroll-mt-28"
                   >
                     <SpotlightCard
                       className="accent-panel card-glow glass h-full"
-                      spotlightColor={SPOTLIGHT[s.category]}
+                      spotlightColor={CATEGORY_SPOTLIGHT[s.category]}
                     >
                       {/* padding lives on the glare layer so the sweep spans the whole card */}
-                      <GlareHover className="h-full rounded-2xl p-7 sm:p-8">
+                      <GlareHover className="flex h-full flex-col rounded-2xl p-7 sm:p-8">
                         <div className="flex items-center gap-4">
                           <div className="accent-icon grid h-12 w-12 shrink-0 place-items-center rounded-xl">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -130,16 +121,32 @@ export default function ServicesPage() {
                         <ul className="mt-6 flex flex-wrap gap-2">
                           {s.deliverables.map((d) => (
                             <li
-                              key={d}
+                              key={d.title}
                               className="accent-chip rounded-full px-3 py-1.5 text-xs font-medium"
                             >
-                              {d}
+                              {d.title}
                             </li>
                           ))}
                         </ul>
+
+                        {/* mt-auto pins this to the bottom so cards of different
+                            lengths still line up */}
+                        <span className="accent-more mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-semibold">
+                          Learn more
+                          <svg
+                            width="15"
+                            height="15"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            className="transition-transform duration-300 group-hover/glare:translate-x-0.5"
+                            aria-hidden
+                          >
+                            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </span>
                       </GlareHover>
                     </SpotlightCard>
-                  </div>
+                  </Link>
                 </Reveal>
               ))}
             </div>

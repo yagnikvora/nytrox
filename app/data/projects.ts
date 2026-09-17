@@ -84,19 +84,6 @@ export const PROJECTS: Project[] = [
     preview: "/previews/careforu-rehab.jpg",
   },
   {
-    slug: "param-web-designs",
-    title: "Param Web Designs",
-    category: "Design Agency",
-    location: "Rajkot, India",
-    url: "https://www.paramwebdesigns.com/",
-    summary:
-      "An agency site that has to carry its own portfolio: service pages running fifteen deep, a project showcase linking out to live client work, and a 360° walk-through of the studio.",
-    highlights: ["Portfolio showcase", "Service catalogue", "360° studio tour", "Enquiry form"],
-    cover: "from-fuchsia-500 via-purple-500 to-indigo-600",
-    accent: "217 70 239",
-    preview: "/previews/param-web-designs.jpg",
-  },
-  {
     slug: "shree-hari-metacast",
     title: "Shree Hari Metacast",
     category: "Manufacturing",

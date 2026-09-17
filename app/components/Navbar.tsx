@@ -43,9 +43,16 @@ export default function Navbar() {
      `trailingSlash: true` in next.config.ts means usePathname() hands back
      "/services/", while the hrefs above are written "/services" — comparing
      them raw never matched, so every page lit "Home". Both sides are stripped
-     to a bare path (and the hash dropped) before they are compared. */
+     to a bare path (and the hash dropped) before they are compared.
+
+     A section's sub-pages light its entry too — /services/website sits under
+     "Services". Home is exact-only, or it would prefix-match every route. */
+  const current = routeOf(pathname);
   const activeIndex = Math.max(
-    NAV.findIndex((item) => routeOf(item.href) === routeOf(pathname)),
+    NAV.findIndex((item) => {
+      const route = routeOf(item.href);
+      return route === current || (route !== "/" && current.startsWith(`${route}/`));
+    }),
     0
   );
 
@@ -93,7 +100,7 @@ export default function Navbar() {
               href="/contact"
               className="btn-gradient hidden rounded-lg px-4 py-2 text-sm font-semibold transition-transform duration-300 ease-out hover:-translate-y-0.5 sm:block"
             >
-              Book a Demo
+              Get Quote
             </Link>
 
             {/* Mobile toggle */}
@@ -142,7 +149,7 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
               className="btn-gradient mt-2 block rounded-lg px-4 py-2.5 text-center text-sm font-semibold"
             >
-              Book a Demo
+              Get Quote
             </Link>
           </div>
         )}

@@ -22,7 +22,7 @@ import MaskedHeading from "./components/MaskedHeading";
 import Parallax from "./components/Parallax";
 import ProcessTimeline from "./components/ProcessTimeline";
 import ScrollReveal from "./components/ScrollReveal";
-import { SERVICES, HOME_SERVICE_COUNT } from "./data/services";
+import { SERVICES, HOME_SERVICE_COUNT, serviceHref } from "./data/services";
 import { STACK } from "./data/stack";
 import { PROJECTS } from "./data/projects";
 
@@ -203,7 +203,7 @@ function Services() {
           return (
             <Reveal as="div" key={s.slug} delay={i * 70} variant="blur">
               <Link
-                href={`/services#${s.slug}`}
+                href={serviceHref(s.slug)}
                 data-accent={accent.name}
                 className="accent block h-full"
               >

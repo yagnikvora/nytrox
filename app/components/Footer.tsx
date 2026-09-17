@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { LogoLockup } from "./Logo";
-import { SERVICES } from "../data/services";
+import { SERVICES, serviceHref } from "../data/services";
 import { PROJECTS } from "../data/projects";
 import { CONTACT_EMAIL, SOCIALS } from "../data/contact";
 
@@ -22,7 +22,7 @@ export default function Footer() {
       links: [
         ...SERVICES.slice(0, 4).map((s) => ({
           label: s.title,
-          href: `/services#${s.slug}`,
+          href: serviceHref(s.slug),
         })),
         { label: "All services", href: "/services" },
       ],
