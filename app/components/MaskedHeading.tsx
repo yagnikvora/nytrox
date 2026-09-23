@@ -16,7 +16,7 @@ type MaskedHeadingProps = {
 
 /**
  * Headline that rises into view word by word from behind its own baseline, the
- * way a title card resolves — each word sits in an overflow-hidden sleeve, so it
+ * way a title card resolves - each word sits in an overflow-hidden sleeve, so it
  * is genuinely masked rather than just faded.
  *
  * The words are aria-hidden and the whole string is exposed once via aria-label,
@@ -105,7 +105,7 @@ export default function MaskedHeading({
                 {word}
               </span>
             </span>
-            {/* A real space *between* sleeves, not inside one — otherwise the
+            {/* A real space *between* sleeves, not inside one - otherwise the
                 headline has no break opportunity and never wraps. */}
             {i < words.length - 1 ? " " : null}
           </Fragment>

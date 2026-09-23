@@ -1,8 +1,8 @@
-/* Adapted from React Bits (https://reactbits.dev) — PixelCard.
+/* Adapted from React Bits (https://reactbits.dev) - PixelCard.
    The library's default forced a fixed 300x400 card with its own border/radius.
    Here the canvas is a background layer that fills whatever size the card is
    given via Tailwind (glass / rounded-2xl / p-6 / h-full), and the content sits
-   above it — so PixelCard drops into the existing Services grid cleanly. */
+   above it - so PixelCard drops into the existing Services grid cleanly. */
 .pixel-card {
   position: relative;
   overflow: hidden;
@@ -21,7 +21,7 @@
   z-index: 0;
   opacity: 0.85;
   /* The grid reads best as ambience at the edges. Fade it down through the
-     middle of the card — that's where the title/description sit — so the
+     middle of the card - that's where the title/description sit - so the
      pixels never compete with the copy for contrast. */
   -webkit-mask-image: radial-gradient(
     115% 85% at 50% 50%,

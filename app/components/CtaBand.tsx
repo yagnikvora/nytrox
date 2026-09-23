@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CONTACT_EMAIL } from "../data/contact";
 import GradientText from "./GradientText";
 import Reveal from "./Reveal";
 
@@ -16,7 +17,7 @@ export default function CtaBand() {
           </h2>
           <p className="relative mx-auto mt-4 max-w-xl text-ink-muted">
             Book a free consultation and let&apos;s map the journey from idea to
-            liftoff — no strings attached.
+            liftoff - no strings attached.
           </p>
           <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
@@ -26,10 +27,10 @@ export default function CtaBand() {
               Book a Consultation
             </Link>
             <Link
-              href="mailto:hello@nytrox.com"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="glass inline-flex items-center justify-center rounded-xl px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
             >
-              <GradientText inline>hello@nytrox.com</GradientText>
+              <GradientText inline>{CONTACT_EMAIL}</GradientText>
             </Link>
           </div>
         </div>

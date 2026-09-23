@@ -41,7 +41,7 @@ export type Service = {
   desc: string;
   /** Longer paragraph shown on the Services page. */
   detail: string;
-  /** "Right for you if…" — the situations a client typically arrives in. */
+  /** "Right for you if…" - the situations a client typically arrives in. */
   fit: string[];
   deliverables: Deliverable[];
   /** How an engagement runs, in order. Numbered on the detail page. */
@@ -66,7 +66,7 @@ export const SERVICES: Service[] = [
     deliverables: [
       {
         title: "User research",
-        desc: "Interviews, an analytics review, and a look at what competitors have already taught your users to expect — boiled down to the handful of findings that should shape the design.",
+        desc: "Interviews, an analytics review, and a look at what competitors have already taught your users to expect - boiled down to the handful of findings that should shape the design.",
       },
       {
         title: "Wireframes & prototypes",
@@ -90,7 +90,7 @@ export const SERVICES: Service[] = [
     faqs: [
       {
         q: "Do you only design, or can you build it too?",
-        a: "Both. Plenty of clients hire us for design alone and build in-house — but because engineering sits in the same studio, the designs are made with the build in mind either way.",
+        a: "Both. Plenty of clients hire us for design alone and build in-house - but because engineering sits in the same studio, the designs are made with the build in mind either way.",
       },
       {
         q: "We already have a product. Can you redesign just part of it?",
@@ -123,7 +123,7 @@ export const SERVICES: Service[] = [
   {
     slug: "website",
     title: "Website",
-    desc: "Fast, responsive sites — marketing pages, storefronts, and CMS builds your team can edit without a developer.",
+    desc: "Fast, responsive sites - marketing pages, storefronts, and CMS builds your team can edit without a developer.",
     detail:
       "Landing pages, multi-page marketing sites, and storefronts built to load fast and rank well. Content lives in a CMS your team actually controls, and every page is responsive, accessible, and tuned for Core Web Vitals before it goes live.",
     fit: [
@@ -162,7 +162,7 @@ export const SERVICES: Service[] = [
       },
       {
         q: "Can you redesign our existing website?",
-        a: "Yes. We review the current site first — what's working, what's ranking, and which content is worth keeping — so a redesign doesn't cost you the search visibility you already have.",
+        a: "Yes. We review the current site first - what's working, what's ranking, and which content is worth keeping - so a redesign doesn't cost you the search visibility you already have.",
       },
       {
         q: "Do you handle hosting and domains?",
@@ -185,9 +185,9 @@ export const SERVICES: Service[] = [
   {
     slug: "development",
     title: "Development",
-    desc: "Custom software, SaaS platforms, and the APIs behind them — engineered on architecture that holds up.",
+    desc: "Custom software, SaaS platforms, and the APIs behind them - engineered on architecture that holds up.",
     detail:
-      "SaaS products, internal dashboards, and the services that feed them — typed end to end, server-rendered for speed, and structured so your team can keep shipping after we hand over the keys.",
+      "SaaS products, internal dashboards, and the services that feed them - typed end to end, server-rendered for speed, and structured so your team can keep shipping after we hand over the keys.",
     fit: [
       "You're building a SaaS product or internal platform and need a team to engineer it.",
       "Your business runs on spreadsheets and disconnected tools that ought to talk to each other.",
@@ -215,7 +215,7 @@ export const SERVICES: Service[] = [
       { title: "Architect", desc: "Requirements, data model, and technical approach written down and agreed." },
       { title: "Build", desc: "Short sprints, with working software to review at the end of each one." },
       { title: "Test", desc: "Automated tests and QA on every release, not saved up for the end." },
-      { title: "Ship & support", desc: "Production launch, documentation, and handover — or ongoing support if you want it." },
+      { title: "Ship & support", desc: "Production launch, documentation, and handover - or ongoing support if you want it." },
     ],
     faqs: [
       {
@@ -247,7 +247,7 @@ export const SERVICES: Service[] = [
   {
     slug: "mobile-app-development",
     title: "Mobile Application Development",
-    desc: "Native and cross-platform apps built for speed, scale, and delight — from concept to the App Store.",
+    desc: "Native and cross-platform apps built for speed, scale, and delight - from concept to the App Store.",
     detail:
       "iOS, Android, and cross-platform builds engineered for smooth 60fps interaction and offline-first reliability. We handle the whole route: architecture, integrations, store submission, and post-launch releases.",
     fit: [
@@ -262,11 +262,11 @@ export const SERVICES: Service[] = [
       },
       {
         title: "React Native / Flutter",
-        desc: "One shared codebase for both platforms when that's the better trade — quicker to ship and cheaper to maintain, without an app that feels like a website.",
+        desc: "One shared codebase for both platforms when that's the better trade - quicker to ship and cheaper to maintain, without an app that feels like a website.",
       },
       {
         title: "App Store release",
-        desc: "Listings, screenshots, signing, and submissions for the App Store and Google Play — including the back-and-forth when a reviewer has questions.",
+        desc: "Listings, screenshots, signing, and submissions for the App Store and Google Play - including the back-and-forth when a reviewer has questions.",
       },
       {
         title: "Offline-first sync",
@@ -281,12 +281,12 @@ export const SERVICES: Service[] = [
     ],
     faqs: [
       {
-        q: "Native or cross-platform — which should we choose?",
+        q: "Native or cross-platform - which should we choose?",
         a: "It depends on the product. Cross-platform suits most apps and keeps a single codebase; native earns its cost when you lean heavily on device hardware or platform-specific features. We'll recommend one during planning and explain why.",
       },
       {
         q: "Do you handle App Store and Google Play submissions?",
-        a: "Yes — listings, builds, signing, and replies to reviewer feedback. The developer accounts stay in your name, so you own the apps outright.",
+        a: "Yes - listings, builds, signing, and replies to reviewer feedback. The developer accounts stay in your name, so you own the apps outright.",
       },
       {
         q: "Can you also build the backend the app needs?",
@@ -306,7 +306,7 @@ export const SERVICES: Service[] = [
     title: "Digital Marketing",
     desc: "Campaigns, content, and social that put your product in front of the people who will actually use it.",
     detail:
-      "Strategy first, then execution: audience research, a content calendar you can sustain, and campaigns across social, email, and organic channels — all reporting into one dashboard, so you can see what is working instead of guessing.",
+      "Strategy first, then execution: audience research, a content calendar you can sustain, and campaigns across social, email, and organic channels - all reporting into one dashboard, so you can see what is working instead of guessing.",
     fit: [
       "You post regularly, but can't tell which channels actually bring in customers.",
       "You're launching something and need an audience before launch day, not after it.",
@@ -339,11 +339,11 @@ export const SERVICES: Service[] = [
     faqs: [
       {
         q: "Which platforms do you work on?",
-        a: "Whichever ones your customers actually use — usually some mix of Instagram, LinkedIn, Facebook, and email. We'd rather run two channels well than spread thin across six.",
+        a: "Whichever ones your customers actually use - usually some mix of Instagram, LinkedIn, Facebook, and email. We'd rather run two channels well than spread thin across six.",
       },
       {
         q: "How soon will we see results?",
-        a: "Organic channels build over months rather than weeks, and we'll say so up front. Early signals — engagement, list growth, first enquiries — show up in the reporting well before the bigger results do.",
+        a: "Organic channels build over months rather than weeks, and we'll say so up front. Early signals - engagement, list growth, first enquiries - show up in the reporting well before the bigger results do.",
       },
       {
         q: "Can you work alongside our in-house team?",
@@ -367,7 +367,7 @@ export const SERVICES: Service[] = [
   {
     slug: "performance-marketing",
     title: "Performance Marketing",
-    desc: "Paid acquisition run on numbers, not hunches — tracked, tested, and optimised for return on ad spend.",
+    desc: "Paid acquisition run on numbers, not hunches - tracked, tested, and optimised for return on ad spend.",
     detail:
       "Google, Meta, and LinkedIn campaigns built on a clean conversion-tracking setup. We test creative and audiences in structured cycles, cut what does not earn its keep, and report on cost per acquisition rather than impressions.",
     fit: [
@@ -402,11 +402,11 @@ export const SERVICES: Service[] = [
     faqs: [
       {
         q: "How much should we spend on ads?",
-        a: "It depends on your market and your goals. We'll suggest a test budget large enough to learn from, then scale on the cost per acquisition you're actually seeing — not on a figure picked in advance.",
+        a: "It depends on your market and your goals. We'll suggest a test budget large enough to learn from, then scale on the cost per acquisition you're actually seeing - not on a figure picked in advance.",
       },
       {
         q: "Who owns the ad accounts?",
-        a: "You do. Campaigns run in accounts owned by your business, with access granted to us — so the history, audiences, and data stay with you whatever happens.",
+        a: "You do. Campaigns run in accounts owned by your business, with access granted to us - so the history, audiences, and data stay with you whatever happens.",
       },
       {
         q: "What if our website isn't converting?",
@@ -431,9 +431,9 @@ export const SERVICES: Service[] = [
   {
     slug: "graphic-design",
     title: "Graphic Design",
-    desc: "Print and digital collateral — decks, social kits, and campaign artwork that hold the line on your brand.",
+    desc: "Print and digital collateral - decks, social kits, and campaign artwork that hold the line on your brand.",
     detail:
-      "Pitch decks, ad creative, social kits, brochures, and everything in between, drawn from one set of templates — so the tenth asset still looks like it came from the same studio as the first.",
+      "Pitch decks, ad creative, social kits, brochures, and everything in between, drawn from one set of templates - so the tenth asset still looks like it came from the same studio as the first.",
     fit: [
       "Your marketing looks different every time someone new makes it.",
       "You have a pitch, launch, or campaign coming up and need materials to match.",
@@ -466,7 +466,7 @@ export const SERVICES: Service[] = [
     faqs: [
       {
         q: "Do we need brand guidelines before you start?",
-        a: "No, though they help. If you have guidelines, we work within them. If not, we can set up a light visual system as part of the project — or take on the full identity through Brand Design.",
+        a: "No, though they help. If you have guidelines, we work within them. If not, we can set up a light visual system as part of the project - or take on the full identity through Brand Design.",
       },
       {
         q: "Which formats will we receive?",
@@ -493,7 +493,7 @@ export const SERVICES: Service[] = [
   {
     slug: "seo",
     title: "SEO",
-    desc: "Technical and content SEO that earns rankings which hold — no shortcuts, no rented traffic.",
+    desc: "Technical and content SEO that earns rankings which hold - no shortcuts, no rented traffic.",
     detail:
       "A technical audit to clear whatever is holding you back, then keyword and content work aimed at intent rather than raw volume. Schema, internal linking, and page speed get handled alongside it, because rankings follow the whole picture.",
     fit: [
@@ -528,11 +528,11 @@ export const SERVICES: Service[] = [
     faqs: [
       {
         q: "How long does SEO take to work?",
-        a: "Longer than ads. Technical fixes can show up quickly, but rankings for competitive terms build over months — and we'd rather tell you that now than promise page one by next week.",
+        a: "Longer than ads. Technical fixes can show up quickly, but rankings for competitive terms build over months - and we'd rather tell you that now than promise page one by next week.",
       },
       {
         q: "Can you guarantee first-page rankings?",
-        a: "No, and be wary of anyone who does — nobody outside Google controls how it ranks pages. What we commit to is the work search engines reward, and honest reporting on what it achieves.",
+        a: "No, and be wary of anyone who does - nobody outside Google controls how it ranks pages. What we commit to is the work search engines reward, and honest reporting on what it achieves.",
       },
       {
         q: "Will you write the content as well?",
@@ -558,9 +558,9 @@ export const SERVICES: Service[] = [
     title: "AI Automation & Solutions",
     desc: "Custom AI agents and automations that take the repetitive work off your team's desk.",
     detail:
-      "Chatbots, document pipelines, and internal agents wired into the tools you already run. We scope the workflow first, prove the value on a single process, then extend — with a human kept in the loop wherever the stakes call for one.",
+      "Chatbots, document pipelines, and internal agents wired into the tools you already run. We scope the workflow first, prove the value on a single process, then extend - with a human kept in the loop wherever the stakes call for one.",
     fit: [
-      "Your team loses hours to repetitive work — copying data, answering the same questions, sorting documents.",
+      "Your team loses hours to repetitive work - copying data, answering the same questions, sorting documents.",
       "You want to use AI in the business but aren't sure where it would genuinely help.",
       "Your support inbox is growing faster than your team.",
     ],
@@ -571,7 +571,7 @@ export const SERVICES: Service[] = [
       },
       {
         title: "Workflow automation",
-        desc: "The repetitive steps between your tools automated end to end — form to CRM, invoice to accounts, email to ticket.",
+        desc: "The repetitive steps between your tools automated end to end - form to CRM, invoice to accounts, email to ticket.",
       },
       {
         title: "LLM integrations",
@@ -599,7 +599,7 @@ export const SERVICES: Service[] = [
       },
       {
         q: "What happens when the AI gets something wrong?",
-        a: "It will, sometimes — which is why the checks are built in: human approval for consequential actions, and logs you can review. We start where a mistake is cheap and extend as accuracy is proven.",
+        a: "It will, sometimes - which is why the checks are built in: human approval for consequential actions, and logs you can review. We start where a mistake is cheap and extend as accuracy is proven.",
       },
     ],
     category: "build",
@@ -619,9 +619,9 @@ export const SERVICES: Service[] = [
   {
     slug: "package-design",
     title: "Package Design",
-    desc: "Retail-ready packaging — structure, artwork, and dielines that survive contact with the printer.",
+    desc: "Retail-ready packaging - structure, artwork, and dielines that survive contact with the printer.",
     detail:
-      "Concepts through to print-ready artwork: structural options, shelf-impact studies, and dielines prepared to your printer's spec — with mockups, so you can see the box before you commit to a run of ten thousand.",
+      "Concepts through to print-ready artwork: structural options, shelf-impact studies, and dielines prepared to your printer's spec - with mockups, so you can see the box before you commit to a run of ten thousand.",
     fit: [
       "You're launching a product and need packaging that holds its own on the shelf.",
       "Your current packaging looks dated next to your competitors'.",
@@ -638,7 +638,7 @@ export const SERVICES: Service[] = [
       },
       {
         title: "Label & carton artwork",
-        desc: "Front-of-pack design plus the detail that has to be there — ingredients, barcodes, and regulatory marks — set out legibly.",
+        desc: "Front-of-pack design plus the detail that has to be there - ingredients, barcodes, and regulatory marks - set out legibly.",
       },
       {
         title: "3D mockups",
@@ -688,7 +688,7 @@ export const SERVICES: Service[] = [
     title: "Brand Design",
     desc: "Logos, identity systems, and guidelines that make you recognisable everywhere you show up.",
     detail:
-      "Positioning and naming through to a full identity — logo suite, palette, type scale, and the usage rules written down. The guidelines matter: the brand has to survive being handed to a printer, an agency, or a new hire.",
+      "Positioning and naming through to a full identity - logo suite, palette, type scale, and the usage rules written down. The guidelines matter: the brand has to survive being handed to a printer, an agency, or a new hire.",
     fit: [
       "You're starting a business and need an identity that looks established from day one.",
       "Your brand has grown inconsistent as different people have designed for it.",
@@ -721,7 +721,7 @@ export const SERVICES: Service[] = [
     faqs: [
       {
         q: "Can you help with naming and positioning too?",
-        a: "Yes. If the name or positioning isn't settled, we start there — an identity is far stronger when it's built on a clear idea of what the brand stands for.",
+        a: "Yes. If the name or positioning isn't settled, we start there - an identity is far stronger when it's built on a clear idea of what the brand stands for.",
       },
       {
         q: "We already have a logo. Can you refresh it rather than start over?",
@@ -729,7 +729,7 @@ export const SERVICES: Service[] = [
       },
       {
         q: "What files do we receive?",
-        a: "Logo files in vector and web formats, colour and type specifications, the brand guidelines, and editable templates — with full rights to all of it.",
+        a: "Logo files in vector and web formats, colour and type specifications, the brand guidelines, and editable templates - with full rights to all of it.",
       },
     ],
     category: "design",
@@ -755,7 +755,7 @@ export const SERVICES: Service[] = [
     title: "Video Editing",
     desc: "Product demos, ads, and social cuts edited to hold attention past the first three seconds.",
     detail:
-      "Raw footage, screen recordings, or a blank page — we edit, grade, and score product demos, launch films, and short-form social cuts, delivered in every aspect ratio the platforms ask for.",
+      "Raw footage, screen recordings, or a blank page - we edit, grade, and score product demos, launch films, and short-form social cuts, delivered in every aspect ratio the platforms ask for.",
     fit: [
       "You have footage, but no time or team to turn it into something polished.",
       "You need a steady flow of short-form video for social.",
@@ -796,7 +796,7 @@ export const SERVICES: Service[] = [
       },
       {
         q: "Which formats will we receive?",
-        a: "Every version you need — vertical for Reels, Shorts, and TikTok, square and landscape for feeds and YouTube — each exported to that platform's recommended settings.",
+        a: "Every version you need - vertical for Reels, Shorts, and TikTok, square and landscape for feeds and YouTube - each exported to that platform's recommended settings.",
       },
     ],
     category: "design",
@@ -835,7 +835,7 @@ export const CATEGORY_SPOTLIGHT: Record<
 
 /**
  * Category sections for the /services page. Twelve detail cards in one
- * undifferentiated grid reads as a wall, so they are split three ways — and the
+ * undifferentiated grid reads as a wall, so they are split three ways - and the
  * `id` doubles as the anchor target for the jump links above the grid.
  */
 const GROUP_META = [
@@ -843,19 +843,19 @@ const GROUP_META = [
     id: "design",
     title: "Design & Brand",
     blurb:
-      "Identity, interface, and everything else people actually see — drawn from one system, so the tenth touchpoint looks like it belongs with the first.",
+      "Identity, interface, and everything else people actually see - drawn from one system, so the tenth touchpoint looks like it belongs with the first.",
   },
   {
     id: "build",
     title: "Build & Engineering",
     blurb:
-      "The software itself: sites, apps, platforms, and the automations behind them — built so your team can keep shipping long after launch week.",
+      "The software itself: sites, apps, platforms, and the automations behind them - built so your team can keep shipping long after launch week.",
   },
   {
     id: "growth",
     title: "Growth & Marketing",
     blurb:
-      "Getting it in front of the right people and proving it worked — organic and paid, measured against revenue rather than impressions.",
+      "Getting it in front of the right people and proving it worked - organic and paid, measured against revenue rather than impressions.",
   },
 ] as const satisfies readonly { id: ServiceCategory; title: string; blurb: string }[];
 

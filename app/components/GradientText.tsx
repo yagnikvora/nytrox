@@ -1,6 +1,6 @@
 "use client";
 
-// Adapted from React Bits (https://reactbits.dev) — GradientText, ported to
+// Adapted from React Bits (https://reactbits.dev) - GradientText, ported to
 // TS + Tailwind for this project. Two changes from upstream: an `inline` mode,
 // so a run of gradient text can sit mid-sentence instead of always being a
 // fit-content flex block, and the sweep holds still under prefers-reduced-motion.
@@ -14,7 +14,7 @@ import {
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 
 /**
- * React Bits' GradientText stops — electric violet → pink → lilac. Shared with
+ * React Bits' GradientText stops - electric violet → pink → lilac. Shared with
  * the `.text-gradient` utility in globals.css, so component text and inline
  * text are the same gradient wherever they sit next to each other.
  */

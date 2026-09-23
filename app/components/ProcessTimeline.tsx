@@ -17,7 +17,7 @@ export type ProcessStep = {
 
 /**
  * The process, drawn as you read it: a gradient line traces the section as it
- * scrolls past — left to right on desktop, top to bottom on narrow screens —
+ * scrolls past - left to right on desktop, top to bottom on narrow screens -
  * and each stage lights up the moment the line reaches it.
  *
  * Under prefers-reduced-motion every stage renders lit and the line is full, so
@@ -28,7 +28,7 @@ export default function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
   const reduce = usePrefersReducedMotion();
 
   // Starts when the block is three-quarters up the viewport and completes as it
-  // leaves — so the line is drawing during the part of the scroll you're
+  // leaves - so the line is drawing during the part of the scroll you're
   // actually looking at it.
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -50,7 +50,7 @@ export default function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
 
   return (
     <div ref={ref} className="relative mt-16">
-      {/* Rail — horizontal from lg up, level with the middle of the number
+      {/* Rail - horizontal from lg up, level with the middle of the number
           tiles; vertical below that, threaded through their centres. */}
       <div className="pointer-events-none absolute left-0 right-0 top-7 hidden h-px bg-white/10 lg:block">
         <motion.div

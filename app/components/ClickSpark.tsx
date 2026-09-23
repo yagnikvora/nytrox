@@ -1,6 +1,6 @@
 "use client";
 
-// Inspired by React Bits (https://reactbits.dev) — ClickSpark, written against
+// Inspired by React Bits (https://reactbits.dev) - ClickSpark, written against
 // this project's canvas conventions (see SpaceBackground) and mounted once at
 // the page root instead of wrapping children.
 import { useEffect, useRef } from "react";
@@ -58,7 +58,7 @@ export default function ClickSpark({
       canvas.style.height = `${vh}px`;
     };
 
-    // easeOutCubic — quick flick outward, gentle settle
+    // easeOutCubic - quick flick outward, gentle settle
     const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
     const draw = () => {

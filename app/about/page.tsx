@@ -18,7 +18,7 @@ import { DISCIPLINES, MILESTONES, STORY, STORY_FACTS, VALUES } from "../data/abo
 import { pageMetadata } from "../data/site";
 
 export const metadata = pageMetadata({
-  title: "About — Nytrox",
+  title: "About - Nytrox",
   description:
     "Nytrox is a remote-first software studio that carries products from the first messy conversation through design, engineering, launch, and the years afterwards.",
   path: "/about/",
@@ -46,7 +46,7 @@ export default function AboutPage() {
             />
             <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
               We&apos;re the software studio behind products you&apos;ve probably
-              used without knowing our name — and we like it that way. The work
+              used without knowing our name - and we like it that way. The work
               should be the loud part.
             </p>
           </Reveal>
@@ -152,7 +152,7 @@ export default function AboutPage() {
               className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
             />
             <ScrollReveal className="mt-4 text-ink-muted">
-              You get the whole crew on a project — not a salesperson up front and
+              You get the whole crew on a project - not a salesperson up front and
               a stranger doing the work.
             </ScrollReveal>
           </Reveal>

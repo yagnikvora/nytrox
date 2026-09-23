@@ -36,7 +36,7 @@ export default function SpaceBackground() {
     let H = 0;
     /* Size the starfield was last built for. On Android, showing or hiding the
        URL bar changes window.innerHeight and fires `resize`, and this whole
-       field used to be thrown away and re-randomised on every one of those —
+       field used to be thrown away and re-randomised on every one of those -
        so the stars visibly teleported each time you changed scroll direction.
        iOS Safari keeps innerHeight stable through the same gesture, which is
        why the effect only ever showed up on Android. */

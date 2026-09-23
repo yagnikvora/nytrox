@@ -164,7 +164,7 @@ export default function GooeyNav({
    * Run the same bubble/particle effect for a keyboard activation.
    *
    * This used to call e.preventDefault(), which played the animation and then
-   * cancelled the navigation — Enter on a nav link went nowhere for anyone not
+   * cancelled the navigation - Enter on a nav link went nowhere for anyone not
    * using a mouse. The default is now left alone: the effect fires and the link
    * follows, exactly as a click does.
    *
@@ -207,7 +207,7 @@ export default function GooeyNav({
           {items.map((item, index) => (
             <li key={index} className={activeIndex === index ? "active" : ""}>
               {/* next/link, not a bare <a>: every desktop nav click used to be a
-                  full document navigation — the whole bundle re-downloaded and
+                  full document navigation - the whole bundle re-downloaded and
                   re-executed, the route fade never played, and the starfield
                   restarted from scratch. Link keeps it a client-side
                   transition. */}

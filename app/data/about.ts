@@ -2,14 +2,14 @@
  * About-page content.
  *
  * NOTE: the MILESTONES below are a plausible draft history inferred from the
- * "5+ years" figure the site already claims — dates and events are NOT verified.
+ * "5+ years" figure the site already claims - dates and events are NOT verified.
  * Replace them with the studio's real timeline before publishing. The same goes
  * for the DISCIPLINES blurbs, which describe how the team is organised.
  */
 
 export const STORY = [
   "Nytrox started with a stubborn belief: most software fails long before it fails technically. It fails when nobody agrees what's being built, when design and engineering work from different maps, and when the people who ship it stop caring the day it goes live.",
-  "So we built the studio we wanted to hire — one team that carries a product from the first messy conversation through design, engineering, testing, launch, and the unglamorous years afterwards. No handoffs between agencies, no finger-pointing, no translating your product vision three times.",
+  "So we built the studio we wanted to hire - one team that carries a product from the first messy conversation through design, engineering, testing, launch, and the unglamorous years afterwards. No handoffs between agencies, no finger-pointing, no translating your product vision three times.",
   "Today that team ships mobile apps, web platforms, and design systems for founders and product leaders who need work that holds up under real users. The brief changes every time. The standard doesn't.",
 ];
 
@@ -45,7 +45,7 @@ export const VALUES: Value[] = [
   },
   {
     title: "Built to hand over",
-    desc: "Clean architecture, real documentation, and a walkthrough for your team. You own everything we make — no lock-in.",
+    desc: "Clean architecture, real documentation, and a walkthrough for your team. You own everything we make - no lock-in.",
     icon: "M4 7.5A2.5 2.5 0 016.5 5h11A2.5 2.5 0 0120 7.5v9a2.5 2.5 0 01-2.5 2.5h-11A2.5 2.5 0 014 16.5v-9zm4 3h8m-8 3.5h5",
   },
   {
@@ -55,7 +55,7 @@ export const VALUES: Value[] = [
   },
   {
     title: "Outcomes, not output",
-    desc: "Shipping isn't the goal — the number that moves afterwards is. We measure ourselves on what your product actually does.",
+    desc: "Shipping isn't the goal - the number that moves afterwards is. We measure ourselves on what your product actually does.",
     icon: "M12 21a9 9 0 110-18 9 9 0 010 18zm0-4.5a4.5 4.5 0 100-9 4.5 4.5 0 000 9zm0-3.3a1.2 1.2 0 100-2.4 1.2 1.2 0 000 2.4z",
   },
 ];
@@ -120,7 +120,7 @@ export const MILESTONES: Milestone[] = [
   {
     year: "2025",
     title: "100 projects delivered",
-    desc: "The hundredth product ships, across eight industries — and long-term support becomes a service in its own right.",
+    desc: "The hundredth product ships, across eight industries - and long-term support becomes a service in its own right.",
   },
   {
     year: "Today",

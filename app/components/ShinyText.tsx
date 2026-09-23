@@ -1,6 +1,6 @@
 "use client";
 
-// Adapted from React Bits (https://reactbits.dev) — ShinyText (TS + Tailwind).
+// Adapted from React Bits (https://reactbits.dev) - ShinyText (TS + Tailwind).
 // A shine sweeps across the text via an animated gradient background clip.
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { motion, useMotionValue, useAnimationFrame, useTransform } from "motion/react";

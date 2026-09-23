@@ -1,15 +1,11 @@
 /**
  * Contact details and form options.
- *
- * NOTE: the phone number and studio address below are placeholders (the +1 555
- * prefix is reserved for fiction) — swap them for the real details before this
- * goes live.
  */
 
-export const CONTACT_EMAIL = "hello@nytrox.com";
-export const CONTACT_PHONE = "+1 (555) 018-2049";
-export const CONTACT_PHONE_HREF = "tel:+15550182049";
-export const CONTACT_ADDRESS = "Ahmedabad, Gujarat, India";
+export const CONTACT_EMAIL = "nytroxai@gmail.com";
+export const CONTACT_PHONE = "+91 79904 42472";
+export const CONTACT_PHONE_HREF = "tel:+917990442472";
+export const CONTACT_ADDRESS = "Rajkot, Gujarat, India";
 
 export type Channel = {
   label: string;
@@ -31,7 +27,7 @@ export const CHANNELS: Channel[] = [
   {
     label: "Call us",
     value: CONTACT_PHONE,
-    hint: "Mon–Fri, 10:00 – 19:00 IST",
+    hint: "Mon-Fri, 10:00 - 19:00 IST",
     href: CONTACT_PHONE_HREF,
     icon: "M6.5 3.5h3l1.5 4-2 1.5a12 12 0 006 6l1.5-2 4 1.5v3a2 2 0 01-2.2 2A17 17 0 014.5 5.7 2 2 0 016.5 3.5z",
   },
@@ -54,7 +50,7 @@ export type Social = {
   /** SVG path for a 24x24 viewBox. */
   d: string;
   /**
-   * Profile URL. Leave it empty and the icon is not rendered at all — the
+   * Profile URL. Leave it empty and the icon is not rendered at all - the
    * footer and the contact page both skip it rather than shipping a link that
    * goes nowhere. Fill these in and both places light up at once.
    */
@@ -62,13 +58,13 @@ export type Social = {
 };
 
 /**
- * Social accounts, shared by the footer and the contact page — they used to be
+ * Social accounts, shared by the footer and the contact page - they used to be
  * two separate hardcoded lists, both pointing at href="#", which meant six
  * links on every page that scrolled the visitor back to the top and did
  * nothing else.
  *
  * TODO(nytrox): add the real profile URLs. Until then these render as nothing,
- * which is the honest state — an icon that does nothing when tapped reads as a
+ * which is the honest state - an icon that does nothing when tapped reads as a
  * broken site, and on a phone there is no hover to hint otherwise.
  */
 export const SOCIALS: Social[] = [
@@ -92,9 +88,9 @@ export const SOCIALS: Social[] = [
 /** Budget bands offered in the enquiry form. */
 export const BUDGETS = [
   "Under $10k",
-  "$10k – $25k",
-  "$25k – $50k",
-  "$50k – $100k",
+  "$10k - $25k",
+  "$25k - $50k",
+  "$50k - $100k",
   "$100k+",
   "Not sure yet",
 ];
@@ -104,7 +100,7 @@ export const NEXT_STEPS = [
   {
     step: "01",
     title: "We read it properly",
-    desc: "A real person reviews your brief within one business day — no auto-responder loops.",
+    desc: "A real person reviews your brief within one business day - no auto-responder loops.",
   },
   {
     step: "02",
@@ -114,14 +110,14 @@ export const NEXT_STEPS = [
   {
     step: "03",
     title: "Proposal & roadmap",
-    desc: "You get a written scope, timeline, and cost — clear enough to decide without a second meeting.",
+    desc: "You get a written scope, timeline, and cost - clear enough to decide without a second meeting.",
   },
 ];
 
 export const FAQS = [
   {
     q: "How quickly can you start?",
-    a: "Most engagements kick off within two to three weeks of signing. If your timeline is tighter, say so in your message — we keep some capacity for urgent work.",
+    a: "Most engagements kick off within two to three weeks of signing. If your timeline is tighter, say so in your message - we keep some capacity for urgent work.",
   },
   {
     q: "Do you work with early-stage startups?",
@@ -137,6 +133,6 @@ export const FAQS = [
   },
   {
     q: "Who owns the work you deliver?",
-    a: "You do — code, designs, and assets transfer to you in full, along with documentation and a handover session for your team.",
+    a: "You do - code, designs, and assets transfer to you in full, along with documentation and a handover session for your team.",
   },
 ];

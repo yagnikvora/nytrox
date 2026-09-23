@@ -12,7 +12,7 @@
  *
  * The two disagree for every nested route (the home page is written flat and so
  * happens to work), which means every prefetch on the deployed site 404s. The
- * navigation still completes — the router falls back to a full document load —
+ * navigation still completes - the router falls back to a full document load -
  * so nothing looks broken, but the prefetch buys nothing, every hover costs a
  * wasted request, and the console fills with 404s. On this project's IIS host it
  * is worse than a plain 404: web.config maps 404 to /404.html with
@@ -20,7 +20,7 @@
  * expected an RSC payload.
  *
  * Dynamic routes nest a level deeper, and there the segment payload is split
- * too — /services/[slug] is written as
+ * too - /services/[slug] is written as
  *
  *     out/services/website/__next.services/$d$slug.txt
  *     out/services/website/__next.services/$d$slug/__PAGE__.txt
@@ -30,7 +30,7 @@
  * every path component under a `__next.*` directory is joined with a dot.
  *
  * This copies each nested payload to the flat name the client actually requests.
- * Both are left in place — the directory form is what Next wrote, and something
+ * Both are left in place - the directory form is what Next wrote, and something
  * downstream may yet expect it.
  *
  * Runs as npm's `postbuild`, so `npm run build` picks it up with no extra step.
@@ -43,7 +43,7 @@ import { join } from "node:path";
 const OUT = "out";
 
 if (!existsSync(OUT)) {
-  console.log("[rsc-payloads] no out/ directory — nothing to do");
+  console.log("[rsc-payloads] no out/ directory - nothing to do");
   process.exit(0);
 }
 
@@ -97,5 +97,5 @@ await walk(OUT);
 console.log(
   copied > 0
     ? `[rsc-payloads] wrote ${copied} flat prefetch payload${copied === 1 ? "" : "s"}`
-    : "[rsc-payloads] nothing to copy — payload names already match"
+    : "[rsc-payloads] nothing to copy - payload names already match"
 );

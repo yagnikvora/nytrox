@@ -14,7 +14,7 @@
  *
  * Why this is a client component: `autoPlay` alone is a request, not a promise.
  * Chrome on Android refuses it outright when Data Saver is on, and refuses it
- * again on a "low media engagement" first visit — in both cases the hero fell
+ * again on a "low media engagement" first visit - in both cases the hero fell
  * back to an empty black rectangle, while iOS Safari (which has no equivalent
  * policy for muted inline video) played it every time. That is the single
  * biggest reason the hero looked different on the two phones. So the play
@@ -96,7 +96,7 @@ export default function HeroVideo() {
       <div className="pointer-events-none absolute -inset-2 bg-black blur-md" />
       <div className="pointer-events-none absolute -inset-8 bg-black blur-3xl" />
 
-      {/* video frame — no border; edges feathered so the black melts into the
+      {/* video frame - no border; edges feathered so the black melts into the
           backdrop */}
       <div
         className="relative aspect-video overflow-hidden"
@@ -113,8 +113,8 @@ export default function HeroVideo() {
           loop
           // "metadata", not "auto": the clip is 3.6 MB and this is the first
           // thing on the page. Where autoplay is allowed the browser fetches
-          // what it needs anyway; where it is blocked — exactly the Android
-          // case above — a phone on mobile data no longer spends 3.6 MB on a
+          // what it needs anyway; where it is blocked - exactly the Android
+          // case above - a phone on mobile data no longer spends 3.6 MB on a
           // video it was never going to play.
           preload="metadata"
           disablePictureInPicture
@@ -129,7 +129,7 @@ export default function HeroVideo() {
         />
 
         {/* Shown only when the browser refused to autoplay. A quiet control
-            rather than a loud one — it sits on the clip's own black, so where
+            rather than a loud one - it sits on the clip's own black, so where
             autoplay works nobody ever sees it. */}
         {blocked && (
           <button

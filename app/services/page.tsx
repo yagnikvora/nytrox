@@ -14,9 +14,9 @@ import { CATEGORY_SPOTLIGHT, SERVICE_GROUPS, serviceHref } from "../data/service
 import { pageMetadata } from "../data/site";
 
 export const metadata = pageMetadata({
-  title: "Services — Nytrox",
+  title: "Services - Nytrox",
   description:
-    "Twelve services across design, engineering, and growth — UI/UX, websites, custom development, mobile apps, AI automation, branding, packaging, video, and performance marketing.",
+    "Twelve services across design, engineering, and growth - UI/UX, websites, custom development, mobile apps, AI automation, branding, packaging, video, and performance marketing.",
   path: "/services/",
 });
 
@@ -41,14 +41,14 @@ export default function ServicesPage() {
               className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-6xl"
             />
             <ScrollReveal className="mx-auto mt-6 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
-              Twelve services across design, engineering, and growth — so you
+              Twelve services across design, engineering, and growth - so you
               brief a single team instead of stitching five together, and every
               piece ships knowing what the others are doing.
             </ScrollReveal>
           </Reveal>
         </section>
 
-        {/* Jump links — twelve cards is a long scroll, so the three categories
+        {/* Jump links - twelve cards is a long scroll, so the three categories
             get shortcuts before the grid starts. */}
         <section className="mx-auto max-w-7xl px-6 pb-6">
           <Reveal className="flex flex-wrap items-center justify-center gap-2.5">

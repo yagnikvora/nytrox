@@ -1,6 +1,6 @@
 "use client";
 
-// Inspired by React Bits (https://reactbits.dev) — ScrollReveal. Upstream drives
+// Inspired by React Bits (https://reactbits.dev) - ScrollReveal. Upstream drives
 // this with GSAP ScrollTrigger; this build ties the same effect to a passive
 // scroll listener + rAF so the project keeps its zero-extra-dependency setup.
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -17,7 +17,7 @@ type ScrollRevealProps = {
 };
 
 /**
- * Brightens a paragraph word by word as it travels up the viewport — the text
+ * Brightens a paragraph word by word as it travels up the viewport - the text
  * sharpens into focus while you read it.
  *
  * Falls back to fully-revealed text when IntersectionObserver is unavailable or
@@ -86,7 +86,7 @@ export default function ScrollReveal({
         // A fully-lit word drops its filter rather than settling on a
         // zero-radius blur. `blur(0px)` still puts the span on its own
         // compositor layer, and a paragraph of thirty words leaves thirty of
-        // them pinned there permanently — across the page that was dozens of
+        // them pinned there permanently - across the page that was dozens of
         // layers doing nothing but costing memory, which is felt on mid-range
         // Android far more than on an iPhone.
         const blurred = blurStrength > 0 && lit < 1;

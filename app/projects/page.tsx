@@ -17,9 +17,9 @@ import { pageMetadata } from "../data/site";
 import type { CSSProperties } from "react";
 
 export const metadata = pageMetadata({
-  title: "Projects — Nytrox",
+  title: "Projects - Nytrox",
   description:
-    "Live client work from the Nytrox studio — hospital and rehab clinics, security services, precision manufacturing, export catalogues, and retail storefronts.",
+    "Live client work from the Nytrox studio - hospital and rehab clinics, security services, precision manufacturing, export catalogues, and retail storefronts.",
   path: "/projects/",
 });
 
@@ -44,7 +44,7 @@ export default function ProjectsPage() {
               className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-6xl"
             />
             <ScrollReveal className="mx-auto mt-6 max-w-2xl text-base leading-7 text-ink-muted sm:text-lg">
-              Clinics, security firms, foundries, exporters, and retailers — all
+              Clinics, security firms, foundries, exporters, and retailers - all
               shipped, handed over, and running in production. Every card opens
               the site itself, so you can judge the work rather than our write-up.
             </ScrollReveal>
@@ -92,7 +92,7 @@ export default function ProjectsPage() {
                     >
                       {/* padding lives on the glare layer so the sweep spans the whole card */}
                       <GlareHover className="flex h-full flex-col rounded-2xl p-6 sm:p-7">
-                        {/* Cover — the live homepage, sat in a browser frame so
+                        {/* Cover - the live homepage, sat in a browser frame so
                             it reads as a site rather than a stock image. The
                             frame sits straight on the card: a mat around it read
                             as a thick coloured border and fought the artwork. */}

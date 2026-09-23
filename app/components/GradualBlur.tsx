@@ -1,4 +1,4 @@
-// Inspired by React Bits (https://reactbits.dev) — GradualBlur.
+// Inspired by React Bits (https://reactbits.dev) - GradualBlur.
 
 type GradualBlurProps = {
   side: "left" | "right";
@@ -6,7 +6,7 @@ type GradualBlurProps = {
   width?: string;
   /** Peak blur at the outer edge, in px. */
   strength?: number;
-  /** Fade the whole strip out — e.g. once the rail has nothing left to scroll. */
+  /** Fade the whole strip out - e.g. once the rail has nothing left to scroll. */
   active?: boolean;
 };
 

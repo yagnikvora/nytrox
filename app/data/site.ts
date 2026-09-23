@@ -10,13 +10,13 @@ export const SITE_NAME = "Nytrox";
 
 /*
  * The home page's search listing. The title leads with the name and then says
- * what the studio does in the words people search with — the tagline alone
+ * what the studio does in the words people search with - the tagline alone
  * ("Software Built for the Next Frontier") told a searcher nothing. Google
  * shows roughly the first 60 characters of a title and 155 of a description.
  */
-export const HOME_TITLE = "Nytrox — Web, App & Software Development Studio";
+export const HOME_TITLE = "Nytrox - Web, App & Software Development Studio";
 export const HOME_DESCRIPTION =
-  "Nytrox builds websites, mobile apps, custom software, and AI automation — plus the design and marketing that launch them. 100+ projects delivered.";
+  "Nytrox builds websites, mobile apps, custom software, and AI automation - plus the design and marketing that launch them. 100+ projects delivered.";
 
 /**
  * Title, description, canonical URL, and link-preview tags for one page.
@@ -27,7 +27,7 @@ export const HOME_DESCRIPTION =
  *
  * `path` keeps its trailing slash to match `trailingSlash: true` in
  * next.config.ts. The canonical has to be the address the server actually
- * answers on — /services/, not /services — or search engines are pointed at a
+ * answers on - /services/, not /services - or search engines are pointed at a
  * redirect instead of the page.
  */
 export function pageMetadata({

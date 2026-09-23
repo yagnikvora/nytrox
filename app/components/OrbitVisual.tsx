@@ -4,7 +4,7 @@ import { Children, cloneElement, isValidElement, type ReactElement, type ReactNo
  * Animated planet with tilted orbits and gliding satellites.
  *
  * Originally the hero visual (commit 8b6a6e5); revived here as the About page
- * centrepiece. Pure CSS — every keyframe it uses (`animate-halo`,
+ * centrepiece. Pure CSS - every keyframe it uses (`animate-halo`,
  * `animate-planet-spin`, `animate-spin-slow*`, `animate-twinkle`,
  * `animate-float*`) already lives in globals.css and is disabled under
  * prefers-reduced-motion.
@@ -25,7 +25,7 @@ const PLANET_CLOUDS =
 export default function OrbitVisual({
   chips = [],
 }: {
-  /** Optional floating labels — [top-left, bottom-right]. */
+  /** Optional floating labels - [top-left, bottom-right]. */
   chips?: [string, string] | [];
 }) {
   return (
@@ -56,10 +56,10 @@ export default function OrbitVisual({
 
       {/* Planet with a ring that wraps around it */}
       <div className="absolute left-1/2 top-1/2 h-[34%] w-[34%] -translate-x-1/2 -translate-y-1/2 animate-float">
-        {/* far half of the ring — sits behind the planet */}
+        {/* far half of the ring - sits behind the planet */}
         <SaturnRing half="back" />
 
-        {/* planet body — overflow-hidden + every layer rounded-full so nothing
+        {/* planet body - overflow-hidden + every layer rounded-full so nothing
             shows a square edge */}
         <div className="absolute inset-0 overflow-hidden rounded-full ring-1 ring-white/10 shadow-[0_0_90px_-6px_rgba(139,92,246,0.85)]">
           {/* base sphere shading (fixed light source) */}
@@ -81,7 +81,7 @@ export default function OrbitVisual({
           <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_116%,rgba(34,211,238,0.45),transparent_40%)]" />
         </div>
 
-        {/* near half of the ring — passes in front of the planet */}
+        {/* near half of the ring - passes in front of the planet */}
         <SaturnRing half="front" />
       </div>
 
@@ -146,7 +146,7 @@ function Orbit({
 }
 
 /* A satellite on the orbit. The tilted orbit both squashes it (scaleY) and, via
-   the spinning arm, rotates it — so a static counter-scale alone would smear it
+   the spinning arm, rotates it - so a static counter-scale alone would smear it
    into an oval. We instead counter-rotate at the same rate (cancelling the arm)
    and then counter-squash, which keeps the dot perfectly round at every angle
    and glued to the ellipse. */

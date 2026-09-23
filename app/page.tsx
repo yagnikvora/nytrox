@@ -128,7 +128,7 @@ function Hero() {
 
           <Reveal delay={80}>
             {/* Three lines by construction. The lg size is fluid because the copy
-                column is only ~400–511px wide — a fixed size that fits line one at
+                column is only ~400-511px wide - a fixed size that fits line one at
                 1440 wraps it into two lines at the lg breakpoint. */}
             <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[clamp(2.25rem,3.35vw,2.9rem)]">
               <SplitText text="We build software that" className="block" delay={22} />
@@ -148,7 +148,7 @@ function Hero() {
             <p className="mt-6 max-w-xl text-base leading-7 text-ink-muted sm:text-lg">
               Nytrox designs and engineers mobile apps, web platforms, and digital
               products end-to-end. From the first spark of an idea to launch and
-              beyond — we make ambitious ideas take flight.
+              beyond - we make ambitious ideas take flight.
             </p>
           </Reveal>
 
@@ -156,7 +156,7 @@ function Hero() {
           <Reveal delay={240}>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
               {/* Plain hover: a small lift, nothing else. No halo behind the
-                  button and no cursor-follow — the glow smeared into the copy
+                  button and no cursor-follow - the glow smeared into the copy
                   beside it, and the follow pulled the button out of the row
                   while you were still reading. */}
               <Link
@@ -191,7 +191,7 @@ function Hero() {
           </Reveal>
         </div>
 
-        {/* Hero video — sits below the copy on small screens, beside it on
+        {/* Hero video - sits below the copy on small screens, beside it on
             large. The parallax lets it drift a little slower than the page, so
             the hero peels apart as you scroll out of it. */}
         <Reveal delay={200} variant="scale" duration={900} className="relative">
@@ -206,7 +206,7 @@ function Hero() {
 
 /* ------------------------------ Services -------------------------------- */
 /**
- * The home tiles alternate two hues card by card — violet, green, violet — so
+ * The home tiles alternate two hues card by card - violet, green, violet - so
  * the grid reads as one set. (The /services page keeps the per-category
  * accents, where three families across twelve cards earn their keep.)
  *
@@ -230,7 +230,7 @@ function Services() {
           className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
         />
         <ScrollReveal className="mt-4 text-ink-muted">
-          A full-stack studio covering every stage of your product journey — so you
+          A full-stack studio covering every stage of your product journey - so you
           launch with one team, not five.
         </ScrollReveal>
       </Reveal>
@@ -340,7 +340,7 @@ function Process() {
           className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
         />
         <ScrollReveal className="mt-4 text-ink-muted">
-          Every product follows a proven lifecycle — transparent at each stage, so
+          Every product follows a proven lifecycle - transparent at each stage, so
           you always know exactly where your mission stands.
         </ScrollReveal>
       </Reveal>

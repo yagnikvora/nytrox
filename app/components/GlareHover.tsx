@@ -1,4 +1,4 @@
-// Inspired by React Bits (https://reactbits.dev) — GlareHover. Implemented with
+// Inspired by React Bits (https://reactbits.dev) - GlareHover. Implemented with
 // a CSS-only sweep so it stays a server component and costs nothing at runtime.
 import type { ReactNode } from "react";
 
@@ -10,7 +10,7 @@ type GlareHoverProps = {
 };
 
 /**
- * Sweeps a soft band of light diagonally across its contents on hover — the
+ * Sweeps a soft band of light diagonally across its contents on hover - the
  * "polished glass" catch you get when tilting a card toward a window.
  *
  * The tilt sits on an outer wrapper (via the standalone `rotate` property) and

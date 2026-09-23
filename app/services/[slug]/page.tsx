@@ -42,7 +42,7 @@ export async function generateMetadata({
   const service = findService((await params).slug);
   if (!service) return {};
   return pageMetadata({
-    title: `${service.title} — Nytrox`,
+    title: `${service.title} - Nytrox`,
     description: service.desc,
     path: `${serviceHref(service.slug)}/`,
   });

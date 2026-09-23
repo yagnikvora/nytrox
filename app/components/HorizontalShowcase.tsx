@@ -20,7 +20,7 @@ const EDGE_FADE =
 /**
  * Selected work as a pinned horizontal rail: the section holds still for one
  * screen-height per card while your vertical scroll drives the cards sideways
- * past a fixed frame — the page reads like a reel instead of a grid.
+ * past a fixed frame - the page reads like a reel instead of a grid.
  *
  * The pin only engages on wide, fine-pointer screens with motion allowed.
  * Everywhere else the same cards render as a native swipe rail, which is what a
@@ -46,7 +46,7 @@ export default function HorizontalShowcase({ projects }: { projects: Project[] }
   // Track width is content-driven (cards + padding), so measure rather than
   // compute: a font swap or a wrapped tag row changes it.
   useEffect(() => {
-    // Only the pinned branch reads `travel`, so there's nothing to reset here —
+    // Only the pinned branch reads `travel`, so there's nothing to reset here -
     // it gets re-measured whenever the pin engages.
     if (!pinned) return;
     const measure = () => {
@@ -149,18 +149,18 @@ export default function HorizontalShowcase({ projects }: { projects: Project[] }
       // One screen for the pin, plus however far the rail has to travel.
       style={{ height: `calc(100vh + ${travel}px)` }}
     >
-      {/* pt clears the fixed navbar — the frame is centred inside what's left */}
+      {/* pt clears the fixed navbar - the frame is centred inside what's left */}
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden pb-14 pt-28">
         {header}
 
         <div
           className="relative py-8"
-          // cards fade out at both edges instead of clipping mid-card — same
+          // cards fade out at both edges instead of clipping mid-card - same
           // treatment as the logo and testimonial rails.
           //
           // The space above and below the cards is padding rather than a margin
           // on purpose: mask-clip is border-box, so nothing outside this box
-          // gets painted — with the cards flush to the edge, a card's 6px hover
+          // gets painted - with the cards flush to the edge, a card's 6px hover
           // lift sheared its own top border off. The padding puts that slack
           // (and room for the hover glow) inside the masked box; the siblings
           // drop their matching margins, so the layout is unchanged.
@@ -199,7 +199,7 @@ export default function HorizontalShowcase({ projects }: { projects: Project[] }
 /* ------------------------------- the card ------------------------------- */
 function RailCard({ project: p }: { project: Project }) {
   return (
-    // Straight out to the client's live site, same as the cards on /projects —
+    // Straight out to the client's live site, same as the cards on /projects -
     // the point of the rail is the work itself, not our write-up of it. The
     // anchor targets on /projects are still reachable from the footer.
     <a
@@ -210,7 +210,7 @@ function RailCard({ project: p }: { project: Project }) {
       style={{ "--accent": p.accent } as CSSProperties}
     >
       <article className="card-glow glass group flex h-full flex-col overflow-hidden rounded-2xl p-5">
-        {/* Cover — the top of the live homepage. The rail is pinned inside one
+        {/* Cover - the top of the live homepage. The rail is pinned inside one
             viewport height, so this stays at h-36 and crops rather than growing
             the card; the full capture is on the /projects page. */}
         <div
@@ -224,7 +224,7 @@ function RailCard({ project: p }: { project: Project }) {
             className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
           />
 
-          {/* external-link glyph, lit on hover — tells you the card leaves the
+          {/* external-link glyph, lit on hover - tells you the card leaves the
               site before you click it, matching the /projects cards */}
           <span
             className="absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-lg bg-black/50 text-white/80 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:text-white group-hover:opacity-100"

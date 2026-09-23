@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Nytrox — cosmic design tokens
+   Nytrox - cosmic design tokens
 --------------------------------------------------------------------------- */
 :root {
   --bg: #000000;
@@ -38,10 +38,10 @@
   --animate-drift: drift 10s ease-in-out infinite;
   --animate-twinkle: twinkle 3.6s ease-in-out infinite;
   --animate-planet-spin: planet-spin 16s linear infinite;
-  /* StarBorder (React Bits) — duration is supplied inline via animationDuration */
+  /* StarBorder (React Bits) - duration is supplied inline via animationDuration */
   --animate-star-movement-bottom: star-movement-bottom linear infinite alternate;
   --animate-star-movement-top: star-movement-top linear infinite alternate;
-  /* LogoLoop (React Bits) — two identical tracks scroll one full track width */
+  /* LogoLoop (React Bits) - two identical tracks scroll one full track width */
   --animate-marquee: marquee 38s linear infinite;
 
   @keyframes float {
@@ -106,7 +106,7 @@ body {
   color: var(--ink);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   /* `clip`, not `hidden`: `overflow-x: hidden` makes the body a scroll
-     container, which stops `position: sticky` working anywhere inside it — and
+     container, which stops `position: sticky` working anywhere inside it - and
      the pinned work rail depends on it. `clip` contains the same overflow
      without creating a scrollport. */
   overflow-x: clip;
@@ -129,7 +129,7 @@ body::-webkit-scrollbar {
 /* ---------------------------------------------------------------------------
    Helpers
 --------------------------------------------------------------------------- */
-/* Inline gradient text — the same three stops and cadence as the GradientText
+/* Inline gradient text - the same three stops and cadence as the GradientText
    component (see GRADIENT_STOPS there), driven by CSS instead of a per-word
    React component so it can be dropped on a run of text inside a heading:
    MaskedHeading's accent words already sit in transformed mask sleeves, and
@@ -164,14 +164,14 @@ body::-webkit-scrollbar {
   }
 }
 
-/* Filled buttons — a deeper cut of the same violet → fuchsia family as
+/* Filled buttons - a deeper cut of the same violet → fuchsia family as
    .text-gradient, sweeping on the same 8s beat, so every button on the site is
    the same live gradient.
 
    What makes an animated fill readable is that the label has to survive every
    frame of the sweep, not just the flattering ones. So the ramp is laid out
-   symmetrically — the deep violet at both ends, a brighter fuchsia as a narrow
-   crest in the middle — and every stop is dark enough to carry white ink: the
+   symmetrically - the deep violet at both ends, a brighter fuchsia as a narrow
+   crest in the middle - and every stop is dark enough to carry white ink: the
    crest is the lightest point the label ever sits on at 4.8:1, and the ends
    reach 6.8:1. The label holds AA contrast through the whole cycle instead of
    dipping under it halfway.
@@ -196,7 +196,7 @@ body::-webkit-scrollbar {
   animation: gradient-sweep 8s ease-in-out infinite alternate;
 }
 
-/* Brand lockup — the mark and the wordmark are the supplied artwork used as a
+/* Brand lockup - the mark and the wordmark are the supplied artwork used as a
    mask, so the shapes come from the SVGs and the colour comes from here. Same
    three stops and the same 8s beat as .text-gradient (and GRADIENT_STOPS in
    GradientText.tsx), so the logo reads as part of the same system as the accent
@@ -221,8 +221,8 @@ body::-webkit-scrollbar {
 }
 /* The mark is a compact silhouette rather than a run of text, so the third of
    the ramp it shows can land wholly inside the deep violet and go dim against
-   the black. It takes a symmetric ramp instead — pale at both ends, the violet
-   a narrow crest — so a bright stop is always inside the glyph. Same stops as
+   the black. It takes a symmetric ramp instead - pale at both ends, the violet
+   a narrow crest - so a bright stop is always inside the glyph. Same stops as
    app/icon.svg, on the same 8s beat. */
 .brand-mark {
   background-image: linear-gradient(
@@ -262,7 +262,7 @@ body::-webkit-scrollbar {
 
 /* NOTE ON DECLARATION ORDER: the standard `backdrop-filter` MUST come after
    `-webkit-backdrop-filter`. Lightning CSS (Tailwind v4s minifier) collapses a
-   prefixed/unprefixed pair down to whichever is declared last — with the
+   prefixed/unprefixed pair down to whichever is declared last - with the
    standard property first it was dropped from the build entirely, leaving only
    `-webkit-backdrop-filter`, which Safari honours but Blink does not. That is
    why every glass surface looked right on iPhone and flat on Android.
@@ -280,7 +280,7 @@ body::-webkit-scrollbar {
   backdrop-filter: blur(14px);
 }
 
-/* Where the blur genuinely runs, the fill steps back and lets it do the work —
+/* Where the blur genuinely runs, the fill steps back and lets it do the work -
    this is the look the design was after, now applied only when it is safe. */
 @supports (backdrop-filter: blur(14px)) {
   .glass {
@@ -303,12 +303,12 @@ body::-webkit-scrollbar {
 --------------------------------------------------------------------------- */
 /* Each service category carries its own accent, so twelve cards read as three
    families rather than one long repetition. The hue is declared once on the
-   card's wrapper and inherits from there — hairline, icon tile, chips, and the
+   card's wrapper and inherits from there - hairline, icon tile, chips, and the
    hover glow all draw from --accent, so nothing downstream has to know which
    colour it is. Hover is keyed off the wrapper (.accent) rather than the card, so
    the same rules drive both the home tiles and the /services detail cards. */
 .accent {
-  --accent: 139 92 246; /* design — violet, and the fallback */
+  --accent: 139 92 246; /* design - violet, and the fallback */
 }
 .accent[data-accent="build"] {
   --accent: 34 211 238; /* cyan */
@@ -338,7 +338,7 @@ body::-webkit-scrollbar {
 /* The /services detail card. ::before is the element's first child, so the
    corner bloom paints behind the content; ::after is the last, so the hairline
    sits on top of the card's own edge. The home tiles use PixelCard, whose
-   ::after is already spoken for by its scrim — they take the icon and hover
+   ::after is already spoken for by its scrim - they take the icon and hover
    treatment only. */
 .accent-panel::before {
   content: "";
@@ -378,7 +378,7 @@ body::-webkit-scrollbar {
   opacity: 1;
 }
 
-/* Icon tile — an accent wash that lifts and lights up with the card. */
+/* Icon tile - an accent wash that lifts and lights up with the card. */
 .accent-icon {
   color: color-mix(in srgb, rgb(var(--accent)) 42%, white);
   background: linear-gradient(
@@ -406,13 +406,13 @@ body::-webkit-scrollbar {
     0 12px 30px -12px rgb(var(--accent) / 0.9);
 }
 
-/* Links and affordances inside an accented card — "Learn more" on the home
+/* Links and affordances inside an accented card - "Learn more" on the home
    tiles, the domain and "Visit live site" on the project cards. */
 .accent-more {
   color: color-mix(in srgb, rgb(var(--accent)) 35%, white);
 }
 
-/* Deliverable chips — tinted rather than plain hairline rings, so the list
+/* Deliverable chips - tinted rather than plain hairline rings, so the list
    reads as part of the card instead of a row of borders. */
 .accent-chip {
   color: color-mix(in srgb, rgb(var(--accent)) 30%, white);
@@ -427,7 +427,7 @@ body::-webkit-scrollbar {
   box-shadow: inset 0 0 0 1px rgb(var(--accent) / 0.4);
 }
 
-/* Route change: the incoming page eases up out of black. Opacity only — a
+/* Route change: the incoming page eases up out of black. Opacity only - a
    transform here would break every `position: fixed` child (navbar, cursor,
    star canvas). */
 .route-fade {

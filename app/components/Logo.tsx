@@ -1,11 +1,11 @@
-/* Nytrox identity — the mark and the NYTROX wordmark are the supplied artwork
+/* Nytrox identity - the mark and the NYTROX wordmark are the supplied artwork
    (public/Only-Logo.svg, public/Only-Name.svg) painted through a CSS mask, so
    the shapes come from the source files while the colour comes from the site
    palette instead of the artwork's gold. See `.brand-art` in globals.css: it
    carries the same stops and the same 8s beat as `.text-gradient`, so the logo
    travels with every other gradient on the page.
 
-   Both pieces are height-driven — pass a `h-*` utility and the width follows
+   Both pieces are height-driven - pass a `h-*` utility and the width follows
    from the source viewBox. Shared by the navbar and the footer so the identity
    stays consistent. */
 

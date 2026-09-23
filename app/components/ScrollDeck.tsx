@@ -12,12 +12,12 @@ import {
 type Section = { id: string; label: string };
 
 const TRANSITION_MS = 850;
-// Slack (px) around a panel's scroll edges — absorbs sub-pixel/padding
+// Slack (px) around a panel's scroll edges - absorbs sub-pixel/padding
 // overflow so a scroll still advances instead of nudging content a few px.
 const EDGE = 28;
 
 /**
- * Full-screen "panel deck". Scrolling doesn't move the document — each
+ * Full-screen "panel deck". Scrolling doesn't move the document - each
  * gesture transitions to the next section (fade + drift). Panels that are
  * taller than the viewport scroll internally first, then advance at the edges.
  *

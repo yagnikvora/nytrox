@@ -26,7 +26,7 @@ type ParallaxProps = {
  * Under prefers-reduced-motion it renders a plain, static wrapper.
  *
  * Note the transform makes this element the containing block for any
- * `position: fixed` descendant — wrap page content, never the navbar, the
+ * `position: fixed` descendant - wrap page content, never the navbar, the
  * cursor, or the star canvas.
  */
 export default function Parallax({

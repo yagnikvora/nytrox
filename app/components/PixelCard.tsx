@@ -1,6 +1,6 @@
 "use client";
 
-// Adapted from React Bits (https://reactbits.dev) — PixelCard (ported to TS).
+// Adapted from React Bits (https://reactbits.dev) - PixelCard (ported to TS).
 // A grid of pixels dissolves in on hover/focus. Adapted for the Nytrox theme:
 // the canvas is a background layer and a `cosmic` variant matches the brand
 // violet/cyan palette. See PixelCard.css for the layout adaptation.
@@ -161,7 +161,7 @@ const VARIANTS: Record<string, VariantConfig> = {
     colors: "#fecdd3,#fda4af,#e11d48",
     noFocus: true,
   },
-  // Nytrox brand palette — violet → indigo → cyan
+  // Nytrox brand palette - violet → indigo → cyan
   cosmic: {
     activeColor: "#a78bfa",
     gap: 5,

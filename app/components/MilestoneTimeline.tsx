@@ -44,7 +44,7 @@ export default function MilestoneTimeline({ items }: { items: Milestone[] }) {
 
   return (
     <ol ref={ref} className="relative mt-14">
-      {/* spine — a dim full-height track with a lit line growing down it */}
+      {/* spine - a dim full-height track with a lit line growing down it */}
       <div
         className="absolute bottom-2 left-[7px] top-2 w-px bg-white/10 sm:left-[calc(6rem+7px)]"
         aria-hidden

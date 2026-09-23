@@ -14,7 +14,7 @@ import { CHANNELS, CONTACT_EMAIL, FAQS, NEXT_STEPS, SOCIALS } from "../data/cont
 import { pageMetadata } from "../data/site";
 
 export const metadata = pageMetadata({
-  title: "Contact — Nytrox",
+  title: "Contact - Nytrox",
   description:
     "Tell us about your product and we'll map the flight path. Every enquiry gets a human reply within one business day.",
   path: "/contact/",
@@ -95,7 +95,7 @@ export default function ContactPage() {
                 </Reveal>
               ))}
 
-              {/* Socials — rendered only once the accounts have real URLs;
+              {/* Socials - rendered only once the accounts have real URLs;
                   see SOCIALS in data/contact.ts. Every icon here pointed at
                   href="#" before, which just jumped the page back to the top. */}
               {SOCIALS.some((social) => social.href) && (
@@ -202,7 +202,7 @@ export default function ContactPage() {
               >
                 Email us
               </a>{" "}
-              and we&apos;ll point you in the right direction — even if that&apos;s
+              and we&apos;ll point you in the right direction - even if that&apos;s
               somewhere other than us.
             </p>
           </Reveal>

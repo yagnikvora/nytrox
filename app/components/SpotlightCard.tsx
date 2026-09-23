@@ -1,6 +1,6 @@
 "use client";
 
-// Adapted from React Bits (https://reactbits.dev) — SpotlightCard (TS + Tailwind).
+// Adapted from React Bits (https://reactbits.dev) - SpotlightCard (TS + Tailwind).
 // The default wrapper baked in neutral bg/border colors; here the base is kept
 // structural only (position + rounding + clip) so the Nytrox glass/`card-glow`
 // utilities can be supplied via `className` and win cleanly.
@@ -13,7 +13,7 @@ interface Position {
 
 interface SpotlightCardProps extends React.PropsWithChildren {
   className?: string;
-  /** Any CSS colour — it is dropped straight into a radial-gradient stop. */
+  /** Any CSS colour - it is dropped straight into a radial-gradient stop. */
   spotlightColor?: string;
 }
 

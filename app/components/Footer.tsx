@@ -49,7 +49,7 @@ export default function Footer() {
               products that launch brands into orbit.
             </p>
             {/* Only the accounts that actually have a URL. See SOCIALS in
-                data/contact.ts — these were all href="#" before, so every one
+                data/contact.ts - these were all href="#" before, so every one
                 of them just jumped the visitor back to the top of the page. */}
             {SOCIALS.some((social) => social.href) && (
               <div className="mt-5 flex gap-2.5">
@@ -93,7 +93,7 @@ export default function Footer() {
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-sm text-ink-muted sm:flex-row">
           <p>© {new Date().getFullYear()} Nytrox. All rights reserved.</p>
           {/* Privacy and Terms used to sit here as href="#". Neither page
-              exists, and a policy is not something to stub out with filler —
+              exists, and a policy is not something to stub out with filler -
               add the routes, then link them here. The address is also no
               longer duplicated as a literal; it comes from CONTACT_EMAIL. */}
           <div className="flex gap-6">

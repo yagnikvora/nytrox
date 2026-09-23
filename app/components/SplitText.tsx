@@ -1,6 +1,6 @@
 "use client";
 
-// Inspired by React Bits (https://reactbits.dev) — SplitText, rebuilt for this
+// Inspired by React Bits (https://reactbits.dev) - SplitText, rebuilt for this
 // project: the upstream version drives GSAP, this one stages plain CSS
 // transitions so it adds no dependency and matches Reveal's approach.
 import { useEffect, useRef, useState } from "react";
@@ -65,7 +65,7 @@ export default function SplitText({
 
   // will-change promotes every single character to its own compositor layer.
   // That is worth it while the stagger is running and pure overhead forever
-  // after — a headline of 30 characters left 30 layers pinned in GPU memory
+  // after - a headline of 30 characters left 30 layers pinned in GPU memory
   // for the life of the page, which mid-range Android hardware feels. Release
   // them once the last character has landed.
   const [settled, setSettled] = useState(false);

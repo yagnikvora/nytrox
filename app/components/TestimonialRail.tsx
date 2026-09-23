@@ -4,7 +4,7 @@ import { useState } from "react";
 import { TESTIMONIALS } from "../data/testimonials";
 import TiltedCard from "./TiltedCard";
 
-/** Seconds for one full pass of the track — slow enough to read a card in passing. */
+/** Seconds for one full pass of the track - slow enough to read a card in passing. */
 const SPEED = 70;
 
 /**
@@ -14,7 +14,7 @@ const SPEED = 70;
  * instead of clipping mid-word.
  *
  * The spacing between cards is per-item padding rather than a flex `gap`,
- * because a gap is only applied *between* items — the track would be one gap
+ * because a gap is only applied *between* items - the track would be one gap
  * short of two whole copies and the seam would jump by that much on every lap.
  *
  * Motion pauses on hover, on keyboard focus, and via the toggle beneath the

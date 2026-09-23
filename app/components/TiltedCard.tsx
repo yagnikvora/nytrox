@@ -1,6 +1,6 @@
 "use client";
 
-// Inspired by React Bits (https://reactbits.dev) — TiltedCard.
+// Inspired by React Bits (https://reactbits.dev) - TiltedCard.
 import { useRef, useState, type ReactNode } from "react";
 
 type TiltedCardProps = {
@@ -8,7 +8,7 @@ type TiltedCardProps = {
   className?: string;
   /** Maximum tilt away from flat, in degrees. */
   max?: number;
-  /** Lens depth — lower is a stronger 3D effect. */
+  /** Lens depth - lower is a stronger 3D effect. */
   perspective?: number;
 };
 

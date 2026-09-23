@@ -30,7 +30,7 @@
 .gooey-nav-container {
   position: relative;
 
-  /* Particle colours — themed to the Nytrox palette (referenced as
+  /* Particle colours - themed to the Nytrox palette (referenced as
      var(--color-N) by the JS that spawns each bubble). */
   --color-1: #8b5cf6;
   --color-2: #22d3ee;
@@ -89,7 +89,7 @@
   z-index: -1;
 }
 
-/* The active label sits on the white metaball, so it has to stay dark — but a
+/* The active label sits on the white metaball, so it has to stay dark - but a
    deep violet-black reads softer than pure #000 against the rest of the bar,
    and still clears 17:1. Kept in step with .effect.text.active below, which is
    the same label duplicated inside the goo filter. */

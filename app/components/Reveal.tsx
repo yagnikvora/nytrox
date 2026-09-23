@@ -26,7 +26,7 @@ const HIDDEN: Record<RevealVariant, CSSProperties> = {
   right: { opacity: 0, transform: "translateX(2.5rem)" },
   scale: { opacity: 0, transform: "scale(0.93)" },
   blur: { opacity: 0, transform: "translateY(1.5rem)", filter: "blur(12px)" },
-  // Wipes up from behind its own bottom edge — no fade, so it reads as a
+  // Wipes up from behind its own bottom edge - no fade, so it reads as a
   // reveal rather than an appearance.
   clip: { clipPath: "inset(100% 0 0 0)", transform: "translateY(1rem)" },
 };
@@ -39,7 +39,7 @@ const SHOWN: Record<RevealVariant, CSSProperties> = {
   scale: { opacity: 1, transform: "scale(1)" },
   // A zero-radius blur is NOT the same as no filter: it keeps the element on
   // its own compositor layer for the life of the page. The home page alone
-  // finished with forty of those still live — memory and raster work that
+  // finished with forty of those still live - memory and raster work that
   // Android phones pay for and never get back. This settles to "none"
   // instead; BLUR_LANDING below is how it gets there without killing the
   // animation on the way.

@@ -41,11 +41,11 @@ export default function Navbar() {
   /* Highlight the entry matching the current route (home otherwise).
 
      `trailingSlash: true` in next.config.ts means usePathname() hands back
-     "/services/", while the hrefs above are written "/services" — comparing
+     "/services/", while the hrefs above are written "/services" - comparing
      them raw never matched, so every page lit "Home". Both sides are stripped
      to a bare path (and the hash dropped) before they are compared.
 
-     A section's sub-pages light its entry too — /services/website sits under
+     A section's sub-pages light its entry too - /services/website sits under
      "Services". Home is exact-only, or it would prefix-match every route. */
   const current = routeOf(pathname);
   const activeIndex = Math.max(
@@ -83,7 +83,7 @@ export default function Navbar() {
             <LogoLockup markClassName="h-8" nameClassName="h-[15px]" />
           </Link>
 
-          {/* Desktop menu — gooey nav */}
+          {/* Desktop menu - gooey nav */}
           <div className="hidden text-sm font-medium md:block">
             <GooeyNav
               key={pathname}
@@ -127,7 +127,7 @@ export default function Navbar() {
         {open && (
           // Deliberately NOT .glass. This panel floats over headings and body
           // copy, and a translucent fill let them read straight through the
-          // links underneath — worst on Android, where the blur was being
+          // links underneath - worst on Android, where the blur was being
           // dropped entirely (see .glass in globals.css). An opaque fill is the
           // only thing that guarantees the menu is legible over any content.
           <div className="mt-2 rounded-2xl border border-white/10 bg-[#05050f] p-3 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.95)] md:hidden">

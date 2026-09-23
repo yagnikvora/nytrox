@@ -44,7 +44,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      "They obsess over the details most agencies skip. The result speaks for itself — pixel-perfect and fast.",
+      "They obsess over the details most agencies skip. The result speaks for itself - pixel-perfect and fast.",
     name: "Marcus Bell",
     role: "CEO, Feastly",
     initials: "MB",
@@ -60,7 +60,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      "Our checkout was losing customers for years. Six weeks with Nytrox and conversion is up 27% — measured, not guessed.",
+      "Our checkout was losing customers for years. Six weeks with Nytrox and conversion is up 27% - measured, not guessed.",
     name: "Rohan Desai",
     role: "Director of Growth, Vellum",
     initials: "RD",

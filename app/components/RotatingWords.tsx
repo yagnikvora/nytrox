@@ -6,7 +6,7 @@
 //   * Only ONE whole phrase is mounted at a time (AnimatePresence mode="wait"),
 //     so two phrases can never occupy the same line.
 //   * Each phrase is a single, non-splitting unit that slides vertically inside
-//     an overflow-hidden box — so it can never wrap or smear horizontally.
+//     an overflow-hidden box - so it can never wrap or smear horizontally.
 //   * An invisible sizer reserves the width/height of the longest phrase, so the
 //     box never resizes and the text after it ("into orbit") never jumps.
 import { useEffect, useState } from "react";

@@ -1,6 +1,6 @@
 "use client";
 
-// Adapted from React Bits (https://reactbits.dev) — CountUp (TS + Tailwind).
+// Adapted from React Bits (https://reactbits.dev) - CountUp (TS + Tailwind).
 // Animates a number up/down with a spring when it scrolls into view.
 import { useInView, useMotionValue, useSpring } from "motion/react";
 import { useCallback, useEffect, useRef } from "react";
@@ -122,7 +122,7 @@ export default function CountUp({
       // The spring goes on emitting changes far below display precision long
       // after the number has visibly stopped, and each one used to rewrite the
       // text node. On a page with a dozen counters that is a few hundred DOM
-      // mutations a second, forever, for no visible change — so only write when
+      // mutations a second, forever, for no visible change - so only write when
       // the formatted string actually differs.
       if (next === lastText.current) return;
       lastText.current = next;

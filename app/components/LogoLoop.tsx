@@ -1,4 +1,4 @@
-// Inspired by React Bits (https://reactbits.dev) — LogoLoop. CSS-only marquee
+// Inspired by React Bits (https://reactbits.dev) - LogoLoop. CSS-only marquee
 // (see the `marquee` keyframes in globals.css), so it stays a server component.
 
 type LogoLoopProps = {

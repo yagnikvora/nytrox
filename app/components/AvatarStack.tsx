@@ -4,7 +4,7 @@
 // about how many teams Nytrox works with, and pairing that claim with photos of
 // real, identifiable people would imply endorsements that don't exist. Stylised
 // portraits read as "people" at 32px without standing in for anyone in
-// particular — swap `PEOPLE` for real client photos once there are some to use.
+// particular - swap `PEOPLE` for real client photos once there are some to use.
 //
 // Each portrait gets its own hairstyle and shoulder width: four identical
 // silhouettes in four colours is what makes a placeholder row look fake, and
@@ -20,7 +20,7 @@ type Person = {
   hairStyle: HairStyle;
   /** collar / shoulders */
   top: string;
-  /** shoulder half-width — small changes read as different builds */
+  /** shoulder half-width - small changes read as different builds */
   shoulders: number;
 };
 

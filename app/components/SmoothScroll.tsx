@@ -12,8 +12,8 @@ import { useEffect } from "react";
  * block for `position: fixed`, which would break the navbar, the cursor, the
  * star canvas, and every sticky section on the site.
  *
- * Skipped on coarse pointers — touch platforms already have momentum scrolling,
- * and hijacking it there fights the OS — and under prefers-reduced-motion.
+ * Skipped on coarse pointers - touch platforms already have momentum scrolling,
+ * and hijacking it there fights the OS - and under prefers-reduced-motion.
  */
 
 /** Fraction of the remaining distance covered each frame. Higher = tighter. */
@@ -29,7 +29,7 @@ export default function SmoothScroll() {
 
     const html = document.documentElement;
     // The stylesheet sets `scroll-behavior: smooth` for anchor jumps. Left on,
-    // the browser would re-smooth every scrollTo below and fight the lerp — so
+    // the browser would re-smooth every scrollTo below and fight the lerp - so
     // the flag switches it off (see globals.css) while we're driving.
     html.dataset.smoothScroll = "on";
 
@@ -63,7 +63,7 @@ export default function SmoothScroll() {
 
     /**
      * True when the wheel is over something that scrolls itself in this
-     * direction (a rail, a modal, a code block) — those keep native scrolling.
+     * direction (a rail, a modal, a code block) - those keep native scrolling.
      */
     const overInnerScroller = (node: EventTarget | null, dy: number) => {
       let el = node instanceof Element ? node : null;
@@ -88,7 +88,7 @@ export default function SmoothScroll() {
     const onWheel = (e: WheelEvent) => {
       // ctrl+wheel is pinch-zoom on most setups; never swallow it
       if (e.ctrlKey || e.metaKey || e.defaultPrevented) return;
-      // Sideways gesture (trackpad swipe over a horizontal rail) — hands off,
+      // Sideways gesture (trackpad swipe over a horizontal rail) - hands off,
       // or preventDefault below would swallow the axis we don't handle.
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
       if (overInnerScroller(e.target, e.deltaY)) return;
@@ -104,8 +104,8 @@ export default function SmoothScroll() {
       start();
     };
 
-    // Anything that moves the page without going through us — scrollbar drag,
-    // arrow keys, find-in-page, a restored scroll position — resyncs the
+    // Anything that moves the page without going through us - scrollbar drag,
+    // arrow keys, find-in-page, a restored scroll position - resyncs the
     // target, so the next wheel tick continues from where the page actually is.
     const onScroll = () => {
       if (Math.abs(window.scrollY - current) > 2) {
@@ -121,7 +121,7 @@ export default function SmoothScroll() {
       start();
     };
 
-    // In-page anchors glide instead of jumping — CSS smooth scrolling is off
+    // In-page anchors glide instead of jumping - CSS smooth scrolling is off
     // while we're driving, so this replaces it.
     const onClick = (e: MouseEvent) => {
       if (e.defaultPrevented || e.button !== 0) return;

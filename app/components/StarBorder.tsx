@@ -1,4 +1,4 @@
-// Adapted from React Bits (https://reactbits.dev) — StarBorder (TS + Tailwind).
+// Adapted from React Bits (https://reactbits.dev) - StarBorder (TS + Tailwind).
 // A soft "star" sweeps around the border. The `star-movement-*` keyframes live
 // in app/globals.css (Tailwind v4 @theme), matching this project's setup.
 import React from "react";
