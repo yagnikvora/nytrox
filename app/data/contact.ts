@@ -3,8 +3,8 @@
  */
 
 export const CONTACT_EMAIL = "nytroxai@gmail.com";
-export const CONTACT_PHONE = "+91 79904 42472";
-export const CONTACT_PHONE_HREF = "tel:+917990442472";
+export const CONTACT_PHONE = "+91 94096 55235";
+export const CONTACT_PHONE_HREF = "tel:+919409655235";
 export const CONTACT_ADDRESS = "Rajkot, Gujarat, India";
 
 export type Channel = {
@@ -85,10 +85,17 @@ export const SOCIALS: Social[] = [
   },
 ];
 
-/** Budget bands offered in the enquiry form. */
+/**
+ * Budget bands offered in the enquiry form - fine $5k steps through the range
+ * most small builds land in, then wider bands for larger engagements.
+ */
 export const BUDGETS = [
-  "Under $10k",
-  "$10k - $25k",
+  "Under $1k",
+  "$1k - $5k",
+  "$5k - $10k",
+  "$10k - $15k",
+  "$15k - $20k",
+  "$20k - $25k",
   "$25k - $50k",
   "$50k - $100k",
   "$100k+",

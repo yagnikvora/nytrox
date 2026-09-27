@@ -883,3 +883,13 @@ export function relatedServices(service: Service, count = 3): Service[] {
     ...rest.filter((s) => s.category !== service.category),
   ].slice(0, count);
 }
+
+/**
+ * The PixelCard dissolve palette on the /services cards - three steps of each
+ * category's accent, light to deep, so the pixels match the card's hover glow.
+ */
+export const CATEGORY_PIXELS: Record<ServiceCategory, string> = {
+  design: "#c4b5fd,#a78bfa,#8b5cf6",
+  build: "#a5f3fc,#67e8f9,#22d3ee",
+  growth: "#fbcfe8,#f472b6,#ec4899",
+};

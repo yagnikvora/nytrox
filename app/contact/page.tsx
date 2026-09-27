@@ -55,10 +55,18 @@ export default function ContactPage() {
                 so the primary action isn't buried under five cards. */}
             <div className="order-2 flex flex-col gap-5 lg:order-1">
               {CHANNELS.map((c, i) => (
-                <Reveal as="div" key={c.label} delay={i * 70} variant="left">
+                <Reveal
+                  as="div"
+                  key={c.label}
+                  delay={i * 70}
+                  variant="left"
+                  // on desktop the cards share the form's height, so both
+                  // columns start and end on the same line
+                  className="lg:flex-1"
+                >
                   <SpotlightCard className="card-glow glass h-full">
                     {/* padding lives on the glare layer so the sweep spans the whole card */}
-                    <GlareHover className="h-full rounded-2xl p-6">
+                    <GlareHover className="flex h-full flex-col justify-center rounded-2xl p-6">
                       <div className="flex items-start gap-4">
                         <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-violet-500/20 to-cyan-400/20 text-violet-200 ring-1 ring-white/10">
                           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>

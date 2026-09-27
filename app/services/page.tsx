@@ -4,13 +4,12 @@ import SpaceBackground from "../components/SpaceBackground";
 import CursorFX from "../components/CursorFX";
 import Reveal from "../components/Reveal";
 import SectionKicker from "../components/SectionKicker";
-import SpotlightCard from "../components/SpotlightCard";
-import GlareHover from "../components/GlareHover";
+import PixelCard from "../components/PixelCard";
 import CtaBand from "../components/CtaBand";
 import Footer from "../components/Footer";
 import MaskedHeading from "../components/MaskedHeading";
 import ScrollReveal from "../components/ScrollReveal";
-import { CATEGORY_SPOTLIGHT, SERVICE_GROUPS, serviceHref } from "../data/services";
+import { CATEGORY_PIXELS, SERVICE_GROUPS, serviceHref } from "../data/services";
 import { pageMetadata } from "../data/site";
 
 export const metadata = pageMetadata({
@@ -102,22 +101,33 @@ export default function ServicesPage() {
                     data-accent={s.category}
                     className="accent block h-full scroll-mt-28"
                   >
-                    <SpotlightCard
-                      className="accent-panel card-glow glass h-full"
-                      spotlightColor={CATEGORY_SPOTLIGHT[s.category]}
+                    {/* same hover as the home tiles - pixel dissolve, lift,
+                        and a lit icon - in the category's own accent */}
+                    <PixelCard
+                      variant="cosmic"
+                      colors={CATEGORY_PIXELS[s.category]}
+                      className="card-glow glass group h-full rounded-2xl p-7 sm:p-8"
                     >
-                      {/* padding lives on the glare layer so the sweep spans the whole card */}
-                      <GlareHover className="flex h-full flex-col rounded-2xl p-7 sm:p-8">
+                      <div className="flex h-full flex-col">
                         <div className="flex items-center gap-4">
                           <div className="accent-icon grid h-12 w-12 shrink-0 place-items-center rounded-xl">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
+                            <svg
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              className="transition-transform duration-[350ms] ease-out group-hover:scale-110"
+                              aria-hidden
+                            >
                               {s.icon}
                             </svg>
                           </div>
                           <h3 className="font-display text-xl font-semibold text-white">{s.title}</h3>
                         </div>
 
-                        <p className="mt-5 text-sm leading-7 text-ink-muted">{s.detail}</p>
+                        <p className="mt-5 text-sm leading-7 text-ink-muted transition-colors duration-300 group-hover:text-ink">
+                          {s.detail}
+                        </p>
 
                         <ul className="mt-6 flex flex-wrap gap-2">
                           {s.deliverables.map((d) => (
@@ -139,14 +149,14 @@ export default function ServicesPage() {
                             height="15"
                             viewBox="0 0 24 24"
                             fill="none"
-                            className="transition-transform duration-300 group-hover/glare:translate-x-0.5"
+                            className="transition-transform duration-300 group-hover:translate-x-0.5"
                             aria-hidden
                           >
                             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         </span>
-                      </GlareHover>
-                    </SpotlightCard>
+                      </div>
+                    </PixelCard>
                   </Link>
                 </Reveal>
               ))}

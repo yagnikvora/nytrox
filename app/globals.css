@@ -427,6 +427,50 @@ body::-webkit-scrollbar {
   box-shadow: inset 0 0 0 1px rgb(var(--accent) / 0.4);
 }
 
+/* ---------------------------------------------------------------------------
+   Stack marquee (LogoLoop)
+--------------------------------------------------------------------------- */
+/* Each chip carries its brand colour as --brand (a hex, set inline). At rest
+   the logos are a touch muted so fourteen brand palettes don't shout over one
+   another; on hover the chip lifts, its mark comes up to full colour, and the
+   border and glow pick up that brand's hue. */
+.stack-chip {
+  transition:
+    transform 300ms ease,
+    color 300ms ease,
+    border-color 300ms ease,
+    background 300ms ease,
+    box-shadow 300ms ease;
+}
+.stack-chip:hover {
+  transform: translateY(-2px);
+  color: #fff;
+  border-color: color-mix(in srgb, var(--brand) 45%, transparent);
+  background: color-mix(in srgb, var(--brand) 8%, rgb(255 255 255 / 0.03));
+  box-shadow: 0 8px 22px -12px color-mix(in srgb, var(--brand) 80%, transparent);
+}
+
+/* the logo's own tile - a faint wash of the brand behind the mark */
+.stack-logo {
+  background: color-mix(in srgb, var(--brand) 10%, rgb(255 255 255 / 0.04));
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06);
+  transition: background 300ms ease, box-shadow 300ms ease;
+}
+.stack-logo img {
+  opacity: 0.85;
+  filter: saturate(0.85);
+  transition: opacity 300ms ease, filter 300ms ease, transform 300ms ease;
+}
+.stack-chip:hover .stack-logo {
+  background: color-mix(in srgb, var(--brand) 20%, rgb(255 255 255 / 0.04));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 35%, transparent);
+}
+.stack-chip:hover .stack-logo img {
+  opacity: 1;
+  filter: none;
+  transform: scale(1.1);
+}
+
 /* Route change: the incoming page eases up out of black. Opacity only - a
    transform here would break every `position: fixed` child (navbar, cursor,
    star canvas). */

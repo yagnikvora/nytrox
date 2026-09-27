@@ -35,9 +35,14 @@ const EDGE_MASK =
 const WATERMARK_PATCH =
   "radial-gradient(circle at bottom right, #000 0%, #000 55%, transparent 100%)";
 
-// Reframing: zoom a touch (so there are no empty gaps) then shift the clip
-// left + up → crops the left edge and lifts the subject higher in the frame.
-const FRAMING = "translate(-8%, -6%) scale(1.18)";
+// Reframing: zoom a touch (so there are no empty gaps) then shift the clip.
+// The galaxy sits right of centre in the raw clip (~65% across, ~49% down).
+//   - Stacked (below lg) the video is on its own, so it's pulled fully to the
+//     centre: -(0.65 - 0.5) x 1.18 ≈ -17% across, ~+1% down.
+//   - Beside the copy (lg+) it crops only the left edge and lifts the subject
+//     higher in the frame, leaning it toward the text.
+const FRAMING =
+  "[transform:translate(-17%,1%)_scale(1.18)] lg:[transform:translate(-8%,-6%)_scale(1.18)]";
 
 export default function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -104,8 +109,7 @@ export default function HeroVideo() {
       >
         <video
           ref={videoRef}
-          className="absolute inset-0 h-full w-full object-cover"
-          style={{ transform: FRAMING }}
+          className={`absolute inset-0 h-full w-full object-cover ${FRAMING}`}
           src="/videos/blue2_looped.mp4"
           autoPlay
           muted
