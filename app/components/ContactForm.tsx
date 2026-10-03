@@ -10,22 +10,35 @@ import {
 } from "react";
 import GradientText from "./GradientText";
 import { SERVICES } from "../data/services";
-import { BUDGETS, CONTACT_EMAIL } from "../data/contact";
+import {
+  CONTACT_EMAIL,
+  COUNTRY_CODES,
+  DEFAULT_COUNTRY_CODE,
+  dialCodeOf,
+} from "../data/contact";
 
 /**
  * Project enquiry form.
  *
- * There is no backend in this project yet, so a validated submission is handed
- * to the visitor's mail client as a pre-filled message to CONTACT_EMAIL - which
- * works on a static deploy with nothing to configure. To post it to a real
- * inbox instead (a Server Action, form service, or CRM endpoint), replace the
- * body of `deliver` below; validation and UI states stay as they are.
+ * A validated submission is posted to app/api/contact, which emails it and
+ * stores it in Sanity. The checks here are for the visitor's benefit; the
+ * endpoint runs the same ones again, and its answers are shown the same way.
  */
 
-type Field = "name" | "email" | "message";
+/** Trailing slash to match `trailingSlash` in next.config - without it the POST is redirected. */
+const ENDPOINT = "/api/contact/";
+
+type Field = "name" | "email" | "phone" | "message";
 type Errors = Partial<Record<Field, string>>;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/**
+ * The number without its country code, which the dropdown beside it supplies.
+ * International numbers run to 15 digits including the code, so 14 is the most
+ * the national part can be.
+ */
+const PHONE_MIN = 6;
+const PHONE_MAX = 14;
 
 const SERVICE_OPTIONS = [...SERVICES.map((s) => s.title), "Something else"];
 
@@ -40,30 +53,25 @@ const inputClass =
 export default function ContactForm() {
   const [errors, setErrors] = useState<Errors>({});
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  /** A failure that isn't about one field - the server or the network. */
+  const [failure, setFailure] = useState("");
 
-  const deliver = (values: Record<string, string>) => {
-    const body = [
-      `Name: ${values.name}`,
-      `Email: ${values.email}`,
-      `Company: ${values.company || "-"}`,
-      `Service: ${values.service || "-"}`,
-      `Budget: ${values.budget || "-"}`,
-      "",
-      "Project details:",
-      values.message,
-    ].join("\n");
-
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-      `New project enquiry - ${values.name}`
-    )}&body=${encodeURIComponent(body)}`;
+  const focusFirst = (form: HTMLFormElement, problems: Errors) => {
+    // move focus to the first problem so keyboard/screen-reader users land on it
+    const first = Object.keys(problems)[0];
+    form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (sending) return;
 
-    const data = new FormData(e.currentTarget);
+    // held now: the event's currentTarget is gone once the handler awaits
+    const form = e.currentTarget;
+    const data = new FormData(form);
     const values = Object.fromEntries(
-      ["name", "email", "company", "service", "budget", "message"].map((k) => [
+      ["name", "email", "company", "country", "phone", "service", "message", "website"].map((k) => [
         k,
         String(data.get(k) ?? "").trim(),
       ])
@@ -73,19 +81,44 @@ export default function ContactForm() {
     if (!values.name) next.name = "Please tell us your name.";
     if (!values.email) next.email = "We need an email to reply to.";
     else if (!EMAIL_RE.test(values.email)) next.email = "That email doesn't look right.";
+    // optional, but if it's filled in it should be diallable; the input only
+    // lets digits through, so length is all that's left to check
+    if (values.phone && !/^\d+$/.test(values.phone)) next.phone = "Use digits only.";
+    else if (values.phone && values.phone.length < PHONE_MIN)
+      next.phone = "That number looks too short.";
     if (!values.message) next.message = "A sentence or two about the project helps.";
     else if (values.message.length < 20) next.message = "Could you add a little more detail?";
 
     setErrors(next);
+    setFailure("");
     if (Object.keys(next).length > 0) {
-      // move focus to the first problem so keyboard/screen-reader users land on it
-      const first = Object.keys(next)[0];
-      e.currentTarget.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+      focusFirst(form, next);
       return;
     }
 
-    deliver(values);
-    setSent(true);
+    setSending(true);
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      if (res.ok) {
+        setSent(true);
+        return;
+      }
+      const reply: { error?: string; fields?: Errors } = await res.json().catch(() => ({}));
+      if (reply.fields && Object.keys(reply.fields).length > 0) {
+        setErrors(reply.fields);
+        focusFirst(form, reply.fields);
+      } else {
+        setFailure(reply.error || "We couldn't send your message just now.");
+      }
+    } catch {
+      setFailure("We couldn't reach the server. Check your connection and try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   /* Clear a field's error as soon as the visitor edits it. */
@@ -108,18 +141,18 @@ export default function ContactForm() {
           </svg>
         </div>
         <h3 className="mt-6 font-display text-2xl font-bold text-white">
-          Your message is ready to send
+          Your message is on its way
         </h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-7 text-ink-muted">
-          We&apos;ve opened your mail app with the brief filled in - hit send and
-          it lands with us. If nothing opened, email{" "}
+          Thanks - your enquiry has reached us, and a real person will reply
+          within one business day. Anything to add in the meantime? Email{" "}
           <a
             href={`mailto:${CONTACT_EMAIL}`}
             className="font-medium text-violet-300 transition-colors hover:text-white"
           >
             {CONTACT_EMAIL}
-          </a>{" "}
-          directly and we&apos;ll pick it up from there.
+          </a>
+          .
         </p>
         <button
           type="button"
@@ -139,7 +172,7 @@ export default function ContactForm() {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="glass flex h-full flex-col rounded-3xl p-6 sm:p-8"
+      className="glass relative flex h-full flex-col rounded-3xl p-6 sm:p-8"
     >
       <h2 className="font-display text-xl font-semibold text-white">
         Tell us about your project
@@ -152,6 +185,12 @@ export default function ContactForm() {
         <FieldWrap label="Full name" htmlFor="name" required error={errors.name}>
           <input
             id="name"
+            // On every control in this form: autofill and password-manager
+            // extensions stamp their own attribute (fdprocessedid) onto form
+            // controls before React hydrates, which React then reports as a
+            // mismatch. It only silences attribute differences on that one
+            // element, so real mismatches elsewhere still surface.
+            suppressHydrationWarning
             name="name"
             type="text"
             autoComplete="name"
@@ -166,6 +205,7 @@ export default function ContactForm() {
         <FieldWrap label="Email" htmlFor="email" required error={errors.email}>
           <input
             id="email"
+            suppressHydrationWarning
             name="email"
             type="email"
             autoComplete="email"
@@ -180,6 +220,7 @@ export default function ContactForm() {
         <FieldWrap label="Company" htmlFor="company">
           <input
             id="company"
+            suppressHydrationWarning
             name="company"
             type="text"
             autoComplete="organization"
@@ -188,8 +229,41 @@ export default function ContactForm() {
           />
         </FieldWrap>
 
-        <FieldWrap label="Budget" htmlFor="budget">
-          <Select id="budget" name="budget" placeholder="Select a range" options={BUDGETS} />
+        <FieldWrap label="Contact no." htmlFor="phone" error={errors.phone}>
+          <div className="flex gap-2">
+            <Select
+              id="country"
+              name="country"
+              ariaLabel="Country code"
+              placeholder="Code"
+              options={COUNTRY_CODES}
+              defaultValue={DEFAULT_COUNTRY_CODE}
+              // the trigger is narrow, so it shows the code alone; the list
+              // carries the country names and is wider than the trigger
+              display={dialCodeOf}
+              // wide enough for a three-digit code at the 16px phone size
+              className="w-28 shrink-0"
+              menuClassName="left-0 w-64 max-w-[calc(100vw-5rem)]"
+            />
+            <input
+              id="phone"
+              suppressHydrationWarning
+              name="phone"
+              type="tel"
+              inputMode="numeric"
+              autoComplete="tel-national"
+              maxLength={PHONE_MAX}
+              placeholder="Optional"
+              aria-invalid={Boolean(errors.phone)}
+              aria-describedby={errors.phone ? "phone-error" : undefined}
+              onChange={(e) => {
+                // digits only - anything else is dropped as it is typed or pasted
+                e.currentTarget.value = e.currentTarget.value.replace(/\D/g, "");
+                clearError("phone");
+              }}
+              className={`${inputClass} min-w-0 flex-1`}
+            />
+          </div>
         </FieldWrap>
 
         <div className="sm:col-span-2">
@@ -207,6 +281,7 @@ export default function ContactForm() {
           <FieldWrap label="Project details" htmlFor="message" required error={errors.message}>
             <textarea
               id="message"
+              suppressHydrationWarning
               name="message"
               rows={5}
               placeholder="What are you building, who is it for, and when do you need it live?"
@@ -219,6 +294,33 @@ export default function ContactForm() {
         </div>
       </div>
 
+      {/* Honeypot: off-screen and out of the tab order, so only a bot fills it
+          in - and the endpoint drops anything that arrives with it set. */}
+      <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="website">Website</label>
+        <input
+          id="website"
+          suppressHydrationWarning
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
+      {failure && (
+        <p
+          role="alert"
+          className="mt-6 rounded-xl border border-pink-400/30 bg-pink-500/10 px-4 py-3 text-sm leading-6 text-pink-200"
+        >
+          {failure} You can also email us directly at{" "}
+          <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-white underline">
+            {CONTACT_EMAIL}
+          </a>
+          .
+        </p>
+      )}
+
       <div className="mt-auto flex flex-col gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs leading-5 text-ink-muted">
           We&apos;ll only use these details to reply to your enquiry.
@@ -226,9 +328,11 @@ export default function ContactForm() {
         {/* same plain hover as the other primary buttons - lift + glow */}
         <button
           type="submit"
-          className="btn-gradient group inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold transition-transform duration-300 ease-out hover:-translate-y-0.5"
+          suppressHydrationWarning
+          disabled={sending}
+          className="btn-gradient group inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold transition-transform duration-300 ease-out hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70 disabled:hover:translate-y-0"
         >
-          Send enquiry
+          {sending ? "Sending…" : "Send enquiry"}
           <svg
             width="16"
             height="16"
@@ -297,17 +401,30 @@ function Select({
   name,
   placeholder,
   options,
+  defaultValue = "",
+  display,
+  ariaLabel,
+  className = "",
+  menuClassName = "inset-x-0",
 }: {
   id: string;
   name: string;
   placeholder: string;
   options: readonly string[];
+  defaultValue?: string;
+  /** What the trigger shows for the chosen option, when that isn't the option itself. */
+  display?: (value: string) => string;
+  /** For a dropdown with no <label> of its own. */
+  ariaLabel?: string;
+  className?: string;
+  /** Horizontal placement and width of the list; spans the trigger by default. */
+  menuClassName?: string;
 }) {
   const listId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(defaultValue);
   const [active, setActive] = useState(0);
   const [dropUp, setDropUp] = useState(false);
 
@@ -402,12 +519,14 @@ function Select({
   };
 
   return (
-    <div ref={rootRef} className="relative">
+    <div ref={rootRef} className={`relative ${className}`}>
       <input type="hidden" name={name} value={value} />
       <button
         id={id}
+        aria-label={ariaLabel}
         type="button"
         role="combobox"
+        suppressHydrationWarning
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listId}
@@ -419,7 +538,7 @@ function Select({
         }`}
       >
         <span className={`truncate ${value ? "text-white" : "text-ink-muted/60"}`}>
-          {value || placeholder}
+          {value ? (display ? display(value) : value) : placeholder}
         </span>
         <svg
           width="16"
@@ -439,7 +558,7 @@ function Select({
         role="listbox"
         tabIndex={-1}
         aria-label={placeholder}
-        className={`absolute inset-x-0 z-50 max-h-72 overflow-y-auto overscroll-contain rounded-xl border border-white/10 bg-[#0c0c1c] p-1.5 [scrollbar-color:rgba(139,92,246,0.45)_transparent] [scrollbar-width:thin] shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(139,92,246,0.08)] transition duration-150 ease-out ${
+        className={`absolute ${menuClassName} z-50 max-h-72 overflow-y-auto overscroll-contain rounded-xl border border-white/10 bg-[#0c0c1c] p-1.5 [scrollbar-color:rgba(139,92,246,0.45)_transparent] [scrollbar-width:thin] shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(139,92,246,0.08)] transition duration-150 ease-out ${
           dropUp ? "bottom-full mb-2 origin-bottom" : "top-full mt-2 origin-top"
         } ${open ? "visible scale-100 opacity-100" : "invisible scale-[0.98] opacity-0"}`}
       >

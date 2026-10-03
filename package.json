@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "node server.js",
     "lint": "eslint",
+    "studio": "npm --prefix studio run dev",
     "postbuild": "node scripts/flatten-rsc-payloads.mjs"
   },
   "dependencies": {

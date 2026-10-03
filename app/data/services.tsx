@@ -5,7 +5,7 @@
  * additionally renders `detail` and the deliverable titles, laid out by
  * `category` (see SERVICE_GROUPS at the bottom of this file). Each service also
  * has its own page at /services/<slug>, which is where `fit`, the deliverable
- * descriptions, `process`, and `faqs` appear.
+ * descriptions, `outcomes`, `scope`, `tools`, `process`, and `faqs` appear.
  *
  * Array order is the running order everywhere: the home grid takes the first
  * HOME_SERVICE_COUNT, the footer the first few, and each category section on
@@ -20,6 +20,11 @@ export type ServiceCategory = "design" | "build" | "growth";
 
 export type Deliverable = {
   /** Shown as a chip on /services and as the card heading on the detail page. */
+  title: string;
+  desc: string;
+};
+
+export type Outcome = {
   title: string;
   desc: string;
 };
@@ -44,6 +49,15 @@ export type Service = {
   /** "Right for you if…" - the situations a client typically arrives in. */
   fit: string[];
   deliverables: Deliverable[];
+  /** "Why it matters" - what changes for the client. Described, never quantified. */
+  outcomes: Outcome[];
+  /** The full checklist of what the service can cover, beyond the headline deliverables. */
+  scope: string[];
+  /**
+   * Tools the work is done in. Like data/stack.ts, this reads as a capability
+   * claim - trim anything the studio doesn't actually work in.
+   */
+  tools: string[];
   /** How an engagement runs, in order. Numbered on the detail page. */
   process: ServiceStep[];
   faqs: ServiceFaq[];
@@ -81,6 +95,35 @@ export const SERVICES: Service[] = [
         desc: "Transitions, loading states, and micro-interactions specified down to timing and easing, so what ships moves the way the prototype did.",
       },
     ],
+    outcomes: [
+      {
+        title: "Decisions made on evidence",
+        desc: "Research settles the arguments that opinion can't, so the team stops redesigning the same screen every time someone new looks at it.",
+      },
+      {
+        title: "Fewer surprises in the build",
+        desc: "Flows, states, and edge cases are worked out on the canvas, where changing your mind costs an afternoon rather than a sprint.",
+      },
+      {
+        title: "One product, not a patchwork",
+        desc: "A shared component library means the tenth screen behaves like the first, whoever happens to build it.",
+      },
+    ],
+    scope: [
+      "User interviews & surveys",
+      "Competitor & heuristic audits",
+      "Information architecture",
+      "User flows & journey maps",
+      "Low-fidelity wireframes",
+      "High-fidelity UI",
+      "Clickable prototypes",
+      "Usability testing",
+      "Design tokens & components",
+      "Responsive layouts",
+      "Accessibility review",
+      "Developer handoff",
+    ],
+    tools: ["Figma", "FigJam", "Framer", "Maze", "Hotjar", "Storybook"],
     process: [
       { title: "Discover", desc: "Stakeholder sessions, user interviews, and an audit of whatever exists today." },
       { title: "Map", desc: "User flows and low-fidelity wireframes, agreed before anything gets polished." },
@@ -149,6 +192,35 @@ export const SERVICES: Service[] = [
         desc: "Image handling, font loading, and script weight checked before launch, so the site is quick on real phones and not just on the office connection.",
       },
     ],
+    outcomes: [
+      {
+        title: "A site your team runs itself",
+        desc: "New pages, fresh copy, and updated images are a job for whoever owns the content, not a ticket waiting on a developer.",
+      },
+      {
+        title: "Fast where it counts",
+        desc: "Pages are tuned for the phones and connections your visitors actually have, so the first impression isn't a loading spinner.",
+      },
+      {
+        title: "Built to be found",
+        desc: "Clean structure, sensible headings, and structured data go in during the build, so search engines can read the site from day one.",
+      },
+    ],
+    scope: [
+      "Landing pages",
+      "Multi-page marketing sites",
+      "E-commerce storefronts",
+      "CMS setup & content modelling",
+      "Blog & resource sections",
+      "Contact & enquiry forms",
+      "Payment & booking integrations",
+      "Analytics & tag setup",
+      "On-page SEO & structured data",
+      "Accessibility checks",
+      "Hosting & domain setup",
+      "CMS training for your team",
+    ],
+    tools: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Sanity", "Shopify", "Vercel", "Google Analytics"],
     process: [
       { title: "Scope", desc: "Pages, content, integrations, and what the site needs to achieve, agreed up front." },
       { title: "Design", desc: "Page layouts and a component set, reviewed on desktop and mobile." },
@@ -211,6 +283,35 @@ export const SERVICES: Service[] = [
         desc: "Automated pipelines, staging environments, and monitoring, so a release is routine rather than an event.",
       },
     ],
+    outcomes: [
+      {
+        title: "A codebase you can keep changing",
+        desc: "Typed, tested, and documented, so adding the next feature doesn't mean being afraid of breaking the last one.",
+      },
+      {
+        title: "Releases that are routine",
+        desc: "Pipelines and staging environments turn a launch into a button press instead of a late night.",
+      },
+      {
+        title: "Tools that finally talk",
+        desc: "The data your team retypes between systems moves on its own, and everyone works from the same numbers.",
+      },
+    ],
+    scope: [
+      "SaaS platforms",
+      "Internal dashboards & admin panels",
+      "Customer portals",
+      "REST & GraphQL APIs",
+      "Third-party integrations",
+      "Authentication & user roles",
+      "Payments & subscriptions",
+      "Database design & migrations",
+      "Automated testing",
+      "CI/CD pipelines",
+      "Monitoring & logging",
+      "Legacy code modernisation",
+    ],
+    tools: ["TypeScript", "React", "Next.js", "Node.js", "PostgreSQL", "GraphQL", "AWS", "Playwright"],
     process: [
       { title: "Architect", desc: "Requirements, data model, and technical approach written down and agreed." },
       { title: "Build", desc: "Short sprints, with working software to review at the end of each one." },
@@ -273,6 +374,35 @@ export const SERVICES: Service[] = [
         desc: "Local storage and background sync, so the app keeps working without a connection and reconciles cleanly once it's back.",
       },
     ],
+    outcomes: [
+      {
+        title: "One team, both stores",
+        desc: "iOS and Android are planned, built, and released together, so neither platform ends up as the afterthought.",
+      },
+      {
+        title: "Works when the signal doesn't",
+        desc: "The app keeps doing its job offline and catches up quietly once the connection returns.",
+      },
+      {
+        title: "Updates without the drama",
+        desc: "Signing, store listings, and review feedback are handled for you, so shipping a new version is ordinary work.",
+      },
+    ],
+    scope: [
+      "iOS apps",
+      "Android apps",
+      "Cross-platform builds",
+      "Push notifications",
+      "Offline storage & sync",
+      "In-app payments",
+      "Camera, location & sensors",
+      "Sign-in & biometrics",
+      "Backend & APIs",
+      "App Store & Play submission",
+      "Crash & usage analytics",
+      "Post-launch updates",
+    ],
+    tools: ["Swift", "Kotlin", "React Native", "Flutter", "TypeScript", "Node.js", "Firebase", "TestFlight"],
     process: [
       { title: "Plan", desc: "Core journeys, the platform choice, and the backend the app will rely on." },
       { title: "Design", desc: "Screens designed to each platform's conventions and prototyped on real devices." },
@@ -330,6 +460,35 @@ export const SERVICES: Service[] = [
         desc: "Reporting that pulls every channel into one view and tracks leads and sales, not likes.",
       },
     ],
+    outcomes: [
+      {
+        title: "Know which channel earns its place",
+        desc: "Every channel reports into one view, so effort goes where customers actually come from.",
+      },
+      {
+        title: "A calendar that keeps running",
+        desc: "Content is planned and produced ahead, so posting doesn't stop the week your team gets busy.",
+      },
+      {
+        title: "One voice everywhere",
+        desc: "Posts, emails, and campaigns sound like the same brand, whichever channel someone meets you on.",
+      },
+    ],
+    scope: [
+      "Audience research",
+      "Competitor review",
+      "Channel strategy",
+      "Content calendar",
+      "Social media management",
+      "Post & caption writing",
+      "Creative production",
+      "Email newsletters",
+      "Welcome & nurture sequences",
+      "Community replies",
+      "Launch campaigns",
+      "Channel reporting",
+    ],
+    tools: ["Meta Business Suite", "LinkedIn", "Mailchimp", "Google Analytics", "Looker Studio", "Canva"],
     process: [
       { title: "Research", desc: "Your audience, your competitors, and how your current channels perform." },
       { title: "Plan", desc: "Channel mix, messaging, and a content calendar agreed with your team." },
@@ -392,6 +551,42 @@ export const SERVICES: Service[] = [
         title: "ROAS reporting",
         desc: "Cost per acquisition and return on ad spend, reported in plain language rather than a wall of platform metrics.",
       },
+    ],
+    outcomes: [
+      {
+        title: "Numbers you can trust",
+        desc: "Tracking is fixed before anything else, so every later decision rests on real leads and sales.",
+      },
+      {
+        title: "Budget that follows results",
+        desc: "Spend moves toward what converts and away from what doesn't, in the open, cycle after cycle.",
+      },
+      {
+        title: "Decisions, not dashboards",
+        desc: "Reports say what happened, what it cost, and what changes next - in language that doesn't need translating.",
+      },
+    ],
+    scope: [
+      "Google Search campaigns",
+      "Shopping campaigns",
+      "Facebook & Instagram ads",
+      "LinkedIn ads",
+      "Remarketing",
+      "Conversion tracking & tags",
+      "Server-side events",
+      "Landing-page review",
+      "Ad creative & copy",
+      "Audience building",
+      "A/B testing",
+      "CPA & ROAS reporting",
+    ],
+    tools: [
+      "Google Ads",
+      "Meta Ads Manager",
+      "LinkedIn Campaign Manager",
+      "Google Tag Manager",
+      "Google Analytics 4",
+      "Looker Studio",
     ],
     process: [
       { title: "Audit", desc: "Your existing ad accounts, tracking, and landing pages, reviewed." },
@@ -457,6 +652,35 @@ export const SERVICES: Service[] = [
         desc: "Editable templates your team can reuse without breaking the layout or drifting off-brand.",
       },
     ],
+    outcomes: [
+      {
+        title: "Recognisable at a glance",
+        desc: "Every piece draws on the same system, so people know it's yours before they read a word.",
+      },
+      {
+        title: "Ready when the moment is",
+        desc: "Decks, ads, and print arrive sized and formatted for where they're going, not reworked the night before.",
+      },
+      {
+        title: "A team that can make its own",
+        desc: "Templates let your people produce day-to-day pieces without drifting off-brand or waiting on a designer.",
+      },
+    ],
+    scope: [
+      "Social post & story sets",
+      "Ad creative",
+      "Pitch & sales decks",
+      "Brochures & flyers",
+      "Posters & signage",
+      "Infographics",
+      "Email & web banners",
+      "Event materials",
+      "Icon & illustration sets",
+      "Editable template kits",
+      "Print-ready artwork",
+      "Size & format adaptations",
+    ],
+    tools: ["Adobe Illustrator", "Adobe Photoshop", "Adobe InDesign", "Figma", "Canva", "Google Slides"],
     process: [
       { title: "Brief", desc: "What it's for, who will see it, and where it will be used." },
       { title: "Concept", desc: "A few directions presented, so you choose before the details are worked out." },
@@ -518,6 +742,42 @@ export const SERVICES: Service[] = [
         title: "Rank reporting",
         desc: "Rankings, organic traffic, and the enquiries that traffic produces, tracked and reported in plain terms.",
       },
+    ],
+    outcomes: [
+      {
+        title: "Traffic you don't rent",
+        desc: "Rankings you've earned keep bringing visitors after the work is done, unlike ads that stop the day the budget does.",
+      },
+      {
+        title: "Visitors who are looking for you",
+        desc: "Pages are built around what people actually search for, so the traffic that arrives has a reason to stay.",
+      },
+      {
+        title: "Clear on what's working",
+        desc: "Reporting ties rankings to visits and visits to enquiries, so you can see the line from effort to result.",
+      },
+    ],
+    scope: [
+      "Technical site audit",
+      "Crawl & indexing fixes",
+      "Page speed & Core Web Vitals",
+      "Keyword research",
+      "Search-intent mapping",
+      "Title & meta optimisation",
+      "Internal linking",
+      "Schema & structured data",
+      "Content briefs & writing",
+      "Local SEO & business profile",
+      "Migration & redesign support",
+      "Rank & traffic reporting",
+    ],
+    tools: [
+      "Google Search Console",
+      "Google Analytics 4",
+      "PageSpeed Insights",
+      "Screaming Frog",
+      "Ahrefs",
+      "Semrush",
     ],
     process: [
       { title: "Audit", desc: "A technical and content review of where the site stands today." },
@@ -582,6 +842,35 @@ export const SERVICES: Service[] = [
         desc: "Simple dashboards and admin screens where your team can review, approve, and correct what the automation does.",
       },
     ],
+    outcomes: [
+      {
+        title: "Time back for work that needs people",
+        desc: "The copying, sorting, and repeat answers are handled, so your team spends its day on judgement calls and conversations.",
+      },
+      {
+        title: "Proven before it's rolled out",
+        desc: "Each automation starts on a single process and is measured against how things ran before, so you extend what works.",
+      },
+      {
+        title: "A person still in charge",
+        desc: "Approvals, logs, and review screens keep the decisions that matter with your team rather than with a model.",
+      },
+    ],
+    scope: [
+      "Customer support chatbots",
+      "Internal knowledge assistants",
+      "Document extraction & sorting",
+      "Email & ticket triage",
+      "CRM & form automation",
+      "Invoice & accounts workflows",
+      "Summaries & drafting",
+      "AI features in your product",
+      "Human-approval steps",
+      "Review & correction screens",
+      "Usage & accuracy logging",
+      "Data-privacy setup",
+    ],
+    tools: ["Claude", "OpenAI", "n8n", "Zapier", "Make", "Python", "Node.js", "PostgreSQL"],
     process: [
       { title: "Map", desc: "The workflow documented step by step, with what it costs in time today." },
       { title: "Prove", desc: "A working pilot on a single process, measured against how it ran before." },
@@ -645,6 +934,35 @@ export const SERVICES: Service[] = [
         desc: "Realistic renders of the finished pack for sign-off, retail listings, and pre-launch marketing.",
       },
     ],
+    outcomes: [
+      {
+        title: "Holds its own on the shelf",
+        desc: "The pack is designed against the competitors it will actually sit beside, not judged alone on a white screen.",
+      },
+      {
+        title: "No surprises at the printer",
+        desc: "Artwork is built on accurate dielines to your printer's spec, so what comes off the press matches what you approved.",
+      },
+      {
+        title: "A range that reads as one family",
+        desc: "Variants are easy to tell apart and still unmistakably yours, so adding a new one doesn't mean starting again.",
+      },
+    ],
+    scope: [
+      "Shelf & competitor research",
+      "Structural options",
+      "Box & carton artwork",
+      "Labels & sleeves",
+      "Pouches & flexible packs",
+      "Bottle & jar labels",
+      "Range & variant systems",
+      "Barcode & regulatory layout",
+      "Foil, emboss & spot finishes",
+      "Print-ready dielines",
+      "3D mockups & renders",
+      "Printer liaison & proof checks",
+    ],
+    tools: ["Adobe Illustrator", "Adobe Photoshop", "Adobe InDesign", "Adobe Dimension", "Blender"],
     process: [
       { title: "Research", desc: "The shelf, your competitors, and the limits your product and printer set." },
       { title: "Concept", desc: "Directions presented as mockups, so you judge them as a finished pack." },
@@ -712,6 +1030,35 @@ export const SERVICES: Service[] = [
         desc: "Business cards, stationery, social templates, and presentation layouts that put the identity to work.",
       },
     ],
+    outcomes: [
+      {
+        title: "Looks established from day one",
+        desc: "A considered identity earns trust before your track record has had the chance to.",
+      },
+      {
+        title: "Consistent, whoever is designing",
+        desc: "Written rules mean a printer, an agency, or a new hire all produce work that looks like the same company.",
+      },
+      {
+        title: "An identity built to be used",
+        desc: "You get working files and templates for the places the brand really appears, not a logo in a folder.",
+      },
+    ],
+    scope: [
+      "Positioning & messaging",
+      "Naming",
+      "Primary logo & lockups",
+      "Icon & favicon marks",
+      "Colour palette",
+      "Typography system",
+      "Imagery & illustration style",
+      "Tone of voice",
+      "Brand guidelines",
+      "Business cards & stationery",
+      "Social & presentation templates",
+      "Logo refresh & rebrand",
+    ],
+    tools: ["Adobe Illustrator", "Adobe Photoshop", "Adobe InDesign", "Figma"],
     process: [
       { title: "Discover", desc: "Positioning, audience, competitors, and what the brand needs to say." },
       { title: "Explore", desc: "Distinct creative routes presented, each with its reasoning." },
@@ -779,6 +1126,35 @@ export const SERVICES: Service[] = [
         desc: "Grading, audio clean-up, music, and the final mix, so the video looks and sounds finished.",
       },
     ],
+    outcomes: [
+      {
+        title: "Attention held past the hook",
+        desc: "Cuts are structured around the opening seconds, where viewers decide whether to keep watching.",
+      },
+      {
+        title: "One edit, every platform",
+        desc: "Each video is reframed and exported for the feeds it will run on, rather than cropped as an afterthought.",
+      },
+      {
+        title: "A steady flow of content",
+        desc: "Batched delivery keeps your channels supplied without your team learning an editing suite.",
+      },
+    ],
+    scope: [
+      "Product demos",
+      "Launch films",
+      "Ad cuts",
+      "Reels, Shorts & TikToks",
+      "Screen-recording walkthroughs",
+      "Testimonial & interview edits",
+      "Motion graphics & titles",
+      "Captions & subtitles",
+      "Colour grading",
+      "Audio clean-up & mix",
+      "Music & sound design",
+      "Multi-format exports",
+    ],
+    tools: ["Adobe Premiere Pro", "Adobe After Effects", "DaVinci Resolve", "Adobe Audition"],
     process: [
       { title: "Brief", desc: "Purpose, audience, platforms, and the footage or assets available." },
       { title: "Rough cut", desc: "Structure and pacing assembled for your feedback before any polish." },
@@ -883,6 +1259,84 @@ export function relatedServices(service: Service, count = 3): Service[] {
     ...rest.filter((s) => s.category !== service.category),
   ].slice(0, count);
 }
+
+/**
+ * How an engagement can be set up. The same three apply to every service, so
+ * they live here once rather than on each entry. No prices - see the note at
+ * the top of this file.
+ */
+export const ENGAGEMENT_MODELS = [
+  {
+    title: "Fixed-scope project",
+    desc: "A defined brief with a clear finish line. Best when you know what you need and want it delivered and handed over.",
+    points: ["Scope agreed in writing first", "Reviews at every stage", "Full handover at the end"],
+  },
+  {
+    title: "Ongoing retainer",
+    desc: "A standing arrangement for work that never really finishes. Requests are picked up as they come in, by people who already know your business.",
+    points: ["One team that knows your brand", "Priorities you can reshuffle", "Regular check-ins and reporting"],
+  },
+  {
+    title: "Alongside your team",
+    desc: "We plug into your in-house team and take on the parts you don't have the hours or the specialists for.",
+    points: ["Works in your tools and process", "Fills a gap, not a whole function", "Knowledge shared, not hoarded"],
+  },
+];
+
+/** What a stage asks of the client, indexed by `ServiceShape.input` (1-3). */
+export const INPUT_LEVELS = ["", "Light", "Moderate", "High"] as const;
+
+/**
+ * Four steps of each category's accent, light to deep - one per process stage
+ * in the effort donut. The stages are an ordered sequence, so they take a
+ * single-hue ramp rather than four unrelated colours; each ramp is stepped far
+ * enough apart to tell neighbours apart on the dark surface.
+ */
+export const CATEGORY_RAMP: Record<ServiceCategory, string[]> = {
+  design: ["#dfd1fc", "#c3aafa", "#a783f8", "#8b5cf6"],
+  build: ["#a5f3fc", "#22d3ee", "#0ea5c6", "#0b7a94"],
+  growth: ["#facce2", "#f5a0ca", "#f174b1", "#ec4899"],
+};
+
+export type ServiceShape = {
+  /** Share of the work in each `process` stage, in order. Adds up to 100. */
+  effort: number[];
+  /** How much of the client's time each `process` stage needs, 1 to 3. */
+  input: (1 | 2 | 3)[];
+};
+
+/**
+ * The two charts on a service's detail page, keyed by slug. These are the
+ * studio's own indicative picture of how an engagement is shaped - not results,
+ * and not a quote - and the page says so beside them. Adjust the numbers here
+ * if they don't match how the work really runs.
+ */
+export const SERVICE_SHAPE: Record<string, ServiceShape> = {
+  "ui-ux-design": { effort: [20, 20, 45, 15], input: [3, 3, 2, 1] },
+  website: { effort: [10, 25, 50, 15], input: [3, 2, 1, 2] },
+  development: { effort: [15, 50, 20, 15], input: [3, 2, 1, 2] },
+  "mobile-app-development": { effort: [10, 20, 55, 15], input: [3, 2, 1, 2] },
+  "digital-marketing": { effort: [15, 15, 55, 15], input: [2, 3, 1, 2] },
+  "performance-marketing": { effort: [15, 20, 40, 25], input: [2, 2, 1, 2] },
+  "graphic-design": { effort: [10, 35, 40, 15], input: [3, 3, 2, 1] },
+  seo: { effort: [20, 15, 45, 20], input: [1, 3, 2, 1] },
+  "ai-automation": { effort: [20, 30, 35, 15], input: [3, 2, 2, 1] },
+  "package-design": { effort: [15, 30, 35, 20], input: [2, 3, 2, 2] },
+  "brand-design": { effort: [20, 30, 30, 20], input: [3, 3, 2, 1] },
+  "video-editing": { effort: [10, 40, 35, 15], input: [3, 3, 2, 1] },
+};
+
+/** Asked of every service, so they close each detail page's FAQ list. */
+export const COMMON_FAQS: ServiceFaq[] = [
+  {
+    q: "How do we get started?",
+    a: "Send a short brief through the contact page. We'll set up a call to understand what you need, then come back with a written proposal covering scope and approach - so you know what you're agreeing to before any work begins.",
+  },
+  {
+    q: "How is the work priced?",
+    a: "By scope rather than from a rate card. Every project is different, so the figure comes in a written proposal once we understand yours, and any change to that scope is agreed with you before it's worked on.",
+  },
+];
 
 /**
  * The PixelCard dissolve palette on the /services cards - three steps of each
