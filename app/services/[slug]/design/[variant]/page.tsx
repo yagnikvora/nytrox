@@ -23,9 +23,8 @@ import { SERVICES } from "../../../../data/services";
  * Preview of an alternative design for a service page, at
  * /services/<slug>/design/<2-7>. Design 1 is the live page itself.
  *
- * Development only: in a production build there are no params to generate, so
- * with dynamicParams off every one of these URLs is a 404 and nothing here
- * ships. Once a design is chosen, it moves into ../../page.tsx and this route
+ * Switched by DESIGN_PREVIEWS: when it is off there are no params to generate,
+ * so with dynamicParams off every one of these URLs is a 404. Once a design is chosen, it moves into ../../page.tsx and this route
  * is deleted.
  */
 export const dynamicParams = false;

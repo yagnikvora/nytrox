@@ -9,8 +9,8 @@ import { LAYOUTS, LAYOUT_PREVIEWS } from "../../../components/projects/shared";
  * Preview of an alternative layout for the projects page, at
  * /projects/style/<2|3>. Layout 1 is /projects itself.
  *
- * Development only: in a production build there are no params to generate, so
- * with dynamicParams off these URLs are 404s and nothing here ships. Once a
+ * Switched by LAYOUT_PREVIEWS: when it is off there are no params to generate,
+ * so with dynamicParams off these URLs are 404s. Once a
  * layout is chosen it moves into ../../page.tsx and this route is deleted.
  */
 export const dynamicParams = false;

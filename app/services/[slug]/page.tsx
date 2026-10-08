@@ -810,7 +810,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         <Footer />
       </main>
 
-      {/* development only - links to the alternative designs being compared */}
+      {/* shown while DESIGN_PREVIEWS is on - links to the designs being compared */}
       <DesignSwitcher slug={service.slug} current="1" />
     </div>
   );

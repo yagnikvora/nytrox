@@ -41,8 +41,13 @@ export const DESIGNS = [
   { id: "7", name: "Mission" },
 ] as const;
 
-/** The preview routes and the switcher exist in development only. */
-export const DESIGN_PREVIEWS = process.env.NODE_ENV === "development";
+/**
+ * One switch for the preview routes and the switcher bar. On, so the designs
+ * can be compared on the live site while one is being chosen; set it to false
+ * (or to `process.env.NODE_ENV === "development"`) to take them off the live
+ * site again without deleting anything.
+ */
+export const DESIGN_PREVIEWS = true;
 
 const WORK_COUNT = 3;
 
@@ -228,8 +233,7 @@ export function WorkGrid({ work }: { work: Project[] }) {
 
 /**
  * Floating bar for hopping between the designs of one service. Renders
- * nothing outside development, so it can sit on the real page without ever
- * reaching visitors.
+ * nothing when DESIGN_PREVIEWS is off.
  */
 export function DesignSwitcher({ slug, current }: { slug: string; current: string }) {
   if (!DESIGN_PREVIEWS) return null;

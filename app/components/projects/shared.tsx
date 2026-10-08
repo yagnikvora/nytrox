@@ -32,12 +32,16 @@ export const LAYOUTS = [
   { id: "3", name: "Rails" },
 ] as const;
 
-/** The preview routes and the switcher exist in development only. */
-export const LAYOUT_PREVIEWS = process.env.NODE_ENV === "development";
+/**
+ * One switch for the preview routes and the switcher bar. On, so the layouts
+ * can be compared on the live site while one is being chosen; set it to false
+ * to take them off the live site again without deleting anything.
+ */
+export const LAYOUT_PREVIEWS = true;
 
 /**
- * Floating bar for hopping between the layouts. Renders nothing outside
- * development, so it can sit on the real page without reaching visitors.
+ * Floating bar for hopping between the layouts. Renders nothing when
+ * LAYOUT_PREVIEWS is off.
  */
 export function LayoutSwitcher({ current }: { current: string }) {
   if (!LAYOUT_PREVIEWS) return null;

@@ -77,7 +77,7 @@ export default function ProjectsShell({ layout, children }: { layout: string; ch
         <Footer />
       </main>
 
-      {/* development only - links to the other layouts being compared */}
+      {/* shown while LAYOUT_PREVIEWS is on - links to the layouts being compared */}
       <LayoutSwitcher current={layout} />
     </div>
   );
