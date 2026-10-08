@@ -164,32 +164,35 @@ export const SERVICES: Service[] = [
     ),
   },
   {
-    slug: "website",
-    title: "Website",
-    desc: "Fast, responsive sites - marketing pages, storefronts, and CMS builds your team can edit without a developer.",
+    // Website and Development were two entries until they were merged: clients
+    // didn't see a line between "a site" and "a web product", and neither did
+    // the work. next.config.ts redirects the two old URLs here.
+    slug: "website-development",
+    title: "Website Development",
+    desc: "Fast, responsive websites and web products - marketing sites, storefronts, SaaS platforms, and the APIs behind them.",
     detail:
-      "Landing pages, multi-page marketing sites, and storefronts built to load fast and rank well. Content lives in a CMS your team actually controls, and every page is responsive, accessible, and tuned for Core Web Vitals before it goes live.",
+      "From a five-page marketing site to a full SaaS platform: built to load fast and rank well, with content your team can edit without a developer and code your team can keep shipping on after we hand over the keys.",
     fit: [
       "Your current site is slow, dated, or impossible to update without a developer.",
-      "You're launching a business or product and need a site that earns trust straight away.",
-      "You sell online and need a storefront that holds up on a phone.",
+      "You're launching a business or web product and need it to earn trust straight away.",
+      "Your business runs on spreadsheets and disconnected tools that ought to be one system.",
     ],
     deliverables: [
       {
-        title: "Marketing sites",
-        desc: "Landing pages and multi-page sites built around what visitors arrive looking for, with clear calls to action and content structured for search.",
+        title: "Marketing sites & storefronts",
+        desc: "Landing pages, multi-page sites, and online stores built around what visitors arrive looking for, designed for mobile first and structured for search.",
       },
       {
-        title: "E-commerce storefronts",
-        desc: "Catalogues, carts, and checkout flows designed for mobile first, connected to the payment and inventory tools you already use.",
+        title: "Web apps & platforms",
+        desc: "SaaS products, customer portals, and internal dashboards written in TypeScript, server-rendered where it helps speed and search, and structured so new features don't mean rewriting old ones.",
       },
       {
-        title: "Headless CMS",
-        desc: "Content modelled around how your team actually publishes, so pages, posts, and products can be edited without touching the code.",
+        title: "CMS, APIs & integrations",
+        desc: "Content modelled around how your team actually publishes, plus the documented APIs and connections to the payment providers, CRMs, and services the site depends on.",
       },
       {
-        title: "Core Web Vitals tuning",
-        desc: "Image handling, font loading, and script weight checked before launch, so the site is quick on real phones and not just on the office connection.",
+        title: "Performance & deployment",
+        desc: "Core Web Vitals checked before launch, with automated pipelines, staging environments, and monitoring, so a release is routine rather than an event.",
       },
     ],
     outcomes: [
@@ -202,30 +205,30 @@ export const SERVICES: Service[] = [
         desc: "Pages are tuned for the phones and connections your visitors actually have, so the first impression isn't a loading spinner.",
       },
       {
-        title: "Built to be found",
-        desc: "Clean structure, sensible headings, and structured data go in during the build, so search engines can read the site from day one.",
+        title: "A codebase you can keep changing",
+        desc: "Typed, tested, and documented, so adding the next feature doesn't mean being afraid of breaking the last one.",
       },
     ],
     scope: [
-      "Landing pages",
-      "Multi-page marketing sites",
+      "Landing pages & marketing sites",
       "E-commerce storefronts",
+      "SaaS platforms",
+      "Dashboards & customer portals",
       "CMS setup & content modelling",
-      "Blog & resource sections",
-      "Contact & enquiry forms",
+      "REST & GraphQL APIs",
       "Payment & booking integrations",
-      "Analytics & tag setup",
+      "Authentication & user roles",
+      "Database design & migrations",
       "On-page SEO & structured data",
-      "Accessibility checks",
-      "Hosting & domain setup",
-      "CMS training for your team",
+      "Automated testing & CI/CD",
+      "Hosting, domains & monitoring",
     ],
-    tools: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Sanity", "Shopify", "Vercel", "Google Analytics"],
+    tools: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL", "Sanity", "AWS"],
     process: [
-      { title: "Scope", desc: "Pages, content, integrations, and what the site needs to achieve, agreed up front." },
+      { title: "Scope", desc: "Pages, features, integrations, and the technical approach, written down and agreed up front." },
       { title: "Design", desc: "Page layouts and a component set, reviewed on desktop and mobile." },
-      { title: "Build", desc: "Development on a staging site you can click through as it takes shape." },
-      { title: "Launch", desc: "Speed, accessibility, and SEO checks, then go-live and CMS training for your team." },
+      { title: "Build", desc: "Short sprints on a staging site you can click through, tested as it takes shape." },
+      { title: "Launch", desc: "Speed, accessibility, and SEO checks, then go-live, handover, and training for your team." },
     ],
     faqs: [
       {
@@ -233,17 +236,22 @@ export const SERVICES: Service[] = [
         a: "Yes. Content lives in a CMS set up around your pages, and we walk your team through it before launch. Text, images, and new pages don't need a developer.",
       },
       {
-        q: "Can you redesign our existing website?",
-        a: "Yes. We review the current site first - what's working, what's ranking, and which content is worth keeping - so a redesign doesn't cost you the search visibility you already have.",
+        q: "Which technologies do you build with?",
+        a: "Mostly TypeScript, React, and Next.js on the front end, with Node.js and PostgreSQL behind it. If your team already works in a different stack, we'll talk through whether staying on it makes more sense.",
       },
       {
-        q: "Do you handle hosting and domains?",
-        a: "We can set up hosting, deployment, and your domain, or deploy to infrastructure you already run. Either way, the accounts sit in your name.",
+        q: "Can you redesign our existing website or take over existing code?",
+        a: "Yes. We review what's there first - what's working, what's ranking, and what's risky to change - so a rebuild doesn't cost you the search visibility or the stability you already have.",
+      },
+      {
+        q: "What happens after launch?",
+        a: "You get the code, the documentation, and a handover session with your team, and the hosting accounts sit in your name. If you'd rather we keep running it, we take on ongoing support and feature work as a retainer.",
       },
     ],
     category: "build",
     icon: (
       <>
+        {/* browser window with a code bracket inside */}
         <rect x="2.5" y="4" width="19" height="16" rx="2" stroke="currentColor" strokeWidth="1.6" />
         <path
           d="M2.5 8.5h19M5.7 6.2h.01M8.3 6.2h.01"
@@ -251,92 +259,8 @@ export const SERVICES: Service[] = [
           strokeWidth="1.6"
           strokeLinecap="round"
         />
-      </>
-    ),
-  },
-  {
-    slug: "development",
-    title: "Development",
-    desc: "Custom software, SaaS platforms, and the APIs behind them - engineered on architecture that holds up.",
-    detail:
-      "SaaS products, internal dashboards, and the services that feed them - typed end to end, server-rendered for speed, and structured so your team can keep shipping after we hand over the keys.",
-    fit: [
-      "You're building a SaaS product or internal platform and need a team to engineer it.",
-      "Your business runs on spreadsheets and disconnected tools that ought to talk to each other.",
-      "You've inherited a codebase that has become risky to change.",
-    ],
-    deliverables: [
-      {
-        title: "Next.js & React",
-        desc: "Web applications written in TypeScript, server-rendered where it helps speed and search, and structured so new features don't mean rewriting old ones.",
-      },
-      {
-        title: "APIs & integrations",
-        desc: "Documented APIs, plus the connections to the payment providers, CRMs, and third-party services your product depends on.",
-      },
-      {
-        title: "Database design",
-        desc: "Data models shaped around how the product will grow, with migrations, indexing, and backups handled from day one rather than retrofitted.",
-      },
-      {
-        title: "Cloud deployment",
-        desc: "Automated pipelines, staging environments, and monitoring, so a release is routine rather than an event.",
-      },
-    ],
-    outcomes: [
-      {
-        title: "A codebase you can keep changing",
-        desc: "Typed, tested, and documented, so adding the next feature doesn't mean being afraid of breaking the last one.",
-      },
-      {
-        title: "Releases that are routine",
-        desc: "Pipelines and staging environments turn a launch into a button press instead of a late night.",
-      },
-      {
-        title: "Tools that finally talk",
-        desc: "The data your team retypes between systems moves on its own, and everyone works from the same numbers.",
-      },
-    ],
-    scope: [
-      "SaaS platforms",
-      "Internal dashboards & admin panels",
-      "Customer portals",
-      "REST & GraphQL APIs",
-      "Third-party integrations",
-      "Authentication & user roles",
-      "Payments & subscriptions",
-      "Database design & migrations",
-      "Automated testing",
-      "CI/CD pipelines",
-      "Monitoring & logging",
-      "Legacy code modernisation",
-    ],
-    tools: ["TypeScript", "React", "Next.js", "Node.js", "PostgreSQL", "GraphQL", "AWS", "Playwright"],
-    process: [
-      { title: "Architect", desc: "Requirements, data model, and technical approach written down and agreed." },
-      { title: "Build", desc: "Short sprints, with working software to review at the end of each one." },
-      { title: "Test", desc: "Automated tests and QA on every release, not saved up for the end." },
-      { title: "Ship & support", desc: "Production launch, documentation, and handover - or ongoing support if you want it." },
-    ],
-    faqs: [
-      {
-        q: "Which technologies do you build with?",
-        a: "Mostly TypeScript, React, and Next.js on the front end, with Node.js, PostgreSQL, and GraphQL behind it, deployed on AWS. If your team already works in a different stack, we'll talk through whether staying on it makes more sense.",
-      },
-      {
-        q: "Can you build an MVP first?",
-        a: "Yes. We scope the smallest version that proves the idea with real users, on foundations that don't need throwing away once it works.",
-      },
-      {
-        q: "What happens after launch?",
-        a: "You get the code, the documentation, and a handover session with your team. If you'd rather we keep running it, we take on ongoing support and feature work as a retainer.",
-      },
-    ],
-    category: "build",
-    icon: (
-      <>
         <path
-          d="M8.6 8.2L4.8 12l3.8 3.8M15.4 8.2L19.2 12l-3.8 3.8M13.4 5.5l-2.8 13"
+          d="M10 12l-2 2.2 2 2.2M14 12l2 2.2-2 2.2"
           stroke="currentColor"
           strokeWidth="1.6"
           strokeLinecap="round"
@@ -1210,7 +1134,7 @@ export const CATEGORY_SPOTLIGHT: Record<
 };
 
 /**
- * Category sections for the /services page. Twelve detail cards in one
+ * Category sections for the /services page. Eleven detail cards in one
  * undifferentiated grid reads as a wall, so they are split three ways - and the
  * `id` doubles as the anchor target for the jump links above the grid.
  */
@@ -1313,8 +1237,7 @@ export type ServiceShape = {
  */
 export const SERVICE_SHAPE: Record<string, ServiceShape> = {
   "ui-ux-design": { effort: [20, 20, 45, 15], input: [3, 3, 2, 1] },
-  website: { effort: [10, 25, 50, 15], input: [3, 2, 1, 2] },
-  development: { effort: [15, 50, 20, 15], input: [3, 2, 1, 2] },
+  "website-development": { effort: [15, 25, 45, 15], input: [3, 2, 1, 2] },
   "mobile-app-development": { effort: [10, 20, 55, 15], input: [3, 2, 1, 2] },
   "digital-marketing": { effort: [15, 15, 55, 15], input: [2, 3, 1, 2] },
   "performance-marketing": { effort: [15, 20, 40, 25], input: [2, 2, 1, 2] },

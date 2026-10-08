@@ -208,7 +208,7 @@ function Hero() {
 /**
  * The home tiles alternate two hues card by card - violet, green, violet - so
  * the grid reads as one set. (The /services page keeps the per-category
- * accents, where three families across twelve cards earn their keep.)
+ * accents, where three families across eleven cards earn their keep.)
  *
  * `name` selects the wrapper accent in globals.css; `pixels` is the matching
  * PixelCard dissolve palette, overriding the cosmic variant's violet→cyan so

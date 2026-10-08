@@ -76,7 +76,7 @@ export function buildServiceView(service: Service) {
     color: ramp[i % ramp.length],
   }));
   // Start from this service's place in the catalogue and wrap round, so the
-  // twelve pages don't all show the same three projects.
+  // eleven pages don't all show the same three projects.
   const offset = SERVICES.indexOf(service);
 
   return {

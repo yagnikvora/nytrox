@@ -107,7 +107,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
   ];
   const faqs = [...service.faqs, ...COMMON_FAQS];
   // Start from this service's place in the catalogue and wrap round, so the
-  // twelve pages don't all show the same three projects.
+  // eleven pages don't all show the same three projects.
   const offset = SERVICES.indexOf(service);
   const work = Array.from(
     { length: WORK_COUNT },

@@ -13,6 +13,16 @@ const nextConfig: NextConfig = {
   // Images are already sized for their slots, so they are served as they are
   // rather than through the on-demand optimiser.
   images: { unoptimized: true },
+
+  // Website and Development were merged into one service. The two old pages
+  // are indexed and linked from outside, so they forward rather than 404.
+  async redirects() {
+    return ["website", "development"].map((slug) => ({
+      source: `/services/${slug}`,
+      destination: "/services/website-development/",
+      permanent: true,
+    }));
+  },
 };
 
 export default nextConfig;

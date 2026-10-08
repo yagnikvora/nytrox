@@ -45,7 +45,7 @@ export default function Navbar() {
      them raw never matched, so every page lit "Home". Both sides are stripped
      to a bare path (and the hash dropped) before they are compared.
 
-     A section's sub-pages light its entry too - /services/website sits under
+     A section's sub-pages light its entry too - /services/seo sits under
      "Services". Home is exact-only, or it would prefix-match every route. */
   const current = routeOf(pathname);
   const activeIndex = Math.max(
