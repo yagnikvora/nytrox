@@ -486,6 +486,22 @@ body::-webkit-scrollbar {
   }
 }
 
+/* Service design previews: content swapped in by a click (the deliverable
+   explorer, the process stepper) rises into place rather than snapping. */
+.design-swap {
+  animation: design-swap 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes design-swap {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Orbit rings in the hero */
 .orbit-ring {
   position: absolute;
@@ -583,7 +599,8 @@ body::-webkit-scrollbar {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .route-fade { animation: none !important; }
+  .route-fade,
+  .design-swap { animation: none !important; }
   .deck-mouse-wheel,
   .animate-float,
   .animate-float-slow,

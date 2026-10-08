@@ -33,6 +33,7 @@ import {
 import { STORY_FACTS, VALUES } from "../../data/about";
 import { PROJECTS, domainOf } from "../../data/projects";
 import { pageMetadata } from "../../data/site";
+import { DesignSwitcher } from "../../components/service-designs/shared";
 
 /*
  * One page per entry in SERVICES. The export has no server to render a slug on
@@ -808,6 +809,9 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         <CtaBand />
         <Footer />
       </main>
+
+      {/* development only - links to the alternative designs being compared */}
+      <DesignSwitcher slug={service.slug} current="1" />
     </div>
   );
 }
