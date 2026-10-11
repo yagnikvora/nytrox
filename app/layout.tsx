@@ -28,6 +28,8 @@ export const metadata: Metadata = {
   applicationName: SITE_NAME,
   title: HOME_TITLE,
   description: HOME_DESCRIPTION,
+  // proves ownership of the site to Google Search Console
+  verification: { google: "SoL-3etGxZIcShJkn2OLpkwwCNxHKigHIRrZXJ_BO6I" },
 };
 
 export default function RootLayout({
