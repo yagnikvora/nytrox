@@ -29,31 +29,41 @@ export const HOME_DESCRIPTION =
  * next.config.ts. The canonical has to be the address the server actually
  * answers on - /services/, not /services - or search engines are pointed at a
  * redirect instead of the page.
+ *
+ * `image` and `article` are for pages that have them - a blog post with a
+ * cover. An image upgrades the link preview to the large card; `article`
+ * switches the Open Graph type and adds its dates and author.
  */
 export function pageMetadata({
   title,
   description,
   path,
+  image,
+  article,
 }: {
   title: string;
   description: string;
   path: string;
+  image?: { url: string; width: number; height: number; alt: string };
+  article?: { publishedTime: string; modifiedTime: string; authors: string[]; section: string };
 }): Metadata {
   return {
     title,
     description,
     alternates: { canonical: path },
     openGraph: {
-      type: "website",
+      ...(article ? { type: "article", ...article } : { type: "website" }),
       siteName: SITE_NAME,
       url: path,
       title,
       description,
+      ...(image && { images: [image] }),
     },
     twitter: {
-      card: "summary",
+      card: image ? "summary_large_image" : "summary",
       title,
       description,
+      ...(image && { images: [image.url] }),
     },
   };
 }

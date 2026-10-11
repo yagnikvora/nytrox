@@ -25,6 +25,8 @@ import ScrollReveal from "./components/ScrollReveal";
 import { SERVICES, HOME_SERVICE_COUNT, serviceHref } from "./data/services";
 import { STACK } from "./data/stack";
 import { PROJECTS } from "./data/projects";
+import { getPosts } from "./data/blog";
+import PostCard from "./components/blog/PostCard";
 import { HOME_DESCRIPTION, HOME_TITLE, SITE_NAME, SITE_URL, pageMetadata } from "./data/site";
 
 export const metadata = pageMetadata({
@@ -97,6 +99,7 @@ export default function Home() {
         <Stack />
         <Process />
         <Testimonials />
+        <Blog />
         <div id="contact-panel">
           <CtaBand />
           <Footer />
@@ -369,6 +372,57 @@ function Testimonials() {
 
       <Reveal className="mt-14">
         <TestimonialRail />
+      </Reveal>
+    </section>
+  );
+}
+
+/* --------------------------------- Blog --------------------------------- */
+/** How many of the newest posts the home page shows. */
+const HOME_POST_COUNT = 3;
+
+/**
+ * The newest posts from Sanity (data/blog.ts). Links from the home page are
+ * how a new post gets found - by visitors and by crawlers alike. With nothing
+ * published yet the section is left out altogether.
+ */
+async function Blog() {
+  const posts = (await getPosts()).slice(0, HOME_POST_COUNT);
+  if (posts.length === 0) return null;
+
+  return (
+    <section id="blog" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
+      <Reveal className="mx-auto max-w-2xl text-center">
+        <SectionKicker>From the blog</SectionKicker>
+        <MaskedHeading
+          text="Notes from the studio floor"
+          accent="studio floor"
+          className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+        />
+        <ScrollReveal className="mt-4 text-ink-muted">
+          Practical writing on building, designing, and growing digital products -
+          what we have learned doing the work.
+        </ScrollReveal>
+      </Reveal>
+
+      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post, i) => (
+          <Reveal as="div" key={post.slug} delay={i * 70} variant="blur" className="h-full">
+            <PostCard post={post} />
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal delay={120} className="mt-12 flex justify-center">
+        <Link
+          href="/blog"
+          className="glass group inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+        >
+          <GradientText inline>Read all articles</GradientText>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover:translate-x-0.5" aria-hidden>
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </Link>
       </Reveal>
     </section>
   );

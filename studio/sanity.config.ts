@@ -6,9 +6,10 @@ import { schemaTypes } from "./schemaTypes";
 import { structure } from "./structure";
 
 /*
- * Studio for the Nytrox Sanity project - where the enquiries saved by the
- * website's contact form (app/api/contact/route.ts in the site) are read and
- * followed up.
+ * Studio for the Nytrox Sanity project. Two things live here: the blog posts
+ * the website shows at /blog (app/data/blog.ts in the site reads them), and the
+ * enquiries saved by its contact form (app/api/contact/route.ts), which are
+ * read and followed up here.
  */
 export default defineConfig({
   name: "default",

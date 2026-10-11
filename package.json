@@ -8,6 +8,7 @@
     "start": "node server.js",
     "lint": "eslint",
     "studio": "npm --prefix studio run dev",
+    "seed:blog": "node --env-file=.env scripts/seed-blog.mjs",
     "postbuild": "node scripts/flatten-rsc-payloads.mjs"
   },
   "dependencies": {
