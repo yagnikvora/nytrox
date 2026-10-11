@@ -11,13 +11,14 @@ import Footer from "../Footer";
 import MaskedHeading from "../MaskedHeading";
 import ScrollReveal from "../ScrollReveal";
 import { PROJECTS } from "../../data/projects";
-import { LayoutSwitcher } from "./shared";
+import CategoryBar from "./CategoryBar";
+import { PORTFOLIO } from "./shared";
 
 /**
- * Everything on /projects that is the same whichever layout is in use: the
- * page chrome, the header, and the close. The layout itself is the children.
+ * The frame of the /projects page: the page chrome, the header, the close,
+ * and the category bar. The portfolio itself is the children.
  */
-export default function ProjectsShell({ layout, children }: { layout: string; children: ReactNode }) {
+export default function ProjectsShell({ children }: { children: ReactNode }) {
   return (
     <div className="relative flex min-h-screen flex-col overflow-clip">
       <CursorFX />
@@ -77,8 +78,8 @@ export default function ProjectsShell({ layout, children }: { layout: string; ch
         <Footer />
       </main>
 
-      {/* shown while LAYOUT_PREVIEWS is on - links to the layouts being compared */}
-      <LayoutSwitcher current={layout} />
+      {/* plain data only: the icons in PORTFOLIO are not needed by the bar */}
+      <CategoryBar categories={PORTFOLIO.map(({ id, title, count }) => ({ id, title, count }))} />
     </div>
   );
 }

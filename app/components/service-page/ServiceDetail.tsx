@@ -22,10 +22,10 @@ import {
 } from "./shared";
 
 /*
- * Design 2 - "Editorial". Reads like a long-form article: a left-aligned
- * header with the facts on a card beside it, then numbered chapters down a
- * single column, with a contents rail that follows the scroll. Fewer boxes
- * than the classic page - rows and hairlines carry most of the structure.
+ * The body of a service page. It reads like a long-form article: a
+ * left-aligned header with the facts on a card beside it, then numbered
+ * chapters down a single column, with a contents rail that follows the
+ * scroll. Rows and hairlines carry most of the structure, rather than boxes.
  */
 
 const SECTIONS = [
@@ -64,7 +64,7 @@ function Chapter({
   );
 }
 
-export default function DesignEditorial({ service, view }: { service: Service; view: ServiceView }) {
+export default function ServiceDetail({ service, view }: { service: Service; view: ServiceView }) {
   const { group, stages, facts, faqs, work, spotlight } = view;
   const longest = Math.max(...stages.map((s) => s.share));
 

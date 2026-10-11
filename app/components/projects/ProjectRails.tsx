@@ -7,12 +7,14 @@ import ProjectCard from "./ProjectCard";
 import { PORTFOLIO } from "./shared";
 
 /**
- * Layout 3 - "Rails". Each category gets a panel with its name pinned on the
- * left; on the right, every service is one sideways-scrolling row of compact
- * cards. The whole portfolio fits in a few screens, and a service with many
- * projects takes no more height than one with two.
+ * The body of the projects page. Each category gets a panel with its name
+ * pinned on the left; on the right, every service is one sideways-scrolling
+ * row of compact cards. The whole portfolio fits in a few screens, and a
+ * service with many projects takes no more height than one with two.
+ *
+ * The category sections' ids are what CategoryBar's tabs jump to.
  */
-export default function LayoutRails() {
+export default function ProjectRails() {
   return (
     <>
       {PORTFOLIO.map((group, g) => (
@@ -66,7 +68,12 @@ export default function LayoutRails() {
 
                     <SnapCarousel label={`${service.title} projects`}>
                       {entries.map((entry, i) => (
-                        <div key={entry.slug} className="w-[82vw] shrink-0 snap-start sm:w-[340px]">
+                        // the id keeps /projects#slug links (the footer's) landing on the card
+                        <div
+                          key={entry.slug}
+                          id={entry.slug}
+                          className="w-[82vw] shrink-0 scroll-mt-28 snap-start sm:w-[340px]"
+                        >
                           <ProjectCard
                             entry={entry}
                             icon={service.icon}

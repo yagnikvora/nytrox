@@ -5,7 +5,6 @@ import Reveal from "../Reveal";
 import SpotlightCard from "../SpotlightCard";
 import GlareHover from "../GlareHover";
 import {
-  CATEGORY_RAMP,
   CATEGORY_SPOTLIGHT,
   COMMON_FAQS,
   SERVICES,
@@ -21,33 +20,10 @@ import { STORY_FACTS } from "../../data/about";
 import { PROJECTS, domainOf, type Project } from "../../data/projects";
 
 /*
- * What the alternative service-page designs (DesignEditorial, DesignBento, DesignCinematic,
- * DesignConsole, DesignBold, DesignMission)
- * have in common: the values derived from a service, and the few sections
- * that look the same whichever layout sits around them.
- *
- * These designs are previews to choose between. Once one is picked, it
- * replaces app/services/[slug]/page.tsx and the rest of this folder can go.
+ * Supporting pieces for the service page (ServiceDetail): the values derived
+ * from a service entry, and the sections that stand on their own - the FAQ
+ * list, the related services, and the recent-work cards.
  */
-
-/** The designs on offer; "1" is the page at /services/<slug> itself. */
-export const DESIGNS = [
-  { id: "1", name: "Classic" },
-  { id: "2", name: "Editorial" },
-  { id: "3", name: "Bento" },
-  { id: "4", name: "Cinematic" },
-  { id: "5", name: "Console" },
-  { id: "6", name: "Bold" },
-  { id: "7", name: "Mission" },
-] as const;
-
-/**
- * One switch for the preview routes and the switcher bar. On, so the designs
- * can be compared on the live site while one is being chosen; set it to false
- * (or to `process.env.NODE_ENV === "development"`) to take them off the live
- * site again without deleting anything.
- */
-export const DESIGN_PREVIEWS = true;
 
 const WORK_COUNT = 3;
 
@@ -71,14 +47,12 @@ export const accentStyle = (category: ServiceCategory) =>
 export function buildServiceView(service: Service) {
   const group = groupOf(service);
   const shape = SERVICE_SHAPE[service.slug];
-  const ramp = CATEGORY_RAMP[service.category];
   const stages = service.process.map((p, i) => ({
     step: String(i + 1).padStart(2, "0"),
     title: p.title,
     desc: p.desc,
     share: shape.effort[i],
     input: shape.input[i],
-    color: ramp[i % ramp.length],
   }));
   // Start from this service's place in the catalogue and wrap round, so the
   // eleven pages don't all show the same three projects.
@@ -228,37 +202,5 @@ export function WorkGrid({ work }: { work: Project[] }) {
         </Reveal>
       ))}
     </div>
-  );
-}
-
-/**
- * Floating bar for hopping between the designs of one service. Renders
- * nothing when DESIGN_PREVIEWS is off.
- */
-export function DesignSwitcher({ slug, current }: { slug: string; current: string }) {
-  if (!DESIGN_PREVIEWS) return null;
-  return (
-    <nav
-      aria-label="Design preview"
-      className="fixed bottom-5 left-1/2 z-[60] flex -translate-x-1/2 items-center gap-1 rounded-full border border-white/15 bg-[#0c0c1c]/95 p-1.5 text-sm shadow-[0_18px_50px_-12px_rgba(0,0,0,0.9)] backdrop-blur"
-    >
-      <span className="hidden px-3 text-xs font-semibold uppercase tracking-[0.16em] text-ink-muted sm:inline">
-        Design
-      </span>
-      {DESIGNS.map((d) => (
-        <Link
-          key={d.id}
-          href={d.id === "1" ? serviceHref(slug) : `${serviceHref(slug)}/design/${d.id}`}
-          aria-current={d.id === current ? "page" : undefined}
-          className={`rounded-full px-3.5 py-2 font-medium transition-colors ${
-            d.id === current ? "bg-white text-black" : "text-ink hover:bg-white/10 hover:text-white"
-          }`}
-        >
-          {d.id}
-          {/* seven names only fit a wide screen; below that the numbers stand alone */}
-          <span className="hidden xl:inline">. {d.name}</span>
-        </Link>
-      ))}
-    </nav>
   );
 }

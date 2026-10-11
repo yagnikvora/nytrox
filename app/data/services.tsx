@@ -1210,18 +1210,6 @@ export const ENGAGEMENT_MODELS = [
 /** What a stage asks of the client, indexed by `ServiceShape.input` (1-3). */
 export const INPUT_LEVELS = ["", "Light", "Moderate", "High"] as const;
 
-/**
- * Four steps of each category's accent, light to deep - one per process stage
- * in the effort donut. The stages are an ordered sequence, so they take a
- * single-hue ramp rather than four unrelated colours; each ramp is stepped far
- * enough apart to tell neighbours apart on the dark surface.
- */
-export const CATEGORY_RAMP: Record<ServiceCategory, string[]> = {
-  design: ["#dfd1fc", "#c3aafa", "#a783f8", "#8b5cf6"],
-  build: ["#a5f3fc", "#22d3ee", "#0ea5c6", "#0b7a94"],
-  growth: ["#facce2", "#f5a0ca", "#f174b1", "#ec4899"],
-};
-
 export type ServiceShape = {
   /** Share of the work in each `process` stage, in order. Adds up to 100. */
   effort: number[];
@@ -1230,8 +1218,8 @@ export type ServiceShape = {
 };
 
 /**
- * The two charts on a service's detail page, keyed by slug. These are the
- * studio's own indicative picture of how an engagement is shaped - not results,
+ * The effort bars and input levels in a service page's process chapter, keyed
+ * by slug. These are the studio's own indicative picture of how an engagement is shaped - not results,
  * and not a quote - and the page says so beside them. Adjust the numbers here
  * if they don't match how the work really runs.
  */

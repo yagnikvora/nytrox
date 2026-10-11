@@ -1,5 +1,5 @@
 import ProjectsShell from "../components/projects/ProjectsShell";
-import LayoutSections from "../components/projects/LayoutSections";
+import ProjectRails from "../components/projects/ProjectRails";
 import { pageMetadata } from "../data/site";
 
 export const metadata = pageMetadata({
@@ -9,14 +9,11 @@ export const metadata = pageMetadata({
   path: "/projects/",
 });
 
-/*
- * The portfolio, grouped by category and then by service. Layout 1 of three;
- * the other two are previewed at /projects/style/<2|3> during development.
- */
+/* The portfolio, grouped by category and then by service. */
 export default function ProjectsPage() {
   return (
-    <ProjectsShell layout="1">
-      <LayoutSections />
+    <ProjectsShell>
+      <ProjectRails />
     </ProjectsShell>
   );
 }
